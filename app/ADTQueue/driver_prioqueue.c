@@ -5,8 +5,8 @@ int main()
 {
     int n, i;
     int time, exp;
-    int pickup, dropoff, type;
-    ElType elemen;
+    char pickup, dropoff, type;
+    QElType elemen;
     PrioQueue pq;
     printf("Masukkan Jumlah Data: ");
     scanf("%d", &n);
@@ -26,7 +26,7 @@ int main()
         elemen.time = time;
         elemen.pickup = pickup;
         elemen.dropoff = dropoff;
-        elemen.type = type;
+        elemen.itype = type;
         penqueue(&pq, elemen);
     }
     displayPQueue(pq);

@@ -76,6 +76,7 @@ void penqueue(PrioQueue *pq, QElType val)
       menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
   PrioQueue temppq;
   QElType tempEl;
+  boolean done;
   if (isEmpty(*pq))
   {
     enqueue(pq, val);
@@ -83,13 +84,15 @@ void penqueue(PrioQueue *pq, QElType val)
   else
   {
     CreatePrioQueue(&temppq);
+    done = false;
     while (!isEmpty(*pq))
     {
       dequeue(pq, &tempEl);
-      if (tempEl.time > val.time)
+      if (tempEl.time > val.time && !done)
       {
         enqueue(&temppq, val);
         enqueue(&temppq, tempEl);
+        done = true;
         while (!isEmpty(*pq))
         {
           dequeue(pq, &tempEl);
@@ -101,6 +104,11 @@ void penqueue(PrioQueue *pq, QElType val)
         enqueue(&temppq, tempEl);
       }
     }
+    if (!done)
+    {
+      enqueue(&temppq, val);
+    }
+
     while (!isEmpty(temppq))
     {
       dequeue(&temppq, &tempEl);
