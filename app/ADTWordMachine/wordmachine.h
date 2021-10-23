@@ -4,7 +4,6 @@
 #ifndef WORD_ENGINE_H
 #define WORD_ENGINE_H
 
-#include "boolean.h"
 #include "charmachine.h"
 
 #define CAPACITY 50
@@ -30,6 +29,11 @@ void startWord();
           atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
           currentChar karakter pertama sesudah karakter terakhir kata */
 
+void fstartWord(char namafile[]);
+/* I.S. : currentChar sembarang
+   F.S. : endWord = true, dan currentChar = MARK;
+          atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
+          currentChar karakter pertama sesudah karakter terakhir kata */
 void advWord();
 /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,

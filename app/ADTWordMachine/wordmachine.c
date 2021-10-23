@@ -12,7 +12,7 @@ void ignoreBlank(){
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : currentChar sembarang
    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
-   while (currentChar == BLANK && currentChar != MARK){
+   while ((currentChar == BLANK || currentChar == '\n') && currentChar != MARK){
      adv();
    }
 }
@@ -31,6 +31,20 @@ void startWord(){
   }
 }
 
+void fstartWord(char namafile[]){
+/* I.S. : currentChar sembarang
+   F.S. : endWord = true, dan currentChar = MARK;
+          atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
+          currentChar karakter pertama sesudah karakter terakhir kata */
+  fstart(namafile);
+  ignoreBlank();
+  if (currentChar == MARK) endWord = true;
+  else {
+    endWord = false;
+    copyWord();
+  }
+}
+
 void advWord(){
 /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
@@ -41,7 +55,6 @@ void advWord(){
    if (currentChar == MARK) endWord = true;
    else {
      copyWord();
-     ignoreBlank();
    }
 }
 void copyWord(){
@@ -52,7 +65,7 @@ void copyWord(){
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
   int i = 0;
-  while (currentChar != MARK && currentChar != BLANK && i < CAPACITY){
+  while (currentChar != MARK && currentChar != BLANK && i < CAPACITY && currentChar != '\n'){
     currentWord.contents[i] = currentChar;
     adv();
     i++;

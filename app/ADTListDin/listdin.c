@@ -120,46 +120,7 @@ void displayList(ListDin l){
   }
   printf("]");
 }
-/* ********** OPERATOR ARITMATIKA ********** */
-/* *** Aritmatika list : Penjumlahan, pengurangan, perkalian, ... *** */
-ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus){
-/* Prekondisi : l1 dan l2 memiliki Neff sama dan tidak kosong */
-/* Jika plus = true, mengirimkan  l1+l2, yaitu setiap elemen l1 dan l2 pada indeks yang sama dijumlahkan */
-/* Jika plus = false, mengirimkan l1-l2, yaitu setiap elemen l1 dikurangi elemen l2 pada indeks yang sama */
-  /*KAMUS*/
-  ListDin l3;
-  int i,n;
-  /*ALGORITMA*/
-  n = NEFF(l1);
-  CreateListDin(&l3,n);
-  if (plus == true){
-    for(i=0; i < n; i++){
-      ELMT(l3,i) = ELMT(l1,i) + ELMT(l2,i);
-    }
-  }
-  else{
-    for(i=0; i < n; i++){
-      ELMT(l3,i) = ELMT(l1,i) - ELMT(l2,i);
-    }
-  }
-  NEFF(l3) = n;
-  return(l3);
-}
-/* ********** OPERATOR RELASIONAL ********** */
-/* *** Operasi pembandingan list : < =, > *** */
-boolean isListEqual(ListDin l1, ListDin l2){
-/* Mengirimkan true jika l1 sama dengan l2 yaitu jika nEff l1 = l2 dan semua elemennya sama */
-  /*KAMUS*/
-  boolean same = true;
-  int i = 0;
-  /*ALGORITMA*/
-  if (NEFF(l1) != NEFF(l2)) same = false;
-  while(same == true && i < NEFF(l1)){
-    if(ELMT(l1,i) != ELMT(l2,i)) same = false;
-    i++;
-  }
-  return(same);
-}
+
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
 IdxType indexOf(ListDin l, ElType val){
@@ -182,21 +143,7 @@ IdxType indexOf(ListDin l, ElType val){
   }
   return (idx);
 }
-/* ********** NILAI EKSTREM ********** */
-void extremes(ListDin l, ElType *max, ElType *min){
-/* I.S. List l tidak kosong */
-/* F.S. max berisi nilai maksimum l;
-        min berisi nilai minimum l */
-  /*KAMUS*/
-  int i;
-  /*ALGORITMA*/
-  *max = ELMT(l,0);
-  *min = ELMT(l,0);
-  for(i = 1; i < NEFF(l); i++){
-    if(ELMT(l,i) > *max) *max = ELMT(l,i);
-    if(ELMT(l,i) < *min) *min = ELMT(l,i);
-  }
-}
+
 /* ********** OPERASI LAIN ********** */
 void copyList(ListDin lIn, ListDin *lOut){
 /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
@@ -211,69 +158,7 @@ void copyList(ListDin lIn, ListDin *lOut){
   }
   NEFF(*lOut) = NEFF(lIn);
 }
-ElType sumList(ListDin l){
-/* Menghasilkan hasil penjumlahan semua elemen l */
-/* Jika l kosong menghasilkan 0 */
-  /*KAMUS*/
-  int sum = 0;
-  int i;
-  /*ALGORITMA*/
-  for(i = 0; i < NEFF(l); i++){
-    sum += ELMT(l,i);
-  }
-  return(sum);
-}
-int countVal(ListDin l, ElType val){
-/* Menghasilkan berapa banyak kemunculan val di l */
-/* Jika l kosong menghasilkan 0 */
-  /*KAMUS*/
-  int cnt = 0;
-  int i;
-  /*ALGORITMA*/
-  for (i = 0 ; i < NEFF(l) ; i++){
-    if(ELMT(l,i) == val) cnt++;
-  }
-  return(cnt);
-}
-boolean isAllEven(ListDin l){
-/* Menghailkan true jika semua elemen l genap. l boleh kosong */
-  /*KAMUS*/
-  int i = 0;
-  boolean even = true;
-  /*ALGORITMA*/
-  while(i < NEFF(l) && even == true){
-    if(ELMT(l,i) % 2 != 0) even = false;
-    i++;
-  }
-  return(even);
-}
-/* ********** SORTING ********** */
-void sort(ListDin *l, boolean asc){
-/* I.S. l boleh kosong */
-/* F.S. Jika asc = true, l terurut membesar */
-/*      Jika asc = false, l terurut mengecil */
-/* Proses : Mengurutkan l dengan salah satu algoritma sorting,
-   algoritma bebas */
-   /*KAMUS*/
-   int i,j, idx_ext,temp;
-   /*ALGORITMA*/
-   for (i = 0 ; i < NEFF(*l)-1 ; i++) {
-     idx_ext = i;
-     if (asc == true){
-       for(j = i+1; j < NEFF(*l) ; j++){
-         if(ELMT(*l,j) < ELMT(*l,idx_ext)) idx_ext = j;
-       }
-     }
-     else{
-       for(j = i+1; j < NEFF(*l) ; j++){
-         if(ELMT(*l,j) > ELMT(*l,idx_ext)) idx_ext = j;
-       }
-     }
-     temp = ELMT(*l,i);
-     ELMT(*l,i) = ELMT(*l,idx_ext);
-     ELMT(*l,idx_ext) = temp;
-   }
-}
+
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
 void insertLast(ListDin *l, ElType val){

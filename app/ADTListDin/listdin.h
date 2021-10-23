@@ -7,14 +7,15 @@
 #ifndef LISTDIN_H
 #define LISTDIN_H
 
-#include "boolean.h"
+#include "../boolean.h"
+#include "../ADTPoint/Point.h"
 
 /*  Kamus Umum */
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef int ElType; /* type elemen list */
+typedef POINT ElType; /* type elemen list */
 typedef int IdxType;
 typedef struct
 {
