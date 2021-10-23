@@ -71,11 +71,12 @@ int main () {
     QEl.dropoff = currentWord.contents[0];
     advWord();
     QEl.itype = currentWord.contents[0];
-    if (itype == 'P'){
+    if (QEl.itype == 'P'){
       advWord();
       QEl.exp = getAngka(currentWord);
     }
     else QEl.exp = -1;
     penqueue(&orders, QEl);
   }
+  displayPQueue(orders);
 }
