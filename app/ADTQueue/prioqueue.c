@@ -21,8 +21,8 @@ boolean isEmpty(PrioQueue pq)
 boolean isFull(PrioQueue pq)
 {
   /* Mengirim true jika tabel penampung elemen pq sudah penuh */
-  /* yaitu jika index head bernilai 0 dan index tail bernilai CAPACITY-1 */
-  return (IDX_HEAD(pq) == 0 && IDX_TAIL(pq) == CAPACITY - 1);
+  /* yaitu jika index head bernilai 0 dan index tail bernilai QCAP-1 */
+  return (IDX_HEAD(pq) == 0 && IDX_TAIL(pq) == QCAP - 1);
 }
 int length(PrioQueue pq)
 {
@@ -33,7 +33,7 @@ int length(PrioQueue pq)
     return (IDX_TAIL(pq) - IDX_HEAD(pq) + 1);
 }
 /*** Primitif Add/Delete ***/
-void enqueue(PrioQueue *q, ElType val)
+void enqueue(PrioQueue *q, QElType val)
 {
   /* Proses: Menambahkan val pada q dengan aturan FIFO */
   /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
@@ -47,13 +47,13 @@ void enqueue(PrioQueue *q, ElType val)
     IDX_TAIL(*q) = 0;
     TAIL(*q) = val;
   }
-  else if (IDX_TAIL(*q) == CAPACITY - 1)
+  else if (IDX_TAIL(*q) == QCAP - 1)
   {
     for (idx = 0; idx < length(*q); idx++)
     {
       (*q).buffer[idx] = (*q).buffer[IDX_HEAD(*q) + idx];
     }
-    IDX_TAIL(*q) = CAPACITY - 1 - IDX_HEAD(*q);
+    IDX_TAIL(*q) = QCAP - 1 - IDX_HEAD(*q);
     IDX_HEAD(*q) = 0;
     IDX_TAIL(*q)
     ++;
@@ -67,7 +67,7 @@ void enqueue(PrioQueue *q, ElType val)
   }
 }
 
-void penqueue(PrioQueue *pq, ElType val)
+void penqueue(PrioQueue *pq, QElType val)
 {
   /* Proses: menambah val secara terurut membesar berdasarkan time*/
   /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
@@ -75,7 +75,7 @@ void penqueue(PrioQueue *pq, ElType val)
       Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
       menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
   PrioQueue temppq;
-  ElType tempEl;
+  QElType tempEl;
   if (isEmpty(*pq))
   {
     enqueue(pq, val);
@@ -109,7 +109,7 @@ void penqueue(PrioQueue *pq, ElType val)
   }
 };
 
-void dequeue(PrioQueue *pq, ElType *val)
+void dequeue(PrioQueue *pq, QElType *val)
 {
   /* Proses: Menghapus val pada q dengan aturan FIFO */
   /* I.S. pq tidak mungkin kosong */
@@ -136,6 +136,6 @@ void displayPQueue(PrioQueue pq)
   l = length(pq);
   for (i = 0; i < l; i++)
   {
-    printf("%d %c %c %c %d\n", pq.buffer[i].time, pq.buffer[i].pickup, pq.buffer[i].dropoff, pq.buffer[i].type, pq.buffer[i].exp);
+    printf("%d %c %c %c %d\n", pq.buffer[i].time, pq.buffer[i].pickup, pq.buffer[i].dropoff, pq.buffer[i].itype, pq.buffer[i].exp);
   }
 };

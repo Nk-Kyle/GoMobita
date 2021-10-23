@@ -10,10 +10,9 @@
 #define COL_CAP 100
 
 typedef int Index; /* Index baris, kolom */
-typedef int ElType;
 typedef struct
 {
-   ElType contents[ROW_CAP][COL_CAP];
+   int contents[ROW_CAP][COL_CAP];
    int rowEff; /* banyaknya/ukuran baris yg terdefinisi */
    int colEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } Matrix;
@@ -31,10 +30,10 @@ void CreateMatrix(int nRow, int nCol, Matrix *m);
 /* *** Selektor *** */
 #define ROWS(M) (M).rowEff
 #define COLS(M) (M).colEff
-#define ELMT(M, i, j) (M).contents[(i)][(j)]
+#define MELM(M, i, j) (M).contents[(i)][(j)]
 
 /* *** Selektor "DUNIA Matrix" *** */
-boolean isIdxValid(int i, int j);
+boolean isMIdxValid(int i, int j);
 /* Mengirimkan true jika i, j adalah Index yang valid untuk matriks apa pun */
 
 /* *** Selektor: Untuk sebuah matriks m yang terdefinisi: *** */
@@ -42,9 +41,9 @@ Index getLastIdxRow(Matrix m);
 /* Mengirimkan Index baris terbesar m */
 Index getLastIdxCol(Matrix m);
 /* Mengirimkan Index kolom terbesar m */
-boolean isIdxEff(Matrix m, Index i, Index j);
+boolean isMIdxEff(Matrix m, Index i, Index j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
-ElType getElmtDiagonal(Matrix m, Index i);
+int getElmtDiagonal(Matrix m, Index i);
 /* Mengirimkan elemen m(i,i) */
 
 /* ********** Assignment  Matrix ********** */
@@ -53,7 +52,7 @@ void copyMatrix(Matrix mIn, Matrix *mRes);
 
 /* ********** KELOMPOK BACA/TULIS ********** */
 void readMatrix(Matrix *m, int nRow, int nCol);
-/* I.S. isIdxValid(nRow,nCol) */
+/* I.S. isMIdxValid(nRow,nCol) */
 /* F.S. m terdefinisi nilai elemen efektifnya, berukuran nRow x nCol */
 /* Proses: Melakukan CreateMatrix(m,nRow,nCol) dan mengisi nilai efektifnya */
 /* Selanjutnya membaca nilai elemen per baris dan kolom */
@@ -83,9 +82,9 @@ Matrix subtractMatrix(Matrix m1, Matrix m2);
 Matrix multiplyMatrix(Matrix m1, Matrix m2);
 /* Prekondisi : Ukuran kolom efektif m1 = ukuran baris efektif m2 */
 /* Mengirim hasil perkalian matriks: salinan m1 * m2 */
-Matrix multiplyConst(Matrix m, ElType x);
+Matrix multiplyConst(Matrix m, int x);
 /* Mengirim hasil perkalian setiap elemen m dengan x */
-void pMultiplyConst(Matrix *m, ElType k);
+void pMultiplyConst(Matrix *m, int k);
 /* I.S. m terdefinisi, k terdefinisi */
 /* F.S. Mengalikan setiap elemen m dengan k */
 
@@ -132,17 +131,17 @@ float rowMean (Matrix m, Index i);
 float colMean (Matrix m, Index j);
 /* Menghasilkan rata-rata dari elemen pada kolom ke-j */
 /* Prekondisi: j adalah indeks kolom efektif dari M */
-void rowExtremes (Matrix m, Index i, ElType * max, ElType * min);
+void rowExtremes (Matrix m, Index i, int * max, int * min);
 /* I.S. i adalah indeks baris efektif dari M, M terdefinisi */
 /* F.S. max berisi elemen maksimum pada baris i dari M
            min berisi elemen minimum pada baris i dari M */
-void colExtremes (Matrix m, Index j, ElType * max, ElType * min);
+void colExtremes (Matrix m, Index j, int * max, int * min);
 /* I.S. j adalah indeks kolom efektif dari M, M terdefinisi */
 /* F.S. max berisi elemen maksimum pada kolom j dari M
            min berisi elemen minimum pada kolom j dari M */
-int countValOnRow (Matrix m, Index i, ElType val);
+int countValOnRow (Matrix m, Index i, int val);
 /* Menghasilkan banyaknya kemunculan X pada baris i dari M */
-int countValOnCol (Matrix m, Index j, ElType val);
+int countValOnCol (Matrix m, Index j, int val);
 /* Menghasilkan banyaknya kemunculan X pada kolom j dari M */
 
 

@@ -6,11 +6,11 @@
 
 #include "charmachine.h"
 
-#define CAPACITY 50
+#define WORD_CAP 50
 #define BLANK ' '
 
 typedef struct {
-   char contents[CAPACITY]; /* container penyimpan kata, indeks yang dipakai [0..CAPACITY-1] */
+   char contents[WORD_CAP]; /* container penyimpan kata, indeks yang dipakai [0..CAPACITY-1] */
    int length;
 } Word;
 

@@ -10,9 +10,9 @@
 
 /* Konstanta */
 #define IDX_UNDEF -1
-#define CAPACITY 100
+#define QCAP 100
 
-/* Deklarasi ElType */
+/* Deklarasi QElType */
 typedef struct
 {
 	int time;	  /* waktu pesanan masuk */
@@ -20,13 +20,13 @@ typedef struct
 						  -1 untuk pesanan yang tidak akan hangus */
 	char pickup;  /* tempat pengambilan barang */
 	char dropoff; /* tujuan pengiriman barang */
-	char type;	  /* tipe barang */
-} ElType;
+	char itype;	  /* tipe barang */
+} QElType;
 
 /* Definisi PrioQueue */
 typedef struct
 {
-	ElType buffer[CAPACITY];
+	QElType buffer[QCAP];
 	int idxHead;
 	int idxTail;
 } PrioQueue;
@@ -51,27 +51,27 @@ boolean isEmpty(PrioQueue pq);
 
 boolean isFull(PrioQueue pq);
 /* Mengirim true jika tabel penampung elemen pq sudah penuh */
-/* yaitu jika index head bernilai 0 dan index tail bernilai CAPACITY-1 */
+/* yaitu jika index head bernilai 0 dan index tail bernilai QCAP-1 */
 
 int length(PrioQueue pq);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika pq kosong. */
 
 /*** Primitif Add/Delete ***/
-void enqueue(PrioQueue *pq, ElType val);
+void enqueue(PrioQueue *pq, QElType val);
 /* Proses: Menambahkan val pada pq dengan aturan FIFO */
 /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur".
 		Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
 		menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
-void penqueue(PrioQueue *pq, ElType val);
+void penqueue(PrioQueue *pq, QElType val);
 /* Proses: menambah val secara terurut membesar berdasarkan time*/
 /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
 /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur".
 		Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
 		menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
-void dequeue(PrioQueue *pq, ElType *val);
+void dequeue(PrioQueue *pq, QElType *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. pq tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd

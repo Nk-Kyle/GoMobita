@@ -1,11 +1,4 @@
 
-/*
-NIM : 13520040
-Nama : Ng Kyle
-Tanggal : 14 September 2021
-Topik praktikum : ADT List Dinamis
-Deskripsi : List Dinamis Eksplisit
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "listdin.h"
@@ -19,7 +12,7 @@ void CreateListDin(ListDin *l, int capacity){
   /*ALGORITMA*/
   NEFF(*l) = 0;
   CAPACITY(*l) = capacity;
-  BUFFER(*l) = (ElType *) malloc(sizeof(ElType) * capacity);
+  BUFFER(*l) = (Loc *) malloc(sizeof(Loc) * capacity);
 }
 void dealocate(ListDin *l){
 /* I.S. l terdefinisi; */
@@ -32,7 +25,7 @@ void dealocate(ListDin *l){
 }
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int length(ListDin l){
+int lengthList(ListDin l){
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list l kosong */
   /*KAMUS*/
@@ -50,14 +43,14 @@ IdxType getLastIdx(ListDin l){
   return (NEFF(l)-1);
 }
 /* ********** Test Indeks yang valid ********** */
-boolean isIdxValid(ListDin l, int i){
+boolean isListIdxValid(ListDin l, int i){
 /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas list l */
 /* yaitu antara indeks yang terdefinisi utk container*/
   /*KAMUS*/
   /*ALGORITMA*/
   return(i >= 0 && i < CAPACITY(l));
 }
-boolean isIdxEff(ListDin l, IdxType i){
+boolean isListIdxEff(ListDin l, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk list */
 /* yaitu antara 0..NEFF(l) */
   /*KAMUS*/
@@ -66,14 +59,14 @@ boolean isIdxEff(ListDin l, IdxType i){
 }
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean isEmpty(ListDin l){
+boolean isListEmpty(ListDin l){
 /* Mengirimkan true jika list l kosong, mengirimkan false jika tidak */
   /*KAMUS*/
   /*ALGORITMA*/
   return(NEFF(l) == 0);
 }
 /* *** Test list penuh *** */
-boolean isFull(ListDin l){
+boolean isListFull(ListDin l){
 /* Mengirimkan true jika list l penuh, mengirimkan false jika tidak */
   /*KAMUS*/
   /*ALGORITMA*/
@@ -92,13 +85,17 @@ void readList(ListDin *l){
       0 satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk l kosong */
   /*KAMUS*/
-  int n, i;
+  int i,n,x,y;
+  char name;
   /*ALGORITMA*/
   do{
     scanf("%d", &n);
   } while(!(0<=n && n <= CAPACITY(*l)));
   for(i=0; i < n ; i++){
-    scanf("%d", &ELMT(*l,i));
+    scanf(" %c", &name);
+    scanf("%d", &x);
+    scanf("%d", &y);
+    ELMT(*l, i) = MakeLoc(name,x,y);
   }
   NEFF(*l) = n;
 }
@@ -113,19 +110,17 @@ void displayList(ListDin l){
   /*KAMUS*/
   int i;
   /*ALGORITMA*/
-  printf("[");
   for(i = 0; i < NEFF(l); i++){
-    if(i == NEFF(l)-1) printf("%d",ELMT(l,i));
-    else printf("%d,", ELMT(l,i));
+    DispLoc(ELMT(l,i));
+    printf("\n");
   }
-  printf("]");
 }
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType indexOf(ListDin l, ElType val){
-/* Search apakah ada elemen List l yang bernilai val */
-/* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
+IdxType indexOf(ListDin l, char locname){
+/* Search apakah ada elemen List l dengan nama loc yang bernilai locname */
+/* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = locname */
 /* Jika tidak ada, mengirimkan IDX_UNDEF */
 /* Menghasilkan indeks tak terdefinisi (IDX_UNDEF) jika List l kosong */
 /* Skema Searching yang digunakan bebas */
@@ -135,13 +130,13 @@ IdxType indexOf(ListDin l, ElType val){
   boolean found = false;
   /*ALGORITMA*/
   while(found == false && i < NEFF(l)){
-    if(ELMT(l,i) == val) {
+    if(Name(ELMT(l,i)) == locname) {
       found = true;
       idx = i;
     }
-    i++;
+    else i++;
   }
-  return (idx);
+  return idx;
 }
 
 /* ********** OPERASI LAIN ********** */
@@ -161,17 +156,17 @@ void copyList(ListDin lIn, ListDin *lOut){
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListDin *l, ElType val){
+void insertLast(ListDin *l, Loc t){
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
   /*KAMUS*/
   /*ALGORITMA*/
-  ELMT(*l,NEFF(*l)) = val;
+  ELMT(*l,NEFF(*l)) = t;
   NEFF(*l)++;
 }
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListDin *l, ElType *val){
+void deleteLast(ListDin *l, Loc *t){
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
@@ -179,7 +174,7 @@ void deleteLast(ListDin *l, ElType *val){
 /*      List l mungkin menjadi kosong */
   /*KAMUS*/
   /*ALGORITMA*/
-  *val = ELMT(*l,NEFF(*l)-1);
+  *t = ELMT(*l,NEFF(*l)-1);
   NEFF(*l)--;
 }
 /* ********* MENGUBAH UKURAN ARRAY ********* */

@@ -65,7 +65,7 @@ void copyWord(){
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
   int i = 0;
-  while (currentChar != MARK && currentChar != BLANK && i < CAPACITY && currentChar != '\n'){
+  while (currentChar != MARK && currentChar != BLANK && i < WORD_CAP && currentChar != '\n'){
     currentWord.contents[i] = currentChar;
     adv();
     i++;
