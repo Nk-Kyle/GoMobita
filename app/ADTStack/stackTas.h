@@ -9,41 +9,41 @@
 #include "../ADTItem/item.h"
 
 #define IDX_UNDEF -1
-#define CAPACITY 100
+#define TAS_CAPACITY 100
 
 typedef struct {
-  Item buffer[CAPACITY]; /* tabel penyimpan elemen */
-  int idxTop;            /* alamat TOP: elemen puncak */
-  int currentCap;        /* menyimpan kapasitas sementara tas*/ 
-} Stack;
+  QElType buffer[TAS_CAPACITY]; /* tabel penyimpan elemen */
+  int idxTop;                   /* alamat TOP: elemen puncak */
+  int currentTasCap;            /* menyimpan kapasitas sementara tas*/ 
+} StackTas;
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika s adalah Stack, maka akses elemen : */
-#define     IDX_TOP(s) (s).idxTop
-#define         TOP(s) (s).buffer[(s).idxTop]
-#define CURRENT_CAP(s) (s).currentCap
+#define         IDX_TOP(s) (s).idxTop
+#define             TOP(s) (s).buffer[(s).idxTop]
+#define CURRENT_TAS_CAP(s) (s).currentTasCap
 
 /* *** Konstruktor/Kreator *** */
-void CreateStack(Stack *s);
+void CreateTas(StackTas *s);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S kosong dengan kondisi sbb: */
 /* - Index top bernilai IDX_UNDEF */
 /* Proses : Melakukan alokasi, membuat sebuah s kosong */
 
 /* ************ Prototype ************ */
-boolean isEmpty(Stack s);
+boolean isTasEmpty(StackTas s);
 /* Mengirim true jika s kosong: lihat definisi di atas */
-boolean isFull(Stack s);
+boolean isTasFull(StackTas s);
 /* Mengirim true jika tabel penampung nilai s stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void push(Stack *s, Item item);
+void pushTas(StackTas *s, QElType item);
 /* Menambahkan val sebagai elemen Stack s */
 /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. val menjadi TOP yang baru,IDX_TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void pop(Stack *s, Item *item);
+void popTas(StackTas *s, QElType *item);
 /* Menghapus val dari Stack s */
 /* I.S. s tidak mungkin kosong */
 /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */
