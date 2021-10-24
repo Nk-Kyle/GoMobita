@@ -140,7 +140,7 @@ void insertGadget(ListGadget *l, ElType val)
     }
 }
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteGadget(ListGadget *l, ElType *val)
+void deleteGadget(ListGadget *l, int idxDelete, ElType *val)
 /* Proses : Menghapus elemen List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen l sebelum penghapusan, */
@@ -148,7 +148,6 @@ void deleteGadget(ListGadget *l, ElType *val)
 /*      List l mungkin menjadi kosong */
 {
     int i = 0;
-    int idxDelete = indexOf(*l, *val);
 
     *val = ELMT(*l, idxDelete);
     ELMT(*l, idxDelete) = VAL_UNDEF;

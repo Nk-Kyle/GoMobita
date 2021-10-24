@@ -74,7 +74,7 @@ void insertGadget(ListGadget *l, ElType val);
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteGadget(ListGadget *l, ElType *val);
+void deleteGadget(ListGadget *l, int idxDelete, ElType *val);
 /* Proses : Menghapus elemen terakhir List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
