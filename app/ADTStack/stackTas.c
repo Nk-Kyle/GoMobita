@@ -18,7 +18,7 @@ boolean isEmpty(Stack s){
 }
 boolean isFull(Stack s){
 /* Mengirim true jika tabel penampung nilai s stack penuh */
-  return(IDX_TOP(s) == CURRENT_CAP(s));
+  return(IDX_TOP(s) == CURRENT_CAP(s) - 1);
 }
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 void push(Stack *s, Item item){
