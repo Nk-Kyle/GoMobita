@@ -4,6 +4,8 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include "../boolean.h"
+
 #define IDX_UNDEF -1
 
 typedef struct
@@ -23,5 +25,13 @@ typedef struct
 #define  Pickup(I) (I).pickup
 #define Dropoff(I) (I).dropoff
 #define    Type(I) (I).itype
+
+/* ************ Prototype ************ */
+boolean isNormal(QElType I);
+/* Mengirim true jika item bertipe normal */
+boolean isHeavy(QElType I);
+/* Mengirim true jika item bertipe heavy */
+boolean isPerishable(QElType I);
+/* Mengirim true jika item bertipe perishable */
 
 #endif
