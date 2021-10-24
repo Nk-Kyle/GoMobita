@@ -4,25 +4,24 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "../boolean.h"
-#include "../ADTLokasi/lokasi.h"
-
 #define IDX_UNDEF -1
 
-typedef struct {
-    int tMasuk;
-    Loc locPick;
-    Loc locDrop;
-    char type;
-    int tHangus;    /* item non-perishable akan memiliki tHangus == -1 */
-} Item;
+typedef struct
+{
+	int time;	  /* waktu pesanan masuk */
+	int exp;	  /* waktu pesanan hangus
+						  -1 untuk pesanan yang tidak akan hangus */
+	char pickup;  /* tempat pengambilan barang */
+	char dropoff; /* tujuan pengiriman barang */
+	char itype;	  /* tipe barang */
+} QElType;
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika I adalah Item, maka akses elemen : */
-#define  TMasuk(I) (I).tMasuk
-#define LocPick(I) (I).locPick
-#define LocDrop(I) (I).locDrop
-#define    Type(I) (I).type
-#define THangus(I) (I).tHangus
+/* Jika I adalah QElType, maka akses elemen : */
+#define    Time(I) (I).time
+#define     Exp(I) (I).exp
+#define  Pickup(I) (I).pickup
+#define Dropoff(I) (I).dropoff
+#define    Type(I) (I).itype
 
 #endif
