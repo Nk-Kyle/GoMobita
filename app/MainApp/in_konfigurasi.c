@@ -6,8 +6,8 @@
 #include "../ADTLokasi/lokasi.c"
 #include "../ADTMatrix/matrix.c"
 #include "../ADTQueue/prioqueue.c"
-void konfig (Matrix *Adj_mat, ListDin *Daftar_lokasi, PrioQueue *orders);
-void konfig (Matrix *Adj_mat, ListDin *Daftar_lokasi, PrioQueue *orders) {
+void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders);
+void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders) {
   int size_n, size_m;
   int x,y;
   int i,j;
