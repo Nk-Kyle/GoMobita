@@ -106,23 +106,48 @@ void print_word(){
   printf("\n");
 }
 
-void get_word(char *str){
+Word getWord(){
   int i;
-  for (i = 0; i < currentWord.length; i++){
-    str[i] = currentWord.contents[i];
+  Word outW;
+  outW.length = currentWord.length;
+  for(i = 0; i < outW.length; i++){
+    outW.contents[i] = currentWord.contents[i];
   }
+  outW.contents[i] ='\0';
+  return outW;
 }
 
-boolean isWordSame(char *str1, char *str2){
+Word makeWord(char str []){
+  Word outW;
+  int i = 0;
+  outW.length = 0;
+  while (str[i] != '\0') {
+    outW.length++;
+    outW.contents[i] = str[i];
+    i++;
+  }
+  outW.contents[i+1] = '\0';
+  return outW;
+}
+
+boolean isWordSame(Word str1, Word str2){
   boolean isSame = false;
   int i = 0;
-  if (strlen(str1) == strlen(str2)){
+  if (str1.length == str2.length){
     isSame = true;
-    while(isSame && i < strlen(str1)){
-      printf("%c %c\n", str1[i], str2[i]);
-      if (str1[i] != str2[i]) isSame = false;
+    while(isSame && i < str1.length){
+      if (str1.contents[i] != str2.contents[i]) isSame = false;
       else i++;
     }
   }
   return isSame;
+}
+
+int getAngka(){
+  int angka = 0;
+  int i;
+  for (i = 0; i < currentWord.length; i++){
+    angka = angka*10 + (currentWord.contents[i]- '0');
+  }
+  return angka;
 }

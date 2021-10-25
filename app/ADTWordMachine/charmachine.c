@@ -5,11 +5,9 @@
 #include <stdio.h>
 
 char currentChar;
-boolean eot;
-boolean feot;
 
 static FILE * tape;
-static FILE * ftape;
+static FILE * ftape; //Pita karakter untuk file
 static int retval;
 
 void start() {
