@@ -6,7 +6,6 @@
 
 #include "../boolean.h"
 
-#define MARK '.'
 /* Char Engine State */
 extern char currentChar;
 extern boolean eot;
@@ -26,5 +25,6 @@ void adv();
    F.S. : currentChar adalah karakter berikutnya dari currentChar yang lama,
           currentChar mungkin = MARK
           Jika  currentChar = MARK maka EOP akan menyala (true) */
+void fadv();
 
 #endif

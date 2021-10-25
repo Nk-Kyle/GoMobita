@@ -6,8 +6,10 @@
 
 char currentChar;
 boolean eot;
+boolean feot;
 
 static FILE * tape;
+static FILE * ftape;
 static int retval;
 
 void start() {
@@ -32,8 +34,8 @@ void fstart(char namafile[]) {
           Jika currentChar = MARK maka EOP akan menyala (true) */
 
 	/* Algoritma */
-	tape = fopen(namafile, "r");
-	adv();
+	ftape = fopen(namafile, "r");
+	fadv();
 }
 
 void adv() {
@@ -45,8 +47,15 @@ void adv() {
 
 	/* Algoritma */
 	retval = fscanf(tape,"%c",&currentChar);
-	eot = (currentChar == MARK);
-	if (eot) {
-       fclose(tape);
- 	}
+}
+
+void fadv() {
+/* Pita dimajukan satu karakter.
+   I.S. : Karakter pada jendela = currentChar, currentChar != MARK
+   F.S. : currentChar adalah karakter berikutnya dari currentChar yang lama,
+          currentChar mungkin = MARK
+		      Jika  currentChar = MARK maka EOP akan menyala (true) */
+
+	/* Algoritma */
+	retval = fscanf(ftape,"%c",&currentChar);
 }

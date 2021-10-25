@@ -14,7 +14,7 @@
 typedef struct {
   QElType buffer[TAS_CAPACITY]; /* tabel penyimpan elemen */
   int idxTop;                   /* alamat TOP: elemen puncak */
-  int currentTasCap;            /* menyimpan kapasitas sementara tas*/ 
+  int currentTasCap;            /* menyimpan kapasitas sementara tas*/
 } StackTas;
 
 /* ********* AKSES (Selektor) ********* */
