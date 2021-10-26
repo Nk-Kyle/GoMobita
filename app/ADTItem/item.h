@@ -16,22 +16,22 @@ typedef struct
 	char pickup;  /* tempat pengambilan barang */
 	char dropoff; /* tujuan pengiriman barang */
 	char itype;	  /* tipe barang */
-} QElType;
+} Pesanan;
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika I adalah QElType, maka akses elemen : */
+/* Jika I adalah Pesanan, maka akses elemen : */
 #define    Time(I) (I).time
 #define     Exp(I) (I).exp
 #define  Pickup(I) (I).pickup
 #define Dropoff(I) (I).dropoff
-#define    Type(I) (I).itype
+#define    IType(I) (I).itype
 
 /* ************ Prototype ************ */
-boolean isNormal(QElType I);
+boolean isNormal(Pesanan I);
 /* Mengirim true jika item bertipe normal */
-boolean isHeavy(QElType I);
+boolean isHeavy(Pesanan I);
 /* Mengirim true jika item bertipe heavy */
-boolean isPerishable(QElType I);
+boolean isPerishable(Pesanan I);
 /* Mengirim true jika item bertipe perishable */
 
 #endif

@@ -17,13 +17,14 @@ int main()
     int uang;                   // uang yang dimiliki mobita
     int waktu;                  // waktu secara keseluruhan
     float satuan_waktu;         // satuan waktu yang akan bertambah setiap mobita bergarak
-    QElType daftar_pesanan;     // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
-    QElType to_do_list;         // pesanan yang dapat dikerjakan mobita
-    QElType in_progress_list;   // pesanan yang sedang dolakukan mobita
+    PrioQueue daftar_pesanan;     // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
+    //Pesanan to_do_list;         // pesanan yang dapat dikerjakan mobita
+    //Pesanan in_progress_list;   // pesanan yang sedang dolakukan mobita
     StackTas tas;               // Tas mobita berisi item yang dipickup
     ListGadget invetory_gadget; // Daftar gadget yang dimiliki mobita
     Matrix adj_matrix;          // peta
     ListDin daftar_lokasi;      // lokasi-lokasi yang ada
+    Pesanan pesanan;
 
     // input command user
     Word cexit;        // keluar (untuk sementara)
@@ -57,8 +58,10 @@ int main()
         break;
     case 1:
         // inisialisasi ADT
-        CreatePrioQueue(&to_do_list);
-        CreatePrioQueue(&in_progress_list);
+        // Linked List
+        //CreatePrioQueue(&to_do_list);
+        //CreatePrioQueue(&in_progress_list);
+        CreatePrioQueue(&daftar_pesanan);
         // inisialisasi Command
         cexit = makeWord("EXIT");              // keluar (untuk sementara)
         cmove = makeWord("MOVE");              // mobita bergerak
@@ -68,7 +71,7 @@ int main()
         cto_do = makeWord("TODO");             // menampilkan pesanan yang ada di to_do_list
         cin_progress = makeWord("INPROGRESS"); // menampilkan pensanan yang ada di in_progress_list
         cbuy = makeWord("BUY");                // mobita membeli gadget
-        cinvetory = makeWord('INVENTORY');     // menampilkan gadget yang mobita punya
+        cinvetory = makeWord("INVENTORY");     // menampilkan gadget yang mobita punya
         chelp = makeWord("HELP");
 
         printf("Masukkan File Konfigurasi: ");
@@ -95,6 +98,9 @@ int main()
             advWord();
             if (isWordSame(currentWord, cmove))
             {
+                /* Masukin MOVE - Ilham
+                  prosedur updateToDo (*PrioQueue daftar_pesanan, int waktu, *LinkedList Todo) - Akmal
+                */
                 // variabel yang terlibat: mobita, adj_matrix
                 waktu += satuan_waktu;
             }
@@ -110,6 +116,7 @@ int main()
             }
             else if (isWordSame(currentWord, cmap))
             {
+                /* Tampilin map - Ilham*/
                 // variabel yang terlibat: daftar_lokasi, mobita, to_do_list(mana aja yg bisa di pickup), tas(tujuan drop off paling atas),adj_matrix(lokasi yg bisa dicapai);
             }
             else if (isWordSame(currentWord, cto_do))
@@ -123,10 +130,13 @@ int main()
             }
             else if (isWordSame(currentWord, cbuy))
             {
+                // - Fay
                 // fungsi beli item (display ada apa aja, pas belu duit cukup/kaga, inventory_gadget mobita nambah kalo berhasil beli)
             }
             else if (isWordSame(currentWord, cinvetory))
             {
+                // TO Do List waktu itemnya ga usah diupdate
+                // InProgress List update waktunya
                 // fungsi display inventory
                 // fungsi pas gadget dipake
                 // variabel yang terlibat buat tiap gadget:

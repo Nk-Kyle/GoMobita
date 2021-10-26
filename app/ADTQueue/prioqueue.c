@@ -33,7 +33,7 @@ int length(PrioQueue pq)
     return (IDX_TAIL(pq) - IDX_HEAD(pq) + 1);
 }
 /*** Primitif Add/Delete ***/
-void enqueue(PrioQueue *q, QElType val)
+void enqueue(PrioQueue *q, Pesanan val)
 {
   /* Proses: Menambahkan val pada q dengan aturan FIFO */
   /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
@@ -67,7 +67,7 @@ void enqueue(PrioQueue *q, QElType val)
   }
 }
 
-void penqueue(PrioQueue *pq, QElType val)
+void penqueue(PrioQueue *pq, Pesanan val)
 {
   /* Proses: menambah val secara terurut membesar berdasarkan time*/
   /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
@@ -75,7 +75,7 @@ void penqueue(PrioQueue *pq, QElType val)
       Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
       menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
   PrioQueue temppq;
-  QElType tempEl;
+  Pesanan tempEl;
   boolean done;
   if (isEmpty(*pq))
   {
@@ -117,7 +117,7 @@ void penqueue(PrioQueue *pq, QElType val)
   }
 };
 
-void dequeue(PrioQueue *pq, QElType *val)
+void dequeue(PrioQueue *pq, Pesanan *val)
 {
   /* Proses: Menghapus val pada q dengan aturan FIFO */
   /* I.S. pq tidak mungkin kosong */

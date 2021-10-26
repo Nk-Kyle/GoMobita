@@ -15,8 +15,8 @@ typedef struct {
 } Loc;
 
 /* SELEKTOR LOKASI */
-#define Name(L) (L).locname
-#define Coor(L) (L).coord
+#define Name(L) (L).locname // A, B, 8, ...
+#define Coor(L) (L).coord // POINT (x,y)
 
 /* Definisi Prototipe Primitif */
 /* Konstruktor */
