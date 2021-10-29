@@ -7,7 +7,7 @@
 #include "../ADTMatrix/matrix.c"
 #include "../ADTQueue/prioqueue.c"
 #include "../ADTStack/stackTas.c"
-#include "../ADTList/listGadget.h"
+#include "../ADTList/listGadget.c"
 #include "in_konfigurasi.c"
 
 int main()
@@ -177,7 +177,7 @@ int main()
                             printf("Uang tidak cukup untuk membeli gadget!\n");
                         }
                         opsi_beli = true;
-                    }  
+                    }
                     else if (opsi_beli == 3)
                     {
                         if (uang >= 1500)
@@ -192,7 +192,7 @@ int main()
                             printf("Uang tidak cukup untuk membeli gadget!\n");
                         }
                         opsi_beli = true;
-                    }    
+                    }
                     else if (opsi_beli == 4)
                     {
                         if (uang >= 3000)
@@ -212,7 +212,7 @@ int main()
                     {
                         printf("Kembali ke menu awal...\n");
                         opsi_beli = true;
-                    }                                        
+                    }
                 } while ((!opsi_valid));
             }
             else if (isWordSame(currentWord, cinvetory))

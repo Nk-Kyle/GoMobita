@@ -18,10 +18,10 @@ boolean isTasEmpty(StackTas s){
 }
 boolean isTasFull(StackTas s){
 /* Mengirim true jika tabel penampung nilai s stack penuh */
-  return(IDX_TOP(s) == CURRENT_CAP(s) - 1);
+  return(IDX_TOP(s) == CURRENT_TAS_CAP(s) - 1);
 }
 /* ************ Menambahkan sebuah elemen ke StackTas ************ */
-void pushTas(StackTas *s, QElType item){
+void pushTas(StackTas *s, Pesanan item){
 /* Menambahkan item sebagai elemen StackTas s */
 /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. item menjadi TOP yang baru, IDX_TOP bertambah 1 */
@@ -34,7 +34,7 @@ void pushTas(StackTas *s, QElType item){
   TOP(*s) = item;
 }
 /* ************ Menghapus sebuah elemen StackTas ************ */
-void popTas(StackTas *s, QElType *item){
+void popTas(StackTas *s, Pesanan *item){
 /* Menghapus item dari StackTas s */
 /* I.S. s tidak mungkin kosong */
 /* F.S. item adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */

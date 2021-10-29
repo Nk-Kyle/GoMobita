@@ -6,7 +6,7 @@ int main()
     int n, i;
     int time, exp;
     char pickup, dropoff, type;
-    QElType elemen;
+    Pesanan elemen;
     PrioQueue pq;
     printf("Masukkan Jumlah Data: ");
     scanf("%d", &n);

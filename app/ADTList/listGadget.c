@@ -10,7 +10,7 @@ void CreateListGadget(ListGadget *l)
 {
     for (int i = 0; i < LISTGADGET_CAPACITY; i++)
     {
-        ELMT(*l, i) = VAL_UNDEF;
+        LGELMT(*l, i) = VAL_UNDEF;
     }
 }
 
@@ -19,7 +19,7 @@ void CreateListGadget(ListGadget *l)
 boolean isIdxGadgetEff(ListGadget l, int i)
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
 {
-    return (ELMT(l, i) != VAL_UNDEF);
+    return (LGELMT(l, i) != VAL_UNDEF);
 }
 
 /* ********** TEST KOSONG/PENUH ********** */
@@ -68,19 +68,19 @@ void displayListGadget(ListGadget l)
     for (int i = 0; i < LISTGADGET_CAPACITY; i++)
     {
         printf("%d. ", (i + 1));
-        if (ELMT(l, i) == 1)
+        if (LGELMT(l, i) == 1)
         {
             printf("Kain Pembungkus Waktu\n");
         }
-        else if (ELMT(l, i) == 2)
+        else if (LGELMT(l, i) == 2)
         {
             printf("Senter Pembesar\n");
         }
-        else if (ELMT(l, i) == 3)
+        else if (LGELMT(l, i) == 3)
         {
             printf("Pintu Kemana Saja\n");
         }
-        else if (ELMT(l, i) == 4)
+        else if (LGELMT(l, i) == 4)
         {
             printf("Mesin Waktu\n");
         }
@@ -93,9 +93,9 @@ void displayListGadget(ListGadget l)
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOf(ListGadget l, ElType val)
+int indexOfGadg(ListGadget l, ElType val)
 /* Search apakah ada elemen List l yang bernilai val */
-/* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
+/* Jika ada, menghasilkan indeks i terkecil, dengan LGELMT(l,i) = val */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
 /* Skema Searching yang digunakan bebas */
 {
@@ -103,7 +103,7 @@ int indexOf(ListGadget l, ElType val)
 
     while (i < LISTGADGET_CAPACITY)
     {
-        if (ELMT(l, i) == val)
+        if (LGELMT(l, i) == val)
         {
             return i;
         }
@@ -136,7 +136,7 @@ void insertGadget(ListGadget *l, ElType val)
             i++;
         }
 
-        ELMT(*l, idxInsert) = val;
+        LGELMT(*l, idxInsert) = val;
     }
 }
 /* ********** MENGHAPUS ELEMEN ********** */
@@ -149,6 +149,6 @@ void deleteGadget(ListGadget *l, int idxDelete, ElType *val)
 {
     int i = 0;
 
-    *val = ELMT(*l, idxDelete);
-    ELMT(*l, idxDelete) = VAL_UNDEF;
+    *val = LGELMT(*l, idxDelete);
+    LGELMT(*l, idxDelete) = VAL_UNDEF;
 }

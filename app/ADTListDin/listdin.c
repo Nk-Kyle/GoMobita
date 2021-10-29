@@ -118,7 +118,7 @@ void displayList(ListDin l){
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : list boleh kosong!! *** */
-IdxType indexOf(ListDin l, char locname){
+IdxType indexOfLD(ListDin l, char locname){
 /* Search apakah ada elemen List l dengan nama loc yang bernilai locname */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = locname */
 /* Jika tidak ada, mengirimkan IDX_UNDEF */

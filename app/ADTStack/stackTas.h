@@ -12,7 +12,7 @@
 #define TAS_CAPACITY 100
 
 typedef struct {
-  QElType buffer[TAS_CAPACITY]; /* tabel penyimpan elemen */
+  Pesanan buffer[TAS_CAPACITY]; /* tabel penyimpan elemen */
   int idxTop;                   /* alamat TOP: elemen puncak */
   int currentTasCap;            /* menyimpan kapasitas sementara tas*/
 } StackTas;
@@ -37,13 +37,13 @@ boolean isTasFull(StackTas s);
 /* Mengirim true jika tabel penampung nilai s stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void pushTas(StackTas *s, QElType item);
+void pushTas(StackTas *s, Pesanan item);
 /* Menambahkan val sebagai elemen Stack s */
 /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. val menjadi TOP yang baru,IDX_TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void popTas(StackTas *s, QElType *item);
+void popTas(StackTas *s, Pesanan *item);
 /* Menghapus val dari Stack s */
 /* I.S. s tidak mungkin kosong */
 /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */
