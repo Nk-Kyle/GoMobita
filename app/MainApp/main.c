@@ -8,22 +8,25 @@
 #include "../ADTQueue/prioqueue.c"
 #include "../ADTStack/stackTas.c"
 #include "../ADTList/listGadget.c"
+#include "../ADTLinkedList/list_linked.c"
+#include"../ADTMap/map.c"
 #include "in_konfigurasi.c"
 
 int main()
 {
     // Kamus
-    Loc mobita;                 // lokasi mobita
-    int uang;                   // uang yang dimiliki mobita
-    int waktu;                  // waktu secara keseluruhan
-    float satuan_waktu;         // satuan waktu yang akan bertambah setiap mobita bergarak
-    PrioQueue daftar_pesanan;     // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
-    //Pesanan to_do_list;         // pesanan yang dapat dikerjakan mobita
-    //Pesanan in_progress_list;   // pesanan yang sedang dolakukan mobita
-    StackTas tas;               // Tas mobita berisi item yang dipickup
+    Loc mobita;                  // lokasi mobita
+    int uang;                    // uang yang dimiliki mobita
+    int waktu;                   // waktu secara keseluruhan
+    float satuan_waktu;          // satuan waktu yang akan bertambah setiap mobita bergarak
+    int speed_up;                // lama speed_up berefek
+    PrioQueue daftar_pesanan;    // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
+    LinkedList to_do_list;       // pesanan yang dapat dikerjakan mobita
+    LinkedList in_progress_list; // pesanan yang sedang dolakukan mobita
+    StackTas tas;                // Tas mobita berisi item yang dipickup
     ListGadget inventory_gadget; // Daftar gadget yang dimiliki mobita
-    Matrix adj_matrix;          // peta
-    ListDin daftar_lokasi;      // lokasi-lokasi yang ada
+    Matrix adj_matrix;           // peta
+    ListDin daftar_lokasi;       // lokasi-lokasi yang ada
     Pesanan pesanan;
 
     // input command user
@@ -40,6 +43,7 @@ int main()
 
     // input lainnya
     int main_menu = 0; // pilihan user di main menu
+    boolean berhasil;  // apakah konfig berhasil atau tidak
 
     // ============================================================Algoritma==============================================================
     printf("============GO MOBITA============\n");
@@ -47,7 +51,7 @@ int main()
     printf("1. New Game\n");
     printf("2. Exit\n");
     printf("3. Load Game\n");
-    while (main_menu != 1 || main_menu != 2 || main_menu != 3)
+    while (main_menu != 1 && main_menu != 2 && main_menu != 3)
     {
         printf("Masukkan Menu yang ingin dilakukan (1/2/3): ");
         scanf("%d", &main_menu);
@@ -59,8 +63,8 @@ int main()
     case 1:
         // inisialisasi ADT
         // Linked List
-        //CreatePrioQueue(&to_do_list);
-        //CreatePrioQueue(&in_progress_list);
+        CreateLinkedList(&to_do_list);
+        CreateLinkedList(&in_progress_list);
         CreatePrioQueue(&daftar_pesanan);
         // inisialisasi Command
         cexit = makeWord("EXIT");              // keluar (untuk sementara)
@@ -82,7 +86,7 @@ int main()
             printf("Masukkan File Konfigurasi: ");
             advWord();
         }
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan);
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil);
         // inisialisasi lainnya
         waktu = 0; // mulai dari 1/0 ya?
         satuan_waktu = 1;
@@ -98,21 +102,74 @@ int main()
             advWord();
             if (isWordSame(currentWord, cmove))
             {
-                /* Masukin MOVE - Ilham
-                  prosedur updateToDo (*PrioQueue daftar_pesanan, int waktu, *LinkedList Todo) - Akmal
-                */
-                // variabel yang terlibat: mobita, adj_matrix
+                move(adj_matrix,daftar_lokasi,mobita);
+                updateToDoList(&daftar_pesanan,&to_do_list,waktu);
+                if (speed_up!=0)
+                {
+                    waktu-=0.5;
+                    speed_up-=1;
+                }
                 waktu += satuan_waktu;
             }
             else if (isWordSame(currentWord, cpick_up))
             {
-                // variabel yang terlibat: mobita(lokasinya mobita), to_do_list & in_progress_list (update pesanan),satuan_waktu(kalo pickup heavy item)
+                /*
+                if(pickUpAble(to_do_list,mobita)){
+                    removePesanan(&to_do_list,mobita,&pesanan);
+                    insertLinkedListFirst(&in_progress_list, pesanan);
+                    pushTas(&tas,pesanan);
+                    switch (pesanan.itype)
+                    {
+                    case 'N':
+                        printf("Normal Item Berhasil di Pick Up\n");
+                        break;
+                        case 'H':
+                            printf("Heavy Item Berhasil di Pick Up, Speed Mobita akan berkurang\n");
+                            satuan_waktu+=1;
+                            break;
+                        case 'P':
+                            printf("Perishable Item Berhasil di Pick Up\n");
+                    default:
+                        break;
+                    }
+                }
+                else{
+                    printf("Tidak Ada Pesanan yang dapat di pick up");
+                }
+                */
+
             }
             else if (isWordSame(currentWord, cdrop_off))
             {
-                // variabel yang terlibat: mobita(lokasi mobita), daftar_pesanan,to_do_list, & in_progress_list(update pesanan),uang, satuan_waktu, tas(kapasitasnya)
-                // speed boost bakal berlaku 10 kali move harus dipikirin gimana (mungkin tambah variabel speed_boost di main.c)
-                // speed boost bakal ngubah/nambah code di bagian move
+                if(mobita.locname==pesanan.dropoff){
+                    popTas(&tas,&pesanan);
+                    deleteLinkedListLast(&in_progress_list,&pesanan);
+                    switch (pesanan.itype)
+                    {
+                    case 'N':
+                        uang+=200;
+                        printf("Normal item berhasil diantarkan. Uang mobita bertambah 200 Yen\n");
+                        break;
+                    case 'H':
+                        uang+=400;
+                        satuan_waktu-=1;
+                        if (satuan_waktu==1)
+                        {
+                            speed_up=10;
+                        }
+                        printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
+                    case 'P':
+                        uang+=400;
+                        //increaseCapacityTas(&tas);
+                        printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                else{
+                    printf("Pesanan gagal diantar\n");
+                }
             }
             else if (isWordSame(currentWord, cmap))
             {
@@ -217,6 +274,7 @@ int main()
             }
             else if (isWordSame(currentWord, cinvetory))
             {
+                displayListGadget(inventory_gadget);
                 // TO Do List waktu itemnya ga usah diupdate
                 // InProgress List update waktunya
                 // fungsi display inventory

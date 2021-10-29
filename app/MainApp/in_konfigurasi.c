@@ -1,13 +1,13 @@
 #include <stdio.h>
-#include "../ADTWordMachine/charmachine.h"
-#include "../ADTWordMachine/wordmachine.h"
-#include "../ADTPoint/point.h"
-#include "../ADTListDin/listdin.h"
-#include "../ADTLokasi/lokasi.h"
-#include "../ADTMatrix/matrix.h"
-#include "../ADTQueue/prioqueue.h"
-void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders);
-void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders) {
+#include "../ADTWordMachine/charmachine.c"
+#include "../ADTWordMachine/wordmachine.c"
+#include "../ADTPoint/point.c"
+#include "../ADTListDin/listdin.c"
+#include "../ADTLokasi/lokasi.c"
+#include "../ADTMatrix/matrix.c"
+#include "../ADTQueue/prioqueue.c"
+void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil);
+void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil) {
   int size_n, size_m;
   int x,y;
   int i,j;
@@ -66,5 +66,4 @@ void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders) {
     else QEl.exp = -1;
     penqueue(orders, QEl);
   }
-  fclose(ftape);
 }
