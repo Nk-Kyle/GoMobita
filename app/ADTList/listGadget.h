@@ -16,9 +16,8 @@
 /* Nilai elemen tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef int ElType;  /* type elemen List */
 typedef struct {
-   ElType contents[LISTGADGET_CAPACITY]; /* memori tempat penyimpan elemen (container) */
+   int contents[LISTGADGET_CAPACITY]; /* memori tempat penyimpan elemen (container) */
 } ListGadget;
 /* Indeks yang digunakan [0..CAPACITY-1] */
 /* Jika l adalah ListGadget, cara deklarasi dan akses: */
@@ -61,7 +60,7 @@ void displayListGadget(ListGadget l);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOfGadg(ListGadget l, ElType val);
+int indexOfGadg(ListGadget l, int val);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
@@ -69,12 +68,12 @@ int indexOfGadg(ListGadget l, ElType val);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN ********** */
 /* *** Menambahkan elemen *** */
-void insertGadget(ListGadget *l, ElType val);
+void insertGadget(ListGadget *l, int val);
 /* Proses: Menambahkan val sebagai elemen terakhir List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteGadget(ListGadget *l, int idxDelete, ElType *val);
+void deleteGadget(ListGadget *l, int idxDelete, int *val);
 /* Proses : Menghapus elemen terakhir List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */

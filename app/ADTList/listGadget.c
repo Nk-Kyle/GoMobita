@@ -93,7 +93,7 @@ void displayListGadget(ListGadget l)
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOfGadg(ListGadget l, ElType val)
+int indexOfGadg(ListGadget l, int val)
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan LGELMT(l,i) = val */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
@@ -115,7 +115,7 @@ int indexOfGadg(ListGadget l, ElType val)
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN ********** */
 /* *** Menambahkan elemen *** */
-void insertGadget(ListGadget *l, ElType val)
+void insertGadget(ListGadget *l, int val)
 /* Proses: Menambahkan val sebagai elemen List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen l yang baru */
@@ -140,7 +140,7 @@ void insertGadget(ListGadget *l, ElType val)
     }
 }
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteGadget(ListGadget *l, int idxDelete, ElType *val)
+void deleteGadget(ListGadget *l, int idxDelete, int *val)
 /* Proses : Menghapus elemen List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen l sebelum penghapusan, */
