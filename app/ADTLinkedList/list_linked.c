@@ -218,12 +218,12 @@ LinkedList concat(LinkedList l1, LinkedList l2) {
   Address p;
   p = l1;
   while (p != NULL){
-    insertLast(&l3, INFO(p));
+    insertLinkedListLast(&l3, INFO(p));
     p = NEXT(p);
   }
   p = l2;
   while (p != NULL){
-    insertLast(&l3, INFO(p));
+    insertLinkedListLast(&l3, INFO(p));
     p = NEXT(p);
   }
   return l3;
@@ -236,7 +236,7 @@ void updateToDoList (PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu)
         while ( HEAD(*daftarPesanan).time <= waktu ) {
             Pesanan temp;
             dequeue(daftarPesanan, &temp);
-            insertLast(toDoList, temp);
+            insertLinkedListLast(toDoList, temp);
         }
     }
 }
