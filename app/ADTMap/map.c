@@ -1,10 +1,10 @@
 #include "map.h"
 #include "../ADTColor/pcolor.h"
-#include<stdio.h>
+#include <stdio.h>
 
 void CreateMap(int i, int j, map *m){
-    baris(*m) = i;
-    kolom(*m) = j;
+    bariseff(*m) = i;
+    kolomeff(*m) = j;
 }
 
 void makeBorder(map *m, int bar, int kol){
@@ -34,7 +34,7 @@ void makeMap(map *m, int bar, int kol, ListDin daftar_lokasi){
     int a,b;
     char c;
     makeBorder(m, bar, kol);
-    for(k = 0; k <= getLastIdx(daftar_lokasi); k++){
+    for(k = 0; k < lengthList(daftar_lokasi); k++){
         a = daftar_lokasi.buffer[k].coord.X;
         b = daftar_lokasi.buffer[k].coord.Y;
         c = daftar_lokasi.buffer[k].locname;
@@ -42,46 +42,77 @@ void makeMap(map *m, int bar, int kol, ListDin daftar_lokasi){
     }
 }
 
-void printMap(map m, ListDin daftar_lokasi, Matrix adj, Loc mobita){
-    int i,j,k,l,n;
-    int locx,locy;
-    char lokasiNow;
-    ListDin posisiCapai;
-    CreateListDin(&posisiCapai,10);
-    lokasiNow = mobita.locname;
-    k = convertToInt(lokasiNow, daftar_lokasi);
-    for(l = 0; l <= getLastIdxCol(adj); l++){
-        if(MELM(adj,k,l) == 1){
-            char a = convertToChar(l, daftar_lokasi);
-            for(k = 0 ; k <= getLastIdx(daftar_lokasi); k++){
-                if(daftar_lokasi.buffer[k].locname == a){
-                    locx = daftar_lokasi.buffer[k].coord.X;
-                    locy = daftar_lokasi.buffer[k].coord.Y;
-                    insertLast(&posisiCapai, MakeLoc(a,locx,locy));
-                }
-            }
-        }
+void printMap(map m, ListDin daftar_lokasi, Matrix mat_adj, Loc mobita, LinkedList ToDo, StackTas Tas ){
+  int i, j, k, l;
+  boolean foundLoc;
+  char mobita_c, curr_c;
+  char warna [lengthList(daftar_lokasi)];
+  Address p;
+  mobita_c = Name(mobita); //char lokasi (nama lokasi mobita)
+  foundLoc = false;
+  i = 0;
+  while (!foundLoc){
+    if (Name(ELMT(daftar_lokasi,i)) == mobita_c) foundLoc = true;
+    else i++;
+  }
+  // Ketemu indeks lokasi mobita sekarang
+  for (j = 0; j < lengthList(daftar_lokasi); j++){
+    if (MELM(mat_adj,i,j) == 1) warna[j] = 'G';
+    else warna[j] = 'N';
+  }
+  p = ToDo;
+  while(p != NULL){
+    curr_c = Pickup(INFO(p));
+    j = 0;
+    while (!foundLoc){
+      if (Name(ELMT(daftar_lokasi,j)) == curr_c) foundLoc = true;
+      else j++;
     }
-    for(i = 0 ; i <= baris(m)-1; i++){
-        for(j = 0; j <= kolom(m)-1; j++){
-            for(n = 0; n <= getLastIdx(posisiCapai); n++){
-                if(j != kolom(m)-1){
-                    if (mobita.locname == ELMTMap(m,i,j)){
-                        print_yellow(ELMTMap(m,i,j));
-                    }else if (ELMTMap(m,i,j) == posisiCapai.buffer[n].locname){
-                        print_green(ELMTMap(m,i,j));
-                    }else{
-                        printf("%c ",ELMTMap(m,i,j));
-                    }
-                }else {
-                    printf("%c",ELMTMap(m,i,j));
-                }
-            }
+    warna[j] = 'R';
+  }
+  curr_c = Dropoff(TOP(Tas));
+  j = 0;
+  while (!foundLoc){
+    if (Name(ELMT(daftar_lokasi,j)) == curr_c) foundLoc = true;
+    else j++;
+  }
+  warna[j] = 'B';
+  j = 0;
+  while (!foundLoc){
+    if (Name(ELMT(daftar_lokasi,j)) == mobita_c) foundLoc = true;
+    else j++;
+  }
+  warna[j] = 'Y';
+  for (i = 0; i < bariseff(m); i++){
+    for(j = 0; j < kolomeff(m); j++){
+      curr_c = ELMTMap(m,i,j);
+      if (curr_c == '*' || curr_c == ' ') printf("%c", curr_c);
+      else{
+        k = 0;
+        while (!foundLoc){
+          if (Name(ELMT(daftar_lokasi,k)) == curr_c) foundLoc = true;
+          else k++;
         }
-        if (i != baris(m)-1){
-            printf("\n");
+        switch (warna[k]) {
+          case 'Y':
+            print_yellow(curr_c);
+            break;
+          case 'R' :
+            print_red(curr_c);
+            break;
+          case 'B' :
+            print_blue(curr_c);
+            break;
+          case 'G' :
+            print_green(curr_c);
+            break;
+          default :
+            printf("%c", curr_c);
         }
+      }
     }
+    printf("\n");
+  }
 }
 
 char convertToChar(int val, ListDin daftar_lokasi){

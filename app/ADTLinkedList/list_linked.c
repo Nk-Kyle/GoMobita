@@ -45,7 +45,7 @@ int indexOfLinkedList(LinkedList l, Pesanan val){
 /* I.S. l, val terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai val */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
-/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+/* Mengembalikan IDX_UNDEF_LL jika tidak ditemukan */
   int idx = 0;
   Address p;
   boolean isFound;
@@ -60,7 +60,7 @@ int indexOfLinkedList(LinkedList l, Pesanan val){
       idx++;
     }
   }
-  if (!isFound) idx = IDX_UNDEF;
+  if (!isFound) idx = IDX_UNDEF_LL;
   return idx;
 }
 

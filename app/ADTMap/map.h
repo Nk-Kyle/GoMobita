@@ -5,19 +5,16 @@
 #include "../ADTLokasi/lokasi.h"
 #include "../ADTPoint/point.h"
 #include "../ADTMatrix/matrix.h"
-
-#define Nil NULL
-#define barisMaks 20
-#define kolomMaks 30
-
+#include "../ADTLinkedList/list_linked.h"
+#include "../ADTStack/stackTas.h"
 typedef struct{
-    char elemen[barisMaks][kolomMaks];
+    char elemen[22][32];
     int bariseff;
     int kolomeff;
 }map;
 
-#define baris(m) (m).bariseff
-#define kolom(m) (m).kolomeff
+#define bariseff(m) (m).bariseff
+#define kolomeff(m) (m).kolomeff
 #define ELMTMap(m, i, j) (m).elemen[(i)][(j)]
 
 /* CreateMap */
@@ -30,7 +27,7 @@ void makeBorder(map *m, int i, int j);
 void makeMap(map *m, int i, int j, ListDin daftar_lokasi);
 /*membuat map dengan isi yang sesuai dengan daftar lokasi*/
 
-void printMap(map m, ListDin daftar_lokasi, Matrix adj,Loc mobita);
+void printMap(map m, ListDin daftar_lokasi, Matrix mat_adj, Loc mobita, LinkedList ToDo, StackTas Tas );
 /*prosedur untuk menampilkan map*/
 
 char convertToChar(int val, ListDin daftar_lokasi);

@@ -6,13 +6,13 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "boolean.h"
+#include "../boolean.h"
 #include "node.h"
 #include "../ADTQueue/prioqueue.h"
 
 typedef Address LinkedList;
 
-#define IDX_UNDEF (-1)
+#define IDX_UNDEF_LL (-1)
 #define FIRST(l) (l)
 
 /* Definisi LinkedList : */
