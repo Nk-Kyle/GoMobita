@@ -189,9 +189,9 @@ int main()
             {
                 // - Fay
                 // fungsi beli item (display ada apa aja, pas belu duit cukup/kaga, inventory_gadget mobita nambah kalo berhasil beli)
-                
+
                 int opsi_beli;
-                boolean opsi_valid = false;
+                boolean opsi_beli_valid = false;
 
                 printf("Uang Anda sekarang: %d\n", uang);
                 printf("Gadget yang tersedia:\n");
@@ -225,7 +225,7 @@ int main()
                             {
                                 printf("Uang tidak cukup untuk membeli gadget!\n");
                             }
-                            opsi_beli = true;
+                            opsi_beli_valid = true;
                         }
                         else if (opsi_beli == 2)
                         {
@@ -240,7 +240,7 @@ int main()
                             {
                                 printf("Uang tidak cukup untuk membeli gadget!\n");
                             }
-                            opsi_beli = true;
+                            opsi_beli_valid = true;
                         }
                         else if (opsi_beli == 3)
                         {
@@ -255,7 +255,7 @@ int main()
                             {
                                 printf("Uang tidak cukup untuk membeli gadget!\n");
                             }
-                            opsi_beli = true;
+                            opsi_beli_valid = true;
                         }
                         else if (opsi_beli == 4)
                         {
@@ -270,19 +270,25 @@ int main()
                             {
                                 printf("Uang tidak cukup untuk membeli gadget!\n");
                             }
-                            opsi_beli = true;
+                            opsi_beli_valid = true;
                         }
                         else if (opsi_beli == 0)
                         {
                             printf("Kembali ke menu awal...\n");
-                            opsi_beli = true;
+                            opsi_beli_valid = true;
                         }
-                    } while ((!opsi_valid));
+                        else
+                        {
+                            printf("Masukan tidak valid!\n");
+                            printf("ENTER COMMAND: ");
+                            opsi_beli = getAngka();
+                            printf("%d\n", opsi_beli);
+                        }
+                    } while (!opsi_beli_valid);
                 }
             }
             else if (isWordSame(currentWord, cinvetory))
             {
-                displayListGadget(inventory_gadget);
                 // TO Do List waktu itemnya ga usah diupdate
                 // InProgress List update waktunya
                 // fungsi display inventory
@@ -292,6 +298,66 @@ int main()
                 // senter pembesar: tas, in_progress_list(maybe ga yakin juga)
                 // pintu kemana saja: daftar_lokasi, mobita
                 // mesin waktu: waktu (harus ditanya efeknya ke perishable item (waktunya bisa >dari waktu awal ga), to_do_list(bakal ngilang ga))
+                
+                // update: use_gadget belum diimplementasikan. bingung input parameternya apa aja
+                //         apa better tiap gadget punya fungsinya masing-masing?
+
+                int opsi_gadget;    /* menyimpan pilihan gadget dari user pada inventory */
+                int kode_gadget;    /* menyimpan kode gadget dari opsi_gadget */
+                boolean opsi_gadget_valid = false;
+
+                displayListGadget(inventory_gadget);
+                printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n\n");
+                printf("ENTER COMMAND: ");
+                opsi_gadget = getAngka();
+                printf("%d\n", opsi_gadget);
+
+                if (LGELMT(inventory_gadget, opsi_gadget) == VAL_UNDEF)         /* Cek kasus opsi gadget kosong */
+                {
+                    printf("Tidak ada Gadget yang dapat digunakan!\n");
+                }
+                else
+                {
+                    do{
+                        deleteGadget(&inventory_gadget, opsi_gadget, &kode_gadget);
+                        if (kode_gadget == 1)
+                        {
+                            use_gadget(kode_gadget);
+                            printf("Kain Pembungkus Waktu berhasil digunakan!");
+                            opsi_gadget_valid = true;                          
+                        }
+                        else if (kode_gadget == 2)
+                        {
+                            use_gadget(kode_gadget);
+                            printf("Senter Pembesar berhasil digunakan!");                            
+                            opsi_gadget_valid = true;                          
+                        }
+                        else if (kode_gadget == 3)
+                        {
+                            use_gadget(kode_gadget);
+                            printf("Pintu Kemana Saja berhasil digunakan!");                            
+                            opsi_gadget_valid = true;                              
+                        }
+                        else if (kode_gadget == 4)
+                        {
+                            use_gadget(kode_gadget);
+                            printf("Mesin Waktu berhasil digunakan!");                            
+                            opsi_gadget_valid = true;                              
+                        }
+                        else if (kode_gadget == 0)
+                        {
+                            printf("Kembali ke menu awal...\n");
+                            opsi_gadget_valid = true;                            
+                        }
+                        else
+                        {
+                            printf("Masukan tidak valid!\n");
+                            printf("ENTER COMMAND: ");
+                            opsi_gadget = getAngka();
+                            printf("%d\n", opsi_gadget);
+                        }
+                    } while (!opsi_gadget_valid);
+                }
             }
             else if (isWordSame(currentWord, chelp))
             {
