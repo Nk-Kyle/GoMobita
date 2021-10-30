@@ -34,4 +34,7 @@ boolean isHeavy(Pesanan I);
 boolean isPerishable(Pesanan I);
 /* Mengirim true jika item bertipe perishable */
 
+boolean isPesananSama(Pesanan i1, Pesanan i2);
+/* Mengirim true jika pesanan 1 = pesanan 2*/
+
 #endif
