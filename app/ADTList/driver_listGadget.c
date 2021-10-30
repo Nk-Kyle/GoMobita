@@ -4,7 +4,7 @@
 int main()
 {
     ListGadget l;
-    ElType val;
+    int val;
     int n, x;
 
     printf("Jumlah gadget: ");
@@ -13,7 +13,7 @@ int main()
     for (int i = 0; i < n; i++)
     {
         scanf("%d", &val);
-        ELMT(l, i) = val;
+        LGELMT(l, i) = val;
     }
 
     printf("\nInventory gadget:\n");
