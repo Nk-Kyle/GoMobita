@@ -9,6 +9,7 @@
 #include "../boolean.h"
 #include "node.h"
 #include "../ADTQueue/prioqueue.h"
+#include"../ADTStack/stackTas.h"
 
 typedef Address LinkedList;
 
@@ -110,4 +111,8 @@ void updateToDoList (PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu);
 void updateInProgressList (LinkedList *in_progress_list, int waktu);
 /* I.S. in_progress_list terdefinisi dan mungkin kosong*/
 /* F.S. Pesanan yang sudah expired dihapus dari in_progress_list*/
+
+void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas,  int waktu);
+/* I.S. in_progress_list terdefinisi dan mungkin kosong*/
+/* F.S. Pesanan yang dapt expired dikembalikan ke waktu expired awal*/
 #endif

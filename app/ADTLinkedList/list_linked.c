@@ -262,3 +262,41 @@ void updateInProgressList (LinkedList *in_progress_list, int waktu){
   }
   
 };
+
+void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int waktu){
+  Address p;
+  StackTas tempTas;
+  Pesanan val;
+
+  //ngerefresh barang di to_do_list
+  p = FIRST(*in_progress_list);
+  while (p!=NULL)
+  {
+    if (INFO(p).itype=='P')
+    {
+      INFO(p).pickuptime = waktu;
+    }
+    p=NEXT(p);
+  }
+
+  //ngerefresh barang di tas
+  CreateTas(&tempTas);
+  tempTas.currentTasCap=100;
+  while (!isTasEmpty(*tas))
+  {
+    popTas(&tas,&val);
+    if (val.itype=='P')
+    {
+      val.pickuptime=waktu;
+    }
+    pushTas(&tempTas,val);
+  }
+  while (!isTasEmpty(tempTas))
+  {
+    popTas(&tempTas,&val);
+    pushTas(&tas,val);
+  }
+  
+  
+  
+};
