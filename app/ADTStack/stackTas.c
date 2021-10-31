@@ -11,6 +11,7 @@ void CreateTas(StackTas *s){
   IDX_TOP(*s) = IDX_UNDEF;
   CURRENT_TAS_CAP(*s) = 3;
 }
+
 /* ************ Prototype ************ */
 boolean isTasEmpty(StackTas s){
 /* Mengirim true jika s kosong: lihat definisi di atas */
@@ -20,6 +21,7 @@ boolean isTasFull(StackTas s){
 /* Mengirim true jika tabel penampung nilai s stack penuh */
   return(IDX_TOP(s) == CURRENT_TAS_CAP(s) - 1);
 }
+
 /* ************ Menambahkan sebuah elemen ke StackTas ************ */
 void pushTas(StackTas *s, Pesanan item){
 /* Menambahkan item sebagai elemen StackTas s */
@@ -33,6 +35,7 @@ void pushTas(StackTas *s, Pesanan item){
   }
   TOP(*s) = item;
 }
+
 /* ************ Menghapus sebuah elemen StackTas ************ */
 void popTas(StackTas *s, Pesanan *item){
 /* Menghapus item dari StackTas s */
@@ -46,6 +49,7 @@ void popTas(StackTas *s, Pesanan *item){
     IDX_TOP(*s)--;
   }
 }
+
 /* ************ Menambah kapasitas sementara Stack tas ************ */
 void increaseTas(StackTas *s)
 /* Meningkatkan kapasitas tas sebesar satu kali */
@@ -57,6 +61,44 @@ void increaseTas(StackTas *s)
     CURRENT_TAS_CAP(*s)++;
   }
 }
+
+/* ************ Update Stack tas ************ */
+void updateTas(StackTas *s, int waktu)
+/* Melakukan upate pada tas */
+/* I.S. s mungkin memiliki item perishable yang sudah expired */
+/* F.S. item perishable yang sudah expired akan hilang */
+{
+  StackTas sTemp;
+  Pesanan item;
+
+  CreateTas(&sTemp);
+  while (!isTasEmpty(*s))
+  {
+    if (isPerishable(TOP(*s)))
+    {
+      if ((waktu - PickupTime(TOP(*s))) == Exp(TOP(*s)))
+      {
+        popTas(&s, &item);
+      }
+      else
+      {
+        popTas(&s, &item);
+        pushTas(&sTemp, item);
+      }
+    }
+    else
+    {
+      popTas(&s, &item);
+      pushTas(&sTemp, item);
+    }
+  }
+  while (!isTasEmpty(sTemp))
+  {
+    popTas(&sTemp, &item);
+    pushTas(&s, item);
+  }
+}
+
 /* ************ Gadget ************ */
 void senterPembesar(StackTas *s)
 /* Meningkatkan kapasitas tas sebesar dua kali lipat */

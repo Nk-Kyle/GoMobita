@@ -54,6 +54,12 @@ void increaseTas(StackTas *s);
 /* I.S. currentTasCap tas mungkin maksimal */
 /* F.S. currentTasCap menjadi bertambah satu tetapi tidak melebihi batas maksimum */
 
+/* ************ Update Stack tas ************ */
+void updateTas(StackTas *s, int waktu);
+/* Melakukan upate pada tas */
+/* I.S. s mungkin memiliki item perishable yang sudah expired */
+/* F.S. item perishable yang sudah expired akan hilang */
+
 /* ************ Gadget ************ */
 void senterPembesar(StackTas *s);
 /* Meningkatkan kapasitas tas sebesar dua kali lipat */
