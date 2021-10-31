@@ -113,6 +113,10 @@ void updateInProgressList (LinkedList *in_progress_list, int waktu);
 /* F.S. Pesanan yang sudah expired dihapus dari in_progress_list*/
 
 void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas,  int waktu);
-/* I.S. in_progress_list terdefinisi dan mungkin kosong*/
-/* F.S. Pesanan yang dapt expired dikembalikan ke waktu expired awal*/
+/* I.S. in_progress_list dan tas terdefinisi dan mungkin kosong*/
+/* F.S. Pesanan yang dapat expired dikembalikan ke waktu expired awal*/
+
+void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas,  int *waktu);
+/* I.S. in_progress_listdan tas  terdefinisi dan mungkin kosong*/
+/* F.S. Mengurangi waktu sebanyak 50 satuan (minimal 0) dan Pesanan yang dapat expired dikembalikan ke waktu expired awal*/
 #endif

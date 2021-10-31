@@ -296,7 +296,12 @@ void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int wak
     popTas(&tempTas,&val);
     pushTas(&tas,val);
   }
-  
-  
-  
+};
+
+void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas,  int *waktu){
+  *waktu -= 50;
+  if(*waktu<0){
+    waktu = 0;
+  }
+  useKainPembungkusWaktu(in_progress_list,tas,waktu);
 };
