@@ -40,12 +40,24 @@ boolean isTasFull(StackTas s);
 void pushTas(StackTas *s, Pesanan item);
 /* Menambahkan val sebagai elemen Stack s */
 /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
-/* F.S. val menjadi TOP yang baru,IDX_TOP bertambah 1 */
+/* F.S. val menjadi TOP yang baru, IDX_TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
 void popTas(StackTas *s, Pesanan *item);
 /* Menghapus val dari Stack s */
 /* I.S. s tidak mungkin kosong */
 /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */
+
+/* ************ Menambah kapasitas sementara Stack tas ************ */
+void increaseTas(StackTas *s);
+/* Meningkatkan kapasitas tas sebesar satu kali */
+/* I.S. currentTasCap tas mungkin maksimal */
+/* F.S. currentTasCap menjadi bertambah satu tetapi tidak melebihi batas maksimum */
+
+/* ************ Gadget ************ */
+void senterPembesar(StackTas *s);
+/* Meningkatkan kapasitas tas sebesar dua kali lipat */
+/* I.S. currentTasCap tas mungkin maksimal */
+/* F.S. currentTasCap menjadi dua kali lipat tetapi tidak melebihi batas maksimum */
 
 #endif

@@ -340,7 +340,7 @@ int main()
                         }
                         else if (kode_gadget == 2)
                         {
-                            use_gadget(kode_gadget);
+                            senterPembesar(&tas);
                             printf("Senter Pembesar berhasil digunakan!");                            
                             opsi_gadget_valid = true;                          
                         }
