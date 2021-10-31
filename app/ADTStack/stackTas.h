@@ -48,6 +48,12 @@ void popTas(StackTas *s, Pesanan *item);
 /* I.S. s tidak mungkin kosong */
 /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */
 
+/* ************ Menambah kapasitas sementara Stack tas ************ */
+void increaseTas(StackTas *s);
+/* Meningkatkan kapasitas tas sebesar satu kali */
+/* I.S. currentTasCap tas mungkin maksimal */
+/* F.S. currentTasCap menjadi bertambah satu tetapi tidak melebihi batas maksimum */
+
 /* ************ Gadget ************ */
 void senterPembesar(StackTas *s);
 /* Meningkatkan kapasitas tas sebesar dua kali lipat */
