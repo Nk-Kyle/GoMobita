@@ -1,5 +1,5 @@
 /* File : item.h
-   Definisi ADT Item berupa struct char, LOC, dan int */
+   Definisi ADT Item berupa struct char dan int */
 
 #ifndef ITEM_H
 #define ITEM_H
