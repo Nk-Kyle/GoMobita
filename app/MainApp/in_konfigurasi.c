@@ -63,11 +63,11 @@ void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean
       if (QEl.itype == 'P'){
         fadvWord();
         QEl.exp = getAngka(currentWord);
-        QEl.expasli = QEl.exp;
+        QEl.pickuptime = -1;
       }
       else {
         QEl.exp = -1;
-        QEl.expasli = -1;
+        QEl.pickuptime = -1;
       }
       penqueue(orders, QEl);
     }

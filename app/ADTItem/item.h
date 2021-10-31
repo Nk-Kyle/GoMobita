@@ -13,8 +13,8 @@ typedef struct
 	int time;	  /* waktu pesanan masuk */
 	int exp;	  /* waktu pesanan hangus
 						  -1 untuk pesanan yang tidak akan hangus */
-	int expasli;  /*waktu asli pesanan hangus
-						  -1 untuk pesanan yang tidak akan hangus*/
+	int pickuptime;  /*waktu barang di pickup
+						  -1 untuk pesanan yang belum dipickup*/
 	char pickup;  /* tempat pengambilan barang */
 	char dropoff; /* tujuan pengiriman barang */
 	char itype;	  /* tipe barang */
@@ -24,7 +24,7 @@ typedef struct
 /* Jika I adalah Pesanan, maka akses elemen : */
 #define    Time(I) (I).time
 #define     Exp(I) (I).exp
-#define	ExpAsli(I) (I).expasli
+#define	PickupTime(I) (I).pickuptime
 #define  Pickup(I) (I).pickup
 #define Dropoff(I) (I).dropoff
 #define    IType(I) (I).itype
