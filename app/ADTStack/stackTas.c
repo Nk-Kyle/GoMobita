@@ -46,3 +46,15 @@ void popTas(StackTas *s, Pesanan *item){
     IDX_TOP(*s)--;
   }
 }
+/* ************ Gadget ************ */
+void senterPembesar(StackTas *s)
+/* Meningkatkan kapasitas tas sebesar dua kali lipat */
+/* I.S. currentTasCap tas mungkin maksimal */
+/* F.S. currentTasCap menjadi dua kali lipat tetapi tidak melebihi batas maksimum */
+{
+  CURRENT_TAS_CAP(*s) = CURRENT_TAS_CAP(*s) * 2;
+  if (CURRENT_TAS_CAP(*s) > 100)
+  {
+    CURRENT_TAS_CAP(*s) = 100;
+  }
+}
