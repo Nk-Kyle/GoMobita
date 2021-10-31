@@ -240,3 +240,25 @@ void updateToDoList (PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu)
         }
     }
 }
+
+void updateInProgressList (LinkedList *in_progress_list, int waktu){
+  Address p;
+  Pesanan val;
+  int i;
+  p = FIRST(*in_progress_list);
+  i=0;
+  while (p!=NULL)
+  {
+    if (INFO(p).itype=='P')
+    {
+      if (waktu-INFO(p).pickuptime==INFO(p).exp)
+      {
+        deleteLinkedListAt(in_progress_list,i,&val);
+      }
+      
+    }
+    p=NEXT(p);
+    i++;
+  }
+  
+};

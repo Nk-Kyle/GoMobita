@@ -107,4 +107,7 @@ void updateToDoList (PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu);
 /* F.S. Item yang ada di daftarPesanan yang Item.time kurang dari sama dengan
         waktu ditambahkan ke dalam toDoList */
 
+void updateInProgressList (LinkedList *in_progress_list, int waktu);
+/* I.S. in_progress_list terdefinisi dan mungkin kosong*/
+/* F.S. Pesanan yang sudah expired dihapus dari in_progress_list*/
 #endif
