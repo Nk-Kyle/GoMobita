@@ -18,6 +18,7 @@ int main()
     Loc mobita;                  // lokasi mobita
     int uang;                    // uang yang dimiliki mobita
     int waktu;                   // waktu secara keseluruhan
+    float waktu_speed;           // waktu saat speed up aktif 
     float satuan_waktu;          // satuan waktu yang akan bertambah setiap mobita bergarak
     int speed_up;                // lama speed_up berefek
     PrioQueue daftar_pesanan;    // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
@@ -80,15 +81,17 @@ int main()
 
         printf("Masukkan File Konfigurasi: ");
         startWord();
-        while (/*isEmpty(peta)||isEmpty(daftar_pesanan) sementara gini dulu:*/ main_menu == 0)
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
+        while (!berhasil)
         {
             printf("File Konfigurasi tidak valid, mohon coba lagi\n");
             printf("Masukkan File Konfigurasi: ");
             advWord();
-        }
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil);
+            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
+        }     
         // inisialisasi lainnya
         waktu = 0; // mulai dari 1/0 ya?
+        waktu_speed = 0;
         satuan_waktu = 1;
         mobita = MakeLoc(daftar_lokasi.buffer[0].locname, daftar_lokasi.buffer[0].coord.X, daftar_lokasi.buffer[0].coord.Y);
         // GAME START
@@ -106,10 +109,18 @@ int main()
                 updateToDoList(&daftar_pesanan,&to_do_list,waktu);
                 if (speed_up!=0)
                 {
-                    waktu-=0.5;
+                    waktu_speed+=0.5;
                     speed_up-=1;
+                    if (waktu_speed==1.0)
+                    {
+                        waktu+=1;
+                        waktu_speed -= 1.0;
+                    }
+                    
                 }
-                waktu += satuan_waktu;
+                else{
+                    waktu += satuan_waktu;
+                }
             }
             else if (isWordSame(currentWord, cpick_up))
             {
@@ -126,6 +137,7 @@ int main()
                         case 'H':
                             printf("Heavy Item Berhasil di Pick Up, Speed Mobita akan berkurang\n");
                             satuan_waktu+=1;
+                            speed_up=0;
                             break;
                         case 'P':
                             printf("Perishable Item Berhasil di Pick Up\n");
