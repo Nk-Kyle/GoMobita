@@ -5,7 +5,7 @@
 #define LOKASI_H
 
 #include "../boolean.h"
-#include "../ADTPOINT/point.h"
+#include "../ADTPoint/point.h"
 
 #define IDX_UNDEF -1
 
