@@ -80,13 +80,14 @@ int main()
 
         printf("Masukkan File Konfigurasi: ");
         startWord();
-        while (/*isEmpty(peta)||isEmpty(daftar_pesanan) sementara gini dulu:*/ main_menu == 0)
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
+        while (!berhasil)
         {
             printf("File Konfigurasi tidak valid, mohon coba lagi\n");
             printf("Masukkan File Konfigurasi: ");
             advWord();
-        }
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil);
+            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
+        }     
         // inisialisasi lainnya
         waktu = 0; // mulai dari 1/0 ya?
         satuan_waktu = 1;
