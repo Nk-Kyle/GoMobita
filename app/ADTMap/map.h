@@ -36,7 +36,11 @@ char convertToChar(int val, ListDin daftar_lokasi);
 int convertToInt(char val, ListDin daftar_lokasi);
 /*mengubah char menjadi integer*/
 
-void move(Matrix matAjc, ListDin daftar_lokasi,Loc mobita);
+void move(Matrix matAjc, ListDin daftar_lokasi,Loc *mobita);
+/*menampilkan menu perpindahan, posisi yang bisa dicapai*/
+
+void pintuKemanaSaja(ListDin dafta_lokasi, Loc *mobita)
+/*spesial ability, bisa pindah kemana saja, kelokasi yang diinginkan*/
 
 
 #endif

@@ -145,14 +145,15 @@ int convertToInt(char val, ListDin daftar_lokasi){
     return hasil;
 }
 
-void move(Matrix matAjc, ListDin daftar_lokasi,Loc mobita){
+void move(Matrix matAjc, ListDin daftar_lokasi,Loc *mobita){
     char lokasiNow;
     int i,j,k,l,m;
     int pilih;
     int locx,locy;
+    POINT p;
     ListDin posisiCapai;
     CreateListDin(&posisiCapai,1);
-    lokasiNow = mobita.locname;
+    lokasiNow = Name(*mobita);
     i = convertToInt(lokasiNow, daftar_lokasi);
     l = 1;
     printf("Posisi yang dapat dicapai :\n");
@@ -170,6 +171,8 @@ void move(Matrix matAjc, ListDin daftar_lokasi,Loc mobita){
             l++;
         }
     }
+
+    
     printf("Posisi yang dipilih yang dipilih: \n");
     printf("\n");
     printf("ENTER COMMAND :");
@@ -178,8 +181,44 @@ void move(Matrix matAjc, ListDin daftar_lokasi,Loc mobita){
     //     printf("Masukkan tidak valid. Ulangi\n");
     //     scanf("%d", &pilih);
     // }
-    mobita.coord.X = posisiCapai.buffer[pilih-1].coord.X;
-    mobita.coord.Y = posisiCapai.buffer[pilih-1].coord.Y;
-    mobita.locname = posisiCapai.buffer[pilih-1].locname;
-    printf("Mobita sekarang ada di titik %c (%d,%d)\n", mobita.locname, mobita.coord.X, mobita.coord.Y);
+    Absis(p) = posisiCapai.buffer[pilih-1].coord.X;
+    Ordinat(p) = posisiCapai.buffer[pilih-1].coord.Y;
+    Coor(*mobita) = p;
+    Name(*mobita) = posisiCapai.buffer[pilih-1].locname;
+    printf("Mobita sekarang ada di titik %c (%d,%d)\n", Name(*mobita), Absis(p), Ordinat(p));
+}
+
+void pintuKemanaSaja(ListDin daftar_lokasi, Loc *mobita){
+  int locx,locy;
+  int pilih;
+  int l = 1;
+  char pos;
+  char posisiNow;
+  POINT p;
+  ListDin posisiCapai;
+  CreateListDin(&posisiCapai, 1);
+  posisiNow = Name(*mobita);
+  printf("posisi yang bisa di capai: \n");
+  for (int i= 0; i<= getLastIdx(daftar_lokasi); i++){
+    if(daftar_lokasi.buffer[i].locname != posisiNow){
+      pos = daftar_lokasi.buffer[i].locname;
+      locx = daftar_lokasi.buffer[i].coord.X;
+      locy = daftar_lokasi.buffer[i].coord.Y;
+      insertLast(&posisiCapai, MakeLoc(pos,locx,locy));
+
+      printf("%d. %c(%d,%d)\n", l, pos, locx,locy);
+      l++;
+    }
+  }
+
+  printf("Posisi yang dipilih yang dipilih: \n");
+  printf("\n");
+  printf("ENTER COMMAND :");
+  scanf("%d\n", &pilih);
+
+  Absis(p) = posisiCapai.buffer[pilih-1].coord.X;
+  Ordinat(p) = posisiCapai.buffer[pilih-1].coord.Y;
+  Coor(*mobita) = p;
+  Name(*mobita) = posisiCapai.buffer[pilih-1].locname;
+  printf("Mobita sekarang ada di titik %c (%d,%d)\n", Name(*mobita), Absis(p), Ordinat(p));
 }
