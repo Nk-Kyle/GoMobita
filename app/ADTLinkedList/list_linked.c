@@ -321,6 +321,25 @@ boolean isPickUpAble(LinkedList *to_do_list, Loc mobita)
   return false;
 };
 
+void removePesananDariToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val)
+{
+  Address p;
+  p = FIRST(*to_do_list);
+  boolean found = false;
+  while (!found)
+  {
+    if (INFO(p).pickup == mobita.locname)
+    {
+      *val = INFO(p);
+      found = true;
+    }
+    else
+    {
+      p = NEXT(p);
+    }
+  }
+};
+
 void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int waktu)
 {
   if (TOP(*tas).itype == 'P')

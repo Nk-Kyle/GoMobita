@@ -115,6 +115,10 @@ boolean isPickUpAble(LinkedList *to_do_list, Loc mobita);
 /* I.S. to_do_list dan mobita terdefinisi*/
 /* F.S. return true jika pada lokasi mobita ada barang yang dapat di pick up*/
 
+void removeToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val);
+/* I.S. to_do_list dan mobita terdefinisi, val sembarang. dipastikan ada pesanan yang sesuai dengan lokasi mobita*/
+/* F.S. mengapus pesanan dari to_do_list yang sesuai dengan lokasi mobita */
+
 void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int waktu);
 /* I.S. in_progress_list dan tas terdefinisi dan mungkin kosong*/
 /* F.S. Pesanan yang dapat expired dikembalikan ke waktu expired awal*/
