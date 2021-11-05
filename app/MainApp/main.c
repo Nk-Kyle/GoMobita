@@ -9,7 +9,7 @@
 #include "../ADTStack/stackTas.c"
 #include "../ADTList/listGadget.c"
 #include "../ADTLinkedList/list_linked.c"
-#include"../ADTMap/map.c"
+#include "../ADTMap/map.c"
 #include "in_konfigurasi.c"
 
 int main()
@@ -18,7 +18,7 @@ int main()
     Loc mobita;                  // lokasi mobita
     int uang;                    // uang yang dimiliki mobita
     int waktu;                   // waktu secara keseluruhan
-    float waktu_speed;           // waktu saat speed up aktif 
+    float waktu_speed;           // waktu saat speed up aktif
     float satuan_waktu;          // satuan waktu yang akan bertambah setiap mobita bergarak
     int speed_up;                // lama speed_up berefek
     PrioQueue daftar_pesanan;    // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
@@ -88,7 +88,7 @@ int main()
             printf("Masukkan File Konfigurasi: ");
             advWord();
             konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
-        }     
+        }
         // inisialisasi lainnya
         waktu = 0; // mulai dari 1/0 ya?
         waktu_speed = 0;
@@ -105,20 +105,20 @@ int main()
             advWord();
             if (isWordSame(currentWord, cmove))
             {
-                move(adj_matrix,daftar_lokasi,mobita);
-                updateToDoList(&daftar_pesanan,&to_do_list,waktu);
-                if (speed_up!=0)
+                move(adj_matrix, daftar_lokasi, &mobita);
+                updateToDoList(&daftar_pesanan, &to_do_list, waktu);
+                if (speed_up != 0)
                 {
-                    waktu_speed+=0.5;
-                    speed_up-=1;
-                    if (waktu_speed==1.0)
+                    waktu_speed += 0.5;
+                    speed_up -= 1;
+                    if (waktu_speed == 1.0)
                     {
-                        waktu+=1;
+                        waktu += 1;
                         waktu_speed -= 1.0;
                     }
-                    
                 }
-                else{
+                else
+                {
                     waktu += satuan_waktu;
                 }
             }
@@ -149,37 +149,38 @@ int main()
                     printf("Tidak Ada Pesanan yang dapat di pick up");
                 }
                 */
-
             }
             else if (isWordSame(currentWord, cdrop_off))
             {
-                if(mobita.locname==pesanan.dropoff){
-                    popTas(&tas,&pesanan);
-                    deleteLinkedListLast(&in_progress_list,&pesanan);
+                if (mobita.locname == pesanan.dropoff)
+                {
+                    popTas(&tas, &pesanan);
+                    deleteLinkedListLast(&in_progress_list, &pesanan);
                     switch (pesanan.itype)
                     {
                     case 'N':
-                        uang+=200;
+                        uang += 200;
                         printf("Normal item berhasil diantarkan. Uang mobita bertambah 200 Yen\n");
                         break;
                     case 'H':
-                        uang+=400;
-                        satuan_waktu-=1;
-                        if (satuan_waktu==1)
+                        uang += 400;
+                        satuan_waktu -= 1;
+                        if (satuan_waktu == 1)
                         {
-                            speed_up=10;
+                            speed_up = 10;
                         }
                         printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
                     case 'P':
-                        uang+=400;
-                        //increaseCapacityTas(&tas);
+                        uang += 400;
+                        // increaseCapacityTas(&tas);
                         printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
                         break;
                     default:
                         break;
                     }
                 }
-                else{
+                else
+                {
                     printf("Pesanan gagal diantar\n");
                 }
             }
@@ -216,14 +217,15 @@ int main()
                 opsi_beli = getAngka();
                 printf("%d\n", opsi_beli);
 
-                if (isGadgetFull(inventory_gadget))         /* Cek kasus inventory penuh */
+                if (isGadgetFull(inventory_gadget)) /* Cek kasus inventory penuh */
                 {
                     printf("Inventory gadget penuh!\n");
                     printf("Kembali ke menu awal...\n");
                 }
                 else
                 {
-                    do{
+                    do
+                    {
                         if (opsi_beli == 1)
                         {
                             if (uang >= 800)
@@ -310,12 +312,12 @@ int main()
                 // senter pembesar: tas, in_progress_list(maybe ga yakin juga)
                 // pintu kemana saja: daftar_lokasi, mobita
                 // mesin waktu: waktu (harus ditanya efeknya ke perishable item (waktunya bisa >dari waktu awal ga), to_do_list(bakal ngilang ga))
-                
+
                 // update: use_gadget belum diimplementasikan. bingung input parameternya apa aja
                 //         apa better tiap gadget punya fungsinya masing-masing?
 
-                int opsi_gadget;    /* menyimpan pilihan gadget dari user pada inventory */
-                int kode_gadget;    /* menyimpan kode gadget dari opsi_gadget */
+                int opsi_gadget; /* menyimpan pilihan gadget dari user pada inventory */
+                int kode_gadget; /* menyimpan kode gadget dari opsi_gadget */
                 boolean opsi_gadget_valid = false;
 
                 displayListGadget(inventory_gadget);
@@ -324,42 +326,43 @@ int main()
                 opsi_gadget = getAngka();
                 printf("%d\n", opsi_gadget);
 
-                if (LGELMT(inventory_gadget, opsi_gadget) == VAL_UNDEF)         /* Cek kasus opsi gadget kosong */
+                if (LGELMT(inventory_gadget, opsi_gadget) == VAL_UNDEF) /* Cek kasus opsi gadget kosong */
                 {
                     printf("Tidak ada Gadget yang dapat digunakan!\n");
                 }
                 else
                 {
-                    do{
+                    do
+                    {
                         deleteGadget(&inventory_gadget, opsi_gadget, &kode_gadget);
                         if (kode_gadget == 1)
                         {
                             use_gadget(kode_gadget);
                             printf("Kain Pembungkus Waktu berhasil digunakan!");
-                            opsi_gadget_valid = true;                          
+                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 2)
                         {
                             senterPembesar(&tas);
-                            printf("Senter Pembesar berhasil digunakan!");                            
-                            opsi_gadget_valid = true;                          
+                            printf("Senter Pembesar berhasil digunakan!");
+                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 3)
                         {
                             use_gadget(kode_gadget);
-                            printf("Pintu Kemana Saja berhasil digunakan!");                            
-                            opsi_gadget_valid = true;                              
+                            printf("Pintu Kemana Saja berhasil digunakan!");
+                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 4)
                         {
                             use_gadget(kode_gadget);
-                            printf("Mesin Waktu berhasil digunakan!");                            
-                            opsi_gadget_valid = true;                              
+                            printf("Mesin Waktu berhasil digunakan!");
+                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 0)
                         {
                             printf("Kembali ke menu awal...\n");
-                            opsi_gadget_valid = true;                            
+                            opsi_gadget_valid = true;
                         }
                         else
                         {
