@@ -115,7 +115,7 @@ boolean isPickUpAble(LinkedList *to_do_list, Loc mobita);
 /* I.S. to_do_list dan mobita terdefinisi*/
 /* F.S. return true jika pada lokasi mobita ada barang yang dapat di pick up*/
 
-void removeToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val);
+void removePesananDariToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val);
 /* I.S. to_do_list dan mobita terdefinisi, val sembarang. dipastikan ada pesanan yang sesuai dengan lokasi mobita*/
 /* F.S. mengapus pesanan dari to_do_list yang sesuai dengan lokasi mobita */
 

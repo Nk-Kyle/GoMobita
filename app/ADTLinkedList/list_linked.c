@@ -361,7 +361,7 @@ void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas, int *waktu)
   *waktu -= 50;
   if (*waktu < 0)
   {
-    waktu = 0;
+    *waktu = 0;
   }
   // ngerefresh barang di to_do_list
   p = FIRST(*in_progress_list);

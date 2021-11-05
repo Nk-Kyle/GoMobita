@@ -28,6 +28,7 @@ int main()
     ListGadget inventory_gadget; // Daftar gadget yang dimiliki mobita
     Matrix adj_matrix;           // peta
     ListDin daftar_lokasi;       // lokasi-lokasi yang ada
+    map peta;                    // peta lokasi-lokasi yang ada
     Pesanan pesanan;
 
     // input command user
@@ -90,7 +91,7 @@ int main()
             konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
         }
         // inisialisasi lainnya
-        waktu = 0; // mulai dari 1/0 ya?
+        waktu = 0;
         waktu_speed = 0;
         satuan_waktu = 1;
         mobita = MakeLoc(daftar_lokasi.buffer[0].locname, daftar_lokasi.buffer[0].coord.X, daftar_lokasi.buffer[0].coord.Y);
@@ -124,38 +125,38 @@ int main()
             }
             else if (isWordSame(currentWord, cpick_up))
             {
-                /*
-                if(pickUpAble(to_do_list,mobita)){
-                    removePesanan(&to_do_list,mobita,&pesanan);
+                if (pickUpAble(&to_do_list, mobita))
+                {
+                    removePesananDariToDo(&to_do_list, mobita, &pesanan);
                     insertLinkedListFirst(&in_progress_list, pesanan);
-                    pushTas(&tas,pesanan);
+                    pushTas(&tas, pesanan);
                     switch (pesanan.itype)
                     {
                     case 'N':
                         printf("Normal Item Berhasil di Pick Up\n");
                         break;
-                        case 'H':
-                            printf("Heavy Item Berhasil di Pick Up, Speed Mobita akan berkurang\n");
-                            satuan_waktu+=1;
-                            speed_up=0;
-                            break;
-                        case 'P':
-                            printf("Perishable Item Berhasil di Pick Up\n");
+                    case 'H':
+                        printf("Heavy Item Berhasil di Pick Up, Speed Mobita akan berkurang\n");
+                        satuan_waktu += 1;
+                        speed_up = 0;
+                        break;
+                    case 'P':
+                        printf("Perishable Item Berhasil di Pick Up\n");
                     default:
                         break;
                     }
                 }
-                else{
+                else
+                {
                     printf("Tidak Ada Pesanan yang dapat di pick up");
                 }
-                */
             }
             else if (isWordSame(currentWord, cdrop_off))
             {
                 if (mobita.locname == pesanan.dropoff)
                 {
                     popTas(&tas, &pesanan);
-                    deleteLinkedListLast(&in_progress_list, &pesanan);
+                    deleteLinkedListFirst(&in_progress_list, &pesanan);
                     switch (pesanan.itype)
                     {
                     case 'N':
@@ -172,7 +173,7 @@ int main()
                         printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
                     case 'P':
                         uang += 400;
-                        // increaseCapacityTas(&tas);
+                        increaseTas(&tas);
                         printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
                         break;
                     default:
@@ -337,26 +338,26 @@ int main()
                         deleteGadget(&inventory_gadget, opsi_gadget, &kode_gadget);
                         if (kode_gadget == 1)
                         {
-                            use_gadget(kode_gadget);
-                            printf("Kain Pembungkus Waktu berhasil digunakan!");
+                            printf("Kain Pembungkus Waktu berhasil digunakan!\n");
+                            useKainPembungkusWaktu(&in_progress_list, &tas, waktu);
                             opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 2)
                         {
                             senterPembesar(&tas);
-                            printf("Senter Pembesar berhasil digunakan!");
+                            printf("Senter Pembesar berhasil digunakan!\n");
                             opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 3)
                         {
-                            use_gadget(kode_gadget);
-                            printf("Pintu Kemana Saja berhasil digunakan!");
+                            pintuKemanaSaja(daftar_lokasi, &mobita);
+                            printf("Pintu Kemana Saja berhasil digunakan!\n");
                             opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 4)
                         {
-                            use_gadget(kode_gadget);
-                            printf("Mesin Waktu berhasil digunakan!");
+                            useMesinWaktu(&in_progress_list, &tas, &waktu);
+                            printf("Mesin Waktu berhasil digunakan!\n");
                             opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 0)
