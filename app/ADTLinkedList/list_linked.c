@@ -306,6 +306,21 @@ void updateInProgressList(LinkedList *in_progress_list, int waktu)
   }
 };
 
+boolean isPickUpAble(LinkedList *to_do_list, Loc mobita)
+{
+  Address p;
+  p = FIRST(*to_do_list);
+  while (p != NULL)
+  {
+    if (INFO(p).pickup == mobita.locname)
+    {
+      return true;
+    }
+    p = NEXT(p);
+  }
+  return false;
+};
+
 void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int waktu)
 {
   if (TOP(*tas).itype == 'P')

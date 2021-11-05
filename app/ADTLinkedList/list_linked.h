@@ -9,7 +9,7 @@
 #include "../boolean.h"
 #include "node.h"
 #include "../ADTQueue/prioqueue.h"
-#include"../ADTStack/stackTas.h"
+#include "../ADTStack/stackTas.h"
 
 typedef Address LinkedList;
 
@@ -81,7 +81,6 @@ void deleteLinkedListAt(LinkedList *l, int idx, Pesanan *val);
 /* F.S. val diset dengan elemen l pada indeks ke-idx. */
 /*      Elemen l pada indeks ke-idx dihapus dari l */
 
-
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 void displayLinkedList(LinkedList l);
 // void printInfo(LinkedList l);
@@ -95,7 +94,7 @@ int lengthLinkedList(LinkedList l);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 
 /****************** PROSES TERHADAP LIST ******************/
-LinkedList concat(LinkedList l1, LinkedList l2) ;
+LinkedList concat(LinkedList l1, LinkedList l2);
 /* I.S. l1 dan l2 sembarang */
 /* F.S. l1 dan l2 kosong, l3 adalah hasil konkatenasi l1 & l2 */
 /* Konkatenasi dua buah list : l1 dan l2    */
@@ -103,20 +102,24 @@ LinkedList concat(LinkedList l1, LinkedList l2) ;
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
 
 /****************** OPERASI MOBITA ******************/
-void updateToDoList (PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu);
+void updateToDoList(PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu);
 /* I.S. daftarPesanan, toDoList, dan waktu terdefinisi sembarang */
 /* F.S. Item yang ada di daftarPesanan yang Item.time kurang dari sama dengan
         waktu ditambahkan ke dalam toDoList */
 
-void updateInProgressList (LinkedList *in_progress_list, int waktu);
+void updateInProgressList(LinkedList *in_progress_list, int waktu);
 /* I.S. in_progress_list terdefinisi dan mungkin kosong*/
 /* F.S. Pesanan yang sudah expired dihapus dari in_progress_list*/
 
-void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas,  int waktu);
+boolean isPickUpAble(LinkedList *to_do_list, Loc mobita);
+/* I.S. to_do_list dan mobita terdefinisi*/
+/* F.S. return true jika pada lokasi mobita ada barang yang dapat di pick up*/
+
+void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int waktu);
 /* I.S. in_progress_list dan tas terdefinisi dan mungkin kosong*/
 /* F.S. Pesanan yang dapat expired dikembalikan ke waktu expired awal*/
 
-void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas,  int *waktu);
+void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas, int *waktu);
 /* I.S. in_progress_listdan tas  terdefinisi dan mungkin kosong*/
 /* F.S. Mengurangi waktu sebanyak 50 satuan (minimal 0) dan Pesanan yang dapat expired dikembalikan ke waktu expired awal*/
 #endif
