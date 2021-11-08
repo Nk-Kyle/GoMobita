@@ -82,13 +82,13 @@ int main()
 
         printf("Masukkan File Konfigurasi: ");
         startWord();
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
         while (!berhasil)
         {
             printf("File Konfigurasi tidak valid, mohon coba lagi\n");
             printf("Masukkan File Konfigurasi: ");
             advWord();
-            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord);
+            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
         }
         // inisialisasi lainnya
         waktu = 0;
@@ -187,17 +187,15 @@ int main()
             }
             else if (isWordSame(currentWord, cmap))
             {
-                /* Tampilin map - Ilham*/
-                // variabel yang terlibat: daftar_lokasi, mobita, to_do_list(mana aja yg bisa di pickup), tas(tujuan drop off paling atas),adj_matrix(lokasi yg bisa dicapai);
+                printMap(peta, daftar_lokasi, adj_matrix, mobita, to_do_list, tas );
             }
             else if (isWordSame(currentWord, cto_do))
             {
-                // fungsi display todo (to_do adalah daftar_pesanan yang waktu pesannya < waktu saat ini)
+              displayToDoList(to_do_list);
             }
             else if (isWordSame(currentWord, cin_progress))
             {
-                // fungsi display in_progress (fungsi yang sama kaya todo)
-                // variabel yang terlibat: in_progress_list, waktu(buat perishable item)
+              displayInProgressList(in_progress_list, waktu);
             }
             else if (isWordSame(currentWord, cbuy))
             {
@@ -215,6 +213,7 @@ int main()
                 printf("4. Mesin Waktu (3000 Yen)\n");
                 printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n\n");
                 printf("ENTER COMMAND: ");
+                advWord();
                 opsi_beli = getAngka();
                 printf("%d\n", opsi_beli);
 
@@ -296,6 +295,7 @@ int main()
                         {
                             printf("Masukan tidak valid!\n");
                             printf("ENTER COMMAND: ");
+                            advWord();
                             opsi_beli = getAngka();
                             printf("%d\n", opsi_beli);
                         }
@@ -324,6 +324,7 @@ int main()
                 displayListGadget(inventory_gadget);
                 printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n\n");
                 printf("ENTER COMMAND: ");
+                advWord();
                 opsi_gadget = getAngka();
                 printf("%d\n", opsi_gadget);
 
@@ -369,6 +370,7 @@ int main()
                         {
                             printf("Masukan tidak valid!\n");
                             printf("ENTER COMMAND: ");
+                            advWord();
                             opsi_gadget = getAngka();
                             printf("%d\n", opsi_gadget);
                         }

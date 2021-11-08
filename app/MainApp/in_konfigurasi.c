@@ -6,7 +6,7 @@
 #include "../ADTLokasi/lokasi.h"
 #include "../ADTMatrix/matrix.h"
 #include "../ADTQueue/prioqueue.h"
-void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil, Word namafile);
+void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil, Word namafile, map *map);
 void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil, Word namafile) {
   int size_n, size_m;
   int x,y;
@@ -48,6 +48,7 @@ void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean
         MELM(*Adj_mat,i,j) = x;
       }
     }
+    makeMap (map, size_n, size_m, daftar_lokasi);
     CreatePrioQueue(orders);
     fadvWord();
     n_orders = getAngka(currentWord);
