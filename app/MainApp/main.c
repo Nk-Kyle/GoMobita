@@ -133,12 +133,14 @@ int main()
                     waktu += satuan_waktu;
                 }
                 updateToDoList(&daftar_pesanan, &to_do_list, waktu);
+                updateInProgressList(&in_progress_list, waktu);
             }
             else if (isWordSame(currentWord, cpick_up))
             {
                 if (isPickUpAble(&to_do_list, mobita))
                 {
                     removePesananDariToDo(&to_do_list, mobita, &pesanan);
+                    pesanan.pickuptime = waktu;
                     insertLinkedListFirst(&in_progress_list, pesanan);
                     pushTas(&tas, pesanan);
                     switch (pesanan.itype)

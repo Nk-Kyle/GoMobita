@@ -1,6 +1,7 @@
 #include "list_linked.h"
 #include "node.h"
 #include "../ADTItem/item.h"
+#include "../ADTColor/pcolor.h"
 #include <stdio.h>
 
 /****************** PEMBUATAN LIST KOSONG ******************/
@@ -246,6 +247,7 @@ void updateInProgressList(LinkedList *in_progress_list, int waktu)
       if (waktu - INFO(p).pickuptime == INFO(p).exp)
       {
         deleteLinkedListAt(in_progress_list, i, &val);
+        print_red("Suatu Perishable item Expired\n");
       }
     }
     p = NEXT(p);
@@ -300,6 +302,8 @@ void removePesananDariToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val)
           NEXT(before) = NEXT(p);
           free(p);
         }
+        p = NEXT(p);
+        before = NEXT(before);
       }
     }
   }
@@ -406,7 +410,7 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
   {
     p = FIRST(in_progress_list);
     i = 1;
-    printf("Pesanan pada To Do List:\n");
+    printf("Pesanan pada In Progress List:\n");
     while (p != NULL)
     {
       printf("%d. ", i);
@@ -416,7 +420,7 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
         printf("Normal Item ");
         break;
       case 'H':
-        printf("Heavy Item) ");
+        printf("Heavy Item ");
         break;
       case 'P':
         printf("Perishable Item ");
@@ -424,7 +428,7 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
         break;
       }
       printf("(Tujuan : %c)", p->info.dropoff);
-      if (p->info.itype == 'C')
+      if (p->info.itype == 'P')
       {
         printf(", (Expired in: %d)", (p->info.exp + p->info.pickuptime - waktu));
       }
