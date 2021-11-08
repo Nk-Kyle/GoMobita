@@ -118,7 +118,6 @@ int main()
             if (isWordSame(currentWord, cmove))
             {
                 move(adj_matrix, daftar_lokasi, &mobita);
-                updateToDoList(&daftar_pesanan, &to_do_list, waktu);
                 if (speed_up != 0)
                 {
                     waktu_speed += 0.5;
@@ -133,6 +132,7 @@ int main()
                 {
                     waktu += satuan_waktu;
                 }
+                updateToDoList(&daftar_pesanan, &to_do_list, waktu);
             }
             else if (isWordSame(currentWord, cpick_up))
             {
@@ -198,15 +198,15 @@ int main()
             }
             else if (isWordSame(currentWord, cmap))
             {
-                printMap(peta, daftar_lokasi, adj_matrix, mobita, to_do_list, tas );
+                printMap(peta, daftar_lokasi, adj_matrix, mobita, to_do_list, tas);
             }
             else if (isWordSame(currentWord, cto_do))
             {
-              displayToDoList(to_do_list);
+                displayToDoList(to_do_list);
             }
             else if (isWordSame(currentWord, cin_progress))
             {
-              displayInProgressList(in_progress_list, waktu);
+                displayInProgressList(in_progress_list, waktu);
             }
             else if (isWordSame(currentWord, cbuy))
             {
