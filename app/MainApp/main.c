@@ -169,7 +169,7 @@ int main()
             }
             else if (isWordSame(currentWord, cdrop_off))
             {
-                if (mobita.locname == pesanan.dropoff)
+                if (mobita.locname == TOP(tas).dropoff)
                 {
                     popTas(&tas, &pesanan);
                     deleteLinkedListFirst(&in_progress_list, &pesanan);
@@ -357,7 +357,7 @@ int main()
                         printf("Masukan invalid!\n");
                     }
                 } while (!opsi_gadget_valid);
-                
+
                 if (opsi_gadget == 0)
                 {
                     printf("Kembali ke menu awal...\n");
