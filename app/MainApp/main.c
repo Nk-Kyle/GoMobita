@@ -230,11 +230,10 @@ int main()
                     printf("2. Senter Pembesar (1200 Yen)\n");
                     printf("3. Pintu Kemana Saja (1500 Yen)\n");
                     printf("4. Mesin Waktu (3000 Yen)\n");
-                    printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n\n");
-                    printf("ENTER COMMAND: ");
+                    printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n");
+                    printf("Masukkan Opsi: ");
                     advWord();
                     opsi_beli = getAngka();
-                    printf("%d\n", opsi_beli);
 
                     if (isGadgetFull(inventory_gadget)) /* Cek kasus inventory penuh */
                     {
@@ -313,7 +312,7 @@ int main()
                             else
                             {
                                 printf("Masukan tidak valid!\n");
-                                printf("ENTER COMMAND: ");
+                                printf("Masukkan Opsi: ");
                                 advWord();
                                 opsi_beli = getAngka();
                                 printf("%d\n", opsi_beli);
@@ -338,67 +337,62 @@ int main()
                 // pintu kemana saja: daftar_lokasi, mobita
                 // mesin waktu: waktu (harus ditanya efeknya ke perishable item (waktunya bisa >dari waktu awal ga), to_do_list(bakal ngilang ga))
 
-                // update: use_gadget belum diimplementasikan. bingung input parameternya apa aja
-                //         apa better tiap gadget punya fungsinya masing-masing?
-
                 int opsi_gadget; /* menyimpan pilihan gadget dari user pada inventory */
                 int kode_gadget; /* menyimpan kode gadget dari opsi_gadget */
                 boolean opsi_gadget_valid = false;
 
                 displayListGadget(inventory_gadget);
-                printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n\n");
-                printf("Enter Opsi: ");
-                advWord();
-                opsi_gadget = getAngka();
-                printf("%d\n", opsi_gadget);
-
-                if (LGELMT(inventory_gadget, opsi_gadget) == VAL_UNDEF) /* Cek kasus opsi gadget kosong */
+                printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n");
+                do
                 {
-                    printf("Tidak ada Gadget yang dapat digunakan!\n");
+                    printf("Masukkan Opsi: ");
+                    advWord();
+                    opsi_gadget = getAngka();
+                    if ((opsi_gadget >= 0) && (opsi_gadget <= 5))
+                    {
+                        opsi_gadget_valid = true;
+                    }
+                    else
+                    {
+                        printf("Masukan invalid!\n");
+                    }
+                } while (!opsi_gadget_valid);
+                
+                if (opsi_gadget == 0)
+                {
+                    printf("Kembali ke menu awal...\n");
                 }
                 else
                 {
-                    do
+                    opsi_gadget--;
+                    if (LGELMT(inventory_gadget, opsi_gadget) == VAL_UNDEF) /* Cek kasus opsi gadget kosong */
+                    {
+                        printf("Tidak ada Gadget yang dapat digunakan!\n");
+                    }
+                    else
                     {
                         deleteGadget(&inventory_gadget, opsi_gadget, &kode_gadget);
                         if (kode_gadget == 1)
                         {
                             printf("Kain Pembungkus Waktu berhasil digunakan!\n");
                             useKainPembungkusWaktu(&in_progress_list, &tas, waktu);
-                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 2)
                         {
                             senterPembesar(&tas);
                             printf("Senter Pembesar berhasil digunakan!\n");
-                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 3)
                         {
                             pintuKemanaSaja(daftar_lokasi, &mobita);
                             printf("Pintu Kemana Saja berhasil digunakan!\n");
-                            opsi_gadget_valid = true;
                         }
                         else if (kode_gadget == 4)
                         {
                             useMesinWaktu(&in_progress_list, &tas, &waktu);
                             printf("Mesin Waktu berhasil digunakan!\n");
-                            opsi_gadget_valid = true;
                         }
-                        else if (kode_gadget == 0)
-                        {
-                            printf("Kembali ke menu awal...\n");
-                            opsi_gadget_valid = true;
-                        }
-                        else
-                        {
-                            printf("Masukan tidak valid!\n");
-                            printf("Enter Opsi: ");
-                            advWord();
-                            opsi_gadget = getAngka();
-                            printf("%d\n", opsi_gadget);
-                        }
-                    } while (!opsi_gadget_valid);
+                    }
                 }
             }
             else if (isWordSame(currentWord, chelp))
@@ -406,7 +400,7 @@ int main()
                 printf("List Command: \n");
                 printf("MOVE        --> menggerakan mobita\n");
                 printf("PICKUP      --> mengambil pesanan (harus di lokasi yang ada pesanannya)\n");
-                printf("DROPFF      --> mengantar pesanan (menurunkan barang terakhir yang di PICKUP dan harus di lokasi tujuan pesanan)\n");
+                printf("DROPOFF      --> mengantar pesanan (menurunkan barang terakhir yang di PICKUP dan harus di lokasi tujuan pesanan)\n");
                 printf("MAP         --> menampilkan peta\n");
                 printf("TODO        --> menampilkan daftar pesanan yang ada\n");
                 printf("INPROGRESS  --> menampilkan daftar pesanan yang sedang dibawa mobita\n");
