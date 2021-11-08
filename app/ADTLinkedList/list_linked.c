@@ -270,19 +270,37 @@ boolean isPickUpAble(LinkedList *to_do_list, Loc mobita)
 
 void removePesananDariToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val)
 {
-  Address p;
+  Address p, before;
+  boolean found;
   p = FIRST(*to_do_list);
-  boolean found = false;
-  while (!found)
+  if (NEXT(p) == NULL)
+  {
+    *val = INFO(p);
+    FIRST(*to_do_list) = NULL;
+    free(p);
+  }
+  else
   {
     if (INFO(p).pickup == mobita.locname)
     {
       *val = INFO(p);
-      found = true;
+      FIRST(*to_do_list) = NEXT(p);
+      free(p);
     }
     else
     {
+      before = p;
       p = NEXT(p);
+      while (p != NULL && !found)
+      {
+        if (INFO(p).pickup == mobita.locname)
+        {
+          *val = INFO(p);
+          found = true;
+          NEXT(before) = NEXT(p);
+          free(p);
+        }
+      }
     }
   }
 };
@@ -363,8 +381,10 @@ void displayToDoList(LinkedList to_do_list)
         break;
       case 'H':
         printf("Heavy Item)\n");
+        break;
       case 'P':
         printf("Perishable Item)\n");
+        break;
       default:
         break;
       }
