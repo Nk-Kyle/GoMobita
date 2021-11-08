@@ -48,7 +48,7 @@ void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean
         MELM(*Adj_mat,i,j) = x;
       }
     }
-    makeMap (map, size_n, size_m, daftar_lokasi);
+    makeMap (map, size_n, size_m, *daftar_lokasi);
     CreatePrioQueue(orders);
     fadvWord();
     n_orders = getAngka(currentWord);

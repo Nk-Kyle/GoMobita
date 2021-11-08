@@ -39,7 +39,7 @@ int convertToInt(char val, ListDin daftar_lokasi);
 void move(Matrix matAjc, ListDin daftar_lokasi,Loc *mobita);
 /*menampilkan menu perpindahan, posisi yang bisa dicapai*/
 
-void pintuKemanaSaja(ListDin dafta_lokasi, Loc *mobita)
+void pintuKemanaSaja(ListDin daftar_lokasi, Loc *mobita);
 /*spesial ability, bisa pindah kemana saja, kelokasi yang diinginkan*/
 
 

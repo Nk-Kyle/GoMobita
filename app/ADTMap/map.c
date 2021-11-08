@@ -1,7 +1,8 @@
 #include "map.h"
 #include "../ADTColor/pcolor.h"
 #include <stdio.h>
-
+#include "../ADTWordMachine/charmachine.h"
+#include "../ADTWordMachine/wordmachine.h"
 void CreateMap(int i, int j, map *m){
     bariseff(*m) = i;
     kolomeff(*m) = j;
@@ -172,11 +173,12 @@ void move(Matrix matAjc, ListDin daftar_lokasi,Loc *mobita){
         }
     }
 
-    
+
     printf("Posisi yang dipilih yang dipilih: \n");
     printf("\n");
     printf("ENTER COMMAND :");
-    scanf("%d\n", &pilih);
+    advWord();
+    pilih = getAngka();
     // while ( pilih < 1 && pilih > k){
     //     printf("Masukkan tidak valid. Ulangi\n");
     //     scanf("%d", &pilih);
@@ -214,7 +216,8 @@ void pintuKemanaSaja(ListDin daftar_lokasi, Loc *mobita){
   printf("Posisi yang dipilih yang dipilih: \n");
   printf("\n");
   printf("ENTER COMMAND :");
-  scanf("%d\n", &pilih);
+  advWord();
+  pilih = getAngka();
 
   Absis(p) = posisiCapai.buffer[pilih-1].coord.X;
   Ordinat(p) = posisiCapai.buffer[pilih-1].coord.Y;

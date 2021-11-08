@@ -11,6 +11,9 @@
 #include "../ADTLinkedList/list_linked.c"
 #include "../ADTMap/map.c"
 #include "in_konfigurasi.c"
+#include "../ADTItem/item.c"
+#include "../ADTLinkedList/node.c"
+#include "../ADTColor/pcolor.c"
 
 int main()
 {
@@ -53,10 +56,15 @@ int main()
     printf("1. New Game\n");
     printf("2. Exit\n");
     printf("3. Load Game\n");
+    printf("Masukkan Menu yang ingin dilakukan (1/2/3): ");
+    startWord();
+    main_menu = getAngka();
     while (main_menu != 1 && main_menu != 2 && main_menu != 3)
     {
+        printf("Inputan salah!");
         printf("Masukkan Menu yang ingin dilakukan (1/2/3): ");
-        scanf("%d", &main_menu);
+        advWord();
+        main_menu = getAngka();
     }
     switch (main_menu)
     {
@@ -91,14 +99,16 @@ int main()
             konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
         }
         // inisialisasi lainnya
+        uang = 0;
         waktu = 0;
         waktu_speed = 0;
         satuan_waktu = 1;
+        speed_up = 0;
         mobita = MakeLoc(daftar_lokasi.buffer[0].locname, daftar_lokasi.buffer[0].coord.X, daftar_lokasi.buffer[0].coord.Y);
         // GAME START
         while (/*!isEmpty(daftar_pesanan) || mobita!=lokasi_HQ sementara gini*/ !isWordSame(currentWord, cexit))
         {
-            printf("Lokasi Mobita   :");
+            printf("Lokasi Mobita   : ");
             DispLoc(mobita);
             printf("\nUang Mobita     : %d\n", uang);
             printf("Waktu           : %d\n", waktu);
@@ -125,7 +135,7 @@ int main()
             }
             else if (isWordSame(currentWord, cpick_up))
             {
-                if (pickUpAble(&to_do_list, mobita))
+                if (isPickUpAble(&to_do_list, mobita))
                 {
                     removePesananDariToDo(&to_do_list, mobita, &pesanan);
                     insertLinkedListFirst(&in_progress_list, pesanan);
