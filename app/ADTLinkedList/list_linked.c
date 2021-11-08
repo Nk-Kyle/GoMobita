@@ -247,7 +247,7 @@ void updateInProgressList(LinkedList *in_progress_list, int waktu)
       if (waktu - INFO(p).pickuptime == INFO(p).exp)
       {
         deleteLinkedListAt(in_progress_list, i, &val);
-        print_red("Suatu Perishable item Expired\n");
+        printf("Suatu Perishable item Expired\n");
       }
     }
     p = NEXT(p);

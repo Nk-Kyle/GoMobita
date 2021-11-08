@@ -24,6 +24,7 @@ int main()
     float waktu_speed;           // waktu saat speed up aktif
     float satuan_waktu;          // satuan waktu yang akan bertambah setiap mobita bergarak
     int speed_up;                // lama speed_up berefek
+    int jumlah_antaran;          // jumlah pesanan yang berhasil diantar mobita
     PrioQueue daftar_pesanan;    // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
     LinkedList to_do_list;       // pesanan yang dapat dikerjakan mobita
     LinkedList in_progress_list; // pesanan yang sedang dolakukan mobita
@@ -105,9 +106,10 @@ int main()
         waktu_speed = 0;
         satuan_waktu = 1;
         speed_up = 0;
+        jumlah_antaran = 0;
         mobita = MakeLoc(daftar_lokasi.buffer[0].locname, daftar_lokasi.buffer[0].coord.X, daftar_lokasi.buffer[0].coord.Y);
         // GAME START
-        while (/*!isEmpty(daftar_pesanan) || mobita!=lokasi_HQ sementara gini*/ !isWordSame(currentWord, cexit))
+        while (!isWordSame(currentWord, cexit) && mobita.locname != '8' || !isEmpty(daftar_pesanan) || !isEmptyLinkedList(to_do_list) || !isEmptyLinkedList(in_progress_list))
         {
             printf("Lokasi Mobita   : ");
             DispLoc(mobita);
@@ -170,6 +172,7 @@ int main()
                 {
                     popTas(&tas, &pesanan);
                     deleteLinkedListFirst(&in_progress_list, &pesanan);
+                    jumlah_antaran++;
                     switch (pesanan.itype)
                     {
                     case 'N':
@@ -412,6 +415,12 @@ int main()
             {
                 printf("Command Tidak Sesuai, masukkan HELP untuk melihat daftar command yang ada\n");
             }
+        }
+        if (!isWordSame(currentWord, cexit))
+        {
+            printf("Selamat!!!! Game Berhasil Diselesaikan\n");
+            printf("Jumlah pesanan yang berhasil diantar: %d\n", jumlah_antaran);
+            printf("Lama waktu game: %d satuan\n", waktu);
         }
     }
 }
