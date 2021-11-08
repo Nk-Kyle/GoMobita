@@ -369,6 +369,7 @@ void displayToDoList(LinkedList to_do_list)
         break;
       }
       i++;
+      p = NEXT(p);
     }
   }
 };
@@ -396,6 +397,7 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
         break;
       case 'H':
         printf("Heavy Item) ");
+        break;
       case 'P':
         printf("Perishable Item ");
       default:
@@ -408,6 +410,7 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
       }
       printf("\n");
       i++;
+      p = NEXT(p);
     }
   }
 };
