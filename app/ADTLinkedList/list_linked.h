@@ -40,12 +40,6 @@ void setElmtLinkedList(LinkedList *l, int idx, Pesanan val);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length(l) */
 /* F.S. Mengubah elemen l pada indeks ke-idx menjadi val */
 
-int indexOfLinkedList(LinkedList l, Pesanan val);
-/* I.S. l, val terdefinisi */
-/* F.S. Mencari apakah ada elemen list l yang bernilai val */
-/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
-/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
-
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void insertLinkedListFirst(LinkedList *l, Pesanan val);
@@ -92,14 +86,6 @@ void displayLinkedList(LinkedList l);
 
 int lengthLinkedList(LinkedList l);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-/****************** PROSES TERHADAP LIST ******************/
-LinkedList concat(LinkedList l1, LinkedList l2);
-/* I.S. l1 dan l2 sembarang */
-/* F.S. l1 dan l2 kosong, l3 adalah hasil konkatenasi l1 & l2 */
-/* Konkatenasi dua buah list : l1 dan l2    */
-/* menghasilkan l3 yang baru (dengan elemen list l1 dan l2 secara beurutan). */
-/* Tidak ada alokasi/dealokasi pada prosedur ini */
 
 /****************** OPERASI MOBITA ******************/
 void updateToDoList(PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu);

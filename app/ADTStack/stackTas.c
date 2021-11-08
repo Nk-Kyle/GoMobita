@@ -78,24 +78,24 @@ void updateTas(StackTas *s, int waktu)
     {
       if ((waktu - PickupTime(TOP(*s))) == Exp(TOP(*s)))
       {
-        popTas(&s, &item);
+        popTas(s, &item);
       }
       else
       {
-        popTas(&s, &item);
+        popTas(s, &item);
         pushTas(&sTemp, item);
       }
     }
     else
     {
-      popTas(&s, &item);
+      popTas(s, &item);
       pushTas(&sTemp, item);
     }
   }
   while (!isTasEmpty(sTemp))
   {
     popTas(&sTemp, &item);
-    pushTas(&s, item);
+    pushTas(s, item);
   }
 }
 
