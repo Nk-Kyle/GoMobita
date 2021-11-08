@@ -126,4 +126,9 @@ void useKainPembungkusWaktu(LinkedList *in_progress_list, StackTas *tas, int wak
 void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas, int *waktu);
 /* I.S. in_progress_listdan tas  terdefinisi dan mungkin kosong*/
 /* F.S. Mengurangi waktu sebanyak 50 satuan (minimal 0) dan Pesanan yang dapat expired dikembalikan ke waktu expired awal*/
+
+void displayToDoList(LinkedList to_do_list);
+/* I.S. to_do_list terdefinisi dan mungkin kosong*/
+/* F.S. menampilkan to_do_list*/
+
 #endif

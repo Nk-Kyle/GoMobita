@@ -392,3 +392,35 @@ void useMesinWaktu(LinkedList *in_progress_list, StackTas *tas, int *waktu)
     pushTas(&tas, val);
   }
 };
+
+void displayToDoList(LinkedList to_do_list)
+{
+  Address p;
+  int i;
+  if (isEmptyLinkedList(to_do_list))
+  {
+    printf("To Do List Kosong\n");
+  }
+  else
+  {
+    p = FIRST(to_do_list);
+    i = 1;
+    printf("Pesanan pada To Do List:\n");
+    while (p != NULL)
+    {
+      printf("%d. %c --> %c (", i, p->info.pickup, p->info.dropoff);
+      switch (p->info.itype)
+      {
+      case 'N':
+        printf("Normal Item)\n");
+        break;
+      case 'H':
+        printf("Heavy Item)\n");
+      case 'P':
+        printf("Perishable Item)\n");
+      default:
+        break;
+      }
+    }
+  }
+};
