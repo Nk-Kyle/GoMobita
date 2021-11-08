@@ -131,4 +131,8 @@ void displayToDoList(LinkedList to_do_list);
 /* I.S. to_do_list terdefinisi dan mungkin kosong*/
 /* F.S. menampilkan to_do_list*/
 
+void displayInProgressList(LinkedList in_progress_list, int waktu);
+/* I.S. in_progress_list terdefinisi dan mungkin kosong*/
+/* F.S. menampilkan in_progress_list*/
+
 #endif

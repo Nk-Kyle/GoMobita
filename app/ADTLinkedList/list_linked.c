@@ -421,6 +421,46 @@ void displayToDoList(LinkedList to_do_list)
       default:
         break;
       }
+      i++;
+    }
+  }
+};
+
+void displayInProgressList(LinkedList in_progress_list, int waktu)
+{
+  Address p;
+  int i;
+  if (isEmptyLinkedList(in_progress_list))
+  {
+    printf("To Do List Kosong\n");
+  }
+  else
+  {
+    p = FIRST(in_progress_list);
+    i = 1;
+    printf("Pesanan pada To Do List:\n");
+    while (p != NULL)
+    {
+      printf("%d. ", i);
+      switch (p->info.itype)
+      {
+      case 'N':
+        printf("Normal Item ");
+        break;
+      case 'H':
+        printf("Heavy Item) ");
+      case 'P':
+        printf("Perishable Item ");
+      default:
+        break;
+      }
+      printf("(Tujuan : %c)", p->info.dropoff);
+      if (p->info.itype == 'C')
+      {
+        printf(", (Expired in: %d)", (p->info.exp + p->info.pickuptime - waktu));
+      }
+      printf("\n");
+      i++;
     }
   }
 };
