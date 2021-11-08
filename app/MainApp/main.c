@@ -78,6 +78,7 @@ int main()
         CreateLinkedList(&in_progress_list);
         CreatePrioQueue(&daftar_pesanan);
         CreateTas(&tas);
+        CreateListGadget(&inventory_gadget);
         // inisialisasi Command
         cexit = makeWord("EXIT");              // keluar (untuk sementara)
         cmove = makeWord("MOVE");              // mobita bergerak
@@ -163,7 +164,7 @@ int main()
                 }
                 else
                 {
-                    printf("Tidak Ada Pesanan yang dapat di pick up");
+                    printf("Tidak Ada Pesanan yang dapat di pick up\n");
                 }
             }
             else if (isWordSame(currentWord, cdrop_off))
@@ -221,101 +222,108 @@ int main()
                 int opsi_beli;
                 boolean opsi_beli_valid = false;
 
-                printf("Uang Anda sekarang: %d\n", uang);
-                printf("Gadget yang tersedia:\n");
-                printf("1. Kain Pembungkus Waktu (800 Yen)\n");
-                printf("2. Senter Pembesar (1200 Yen)\n");
-                printf("3. Pintu Kemana Saja (1500 Yen)\n");
-                printf("4. Mesin Waktu (3000 Yen)\n");
-                printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n\n");
-                printf("ENTER COMMAND: ");
-                advWord();
-                opsi_beli = getAngka();
-                printf("%d\n", opsi_beli);
-
-                if (isGadgetFull(inventory_gadget)) /* Cek kasus inventory penuh */
+                if (mobita.locname == '8')
                 {
-                    printf("Inventory gadget penuh!\n");
-                    printf("Kembali ke menu awal...\n");
+                    printf("Uang Anda sekarang: %d\n", uang);
+                    printf("Gadget yang tersedia:\n");
+                    printf("1. Kain Pembungkus Waktu (800 Yen)\n");
+                    printf("2. Senter Pembesar (1200 Yen)\n");
+                    printf("3. Pintu Kemana Saja (1500 Yen)\n");
+                    printf("4. Mesin Waktu (3000 Yen)\n");
+                    printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n\n");
+                    printf("ENTER COMMAND: ");
+                    advWord();
+                    opsi_beli = getAngka();
+                    printf("%d\n", opsi_beli);
+
+                    if (isGadgetFull(inventory_gadget)) /* Cek kasus inventory penuh */
+                    {
+                        printf("Inventory gadget penuh!\n");
+                        printf("Kembali ke menu awal...\n");
+                    }
+                    else
+                    {
+                        do
+                        {
+                            if (opsi_beli == 1)
+                            {
+                                if (uang >= 800)
+                                {
+                                    uang = uang - 800;
+                                    insertGadget(&inventory_gadget, opsi_beli);
+                                    printf("Kain Pembungkus Waktu berhasil dibeli!\n");
+                                    printf("Uang Anda sekarang: %d\n", uang);
+                                }
+                                else
+                                {
+                                    printf("Uang tidak cukup untuk membeli gadget!\n");
+                                }
+                                opsi_beli_valid = true;
+                            }
+                            else if (opsi_beli == 2)
+                            {
+                                if (uang >= 1200)
+                                {
+                                    uang = uang - 1200;
+                                    insertGadget(&inventory_gadget, opsi_beli);
+                                    printf("Senter Pembesar berhasil dibeli!\n");
+                                    printf("Uang Anda sekarang: %d\n", uang);
+                                }
+                                else
+                                {
+                                    printf("Uang tidak cukup untuk membeli gadget!\n");
+                                }
+                                opsi_beli_valid = true;
+                            }
+                            else if (opsi_beli == 3)
+                            {
+                                if (uang >= 1500)
+                                {
+                                    uang = uang - 1500;
+                                    insertGadget(&inventory_gadget, opsi_beli);
+                                    printf("Pintu Kemana Saja berhasil dibeli!\n");
+                                    printf("Uang Anda sekarang: %d\n", uang);
+                                }
+                                else
+                                {
+                                    printf("Uang tidak cukup untuk membeli gadget!\n");
+                                }
+                                opsi_beli_valid = true;
+                            }
+                            else if (opsi_beli == 4)
+                            {
+                                if (uang >= 3000)
+                                {
+                                    uang = uang - 3000;
+                                    insertGadget(&inventory_gadget, opsi_beli);
+                                    printf("Mesin Waktu berhasil dibeli!\n");
+                                    printf("Uang Anda sekarang: %d\n", uang);
+                                }
+                                else
+                                {
+                                    printf("Uang tidak cukup untuk membeli gadget!\n");
+                                }
+                                opsi_beli_valid = true;
+                            }
+                            else if (opsi_beli == 0)
+                            {
+                                printf("Kembali ke menu awal...\n");
+                                opsi_beli_valid = true;
+                            }
+                            else
+                            {
+                                printf("Masukan tidak valid!\n");
+                                printf("ENTER COMMAND: ");
+                                advWord();
+                                opsi_beli = getAngka();
+                                printf("%d\n", opsi_beli);
+                            }
+                        } while (!opsi_beli_valid);
+                    }
                 }
                 else
                 {
-                    do
-                    {
-                        if (opsi_beli == 1)
-                        {
-                            if (uang >= 800)
-                            {
-                                uang = uang - 800;
-                                insertGadget(&inventory_gadget, opsi_beli);
-                                printf("Kain Pembungkus Waktu berhasil dibeli!\n");
-                                printf("Uang Anda sekarang: %d\n", uang);
-                            }
-                            else
-                            {
-                                printf("Uang tidak cukup untuk membeli gadget!\n");
-                            }
-                            opsi_beli_valid = true;
-                        }
-                        else if (opsi_beli == 2)
-                        {
-                            if (uang >= 1200)
-                            {
-                                uang = uang - 1200;
-                                insertGadget(&inventory_gadget, opsi_beli);
-                                printf("Senter Pembesar berhasil dibeli!\n");
-                                printf("Uang Anda sekarang: %d\n", uang);
-                            }
-                            else
-                            {
-                                printf("Uang tidak cukup untuk membeli gadget!\n");
-                            }
-                            opsi_beli_valid = true;
-                        }
-                        else if (opsi_beli == 3)
-                        {
-                            if (uang >= 1500)
-                            {
-                                uang = uang - 1500;
-                                insertGadget(&inventory_gadget, opsi_beli);
-                                printf("Pintu Kemana Saja berhasil dibeli!\n");
-                                printf("Uang Anda sekarang: %d\n", uang);
-                            }
-                            else
-                            {
-                                printf("Uang tidak cukup untuk membeli gadget!\n");
-                            }
-                            opsi_beli_valid = true;
-                        }
-                        else if (opsi_beli == 4)
-                        {
-                            if (uang >= 3000)
-                            {
-                                uang = uang - 3000;
-                                insertGadget(&inventory_gadget, opsi_beli);
-                                printf("Mesin Waktu berhasil dibeli!\n");
-                                printf("Uang Anda sekarang: %d\n", uang);
-                            }
-                            else
-                            {
-                                printf("Uang tidak cukup untuk membeli gadget!\n");
-                            }
-                            opsi_beli_valid = true;
-                        }
-                        else if (opsi_beli == 0)
-                        {
-                            printf("Kembali ke menu awal...\n");
-                            opsi_beli_valid = true;
-                        }
-                        else
-                        {
-                            printf("Masukan tidak valid!\n");
-                            printf("ENTER COMMAND: ");
-                            advWord();
-                            opsi_beli = getAngka();
-                            printf("%d\n", opsi_beli);
-                        }
-                    } while (!opsi_beli_valid);
+                    printf("Anda harus kembali ke headquarter!\n");
                 }
             }
             else if (isWordSame(currentWord, cinvetory))
@@ -339,7 +347,7 @@ int main()
 
                 displayListGadget(inventory_gadget);
                 printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n\n");
-                printf("ENTER COMMAND: ");
+                printf("Enter Opsi: ");
                 advWord();
                 opsi_gadget = getAngka();
                 printf("%d\n", opsi_gadget);
@@ -385,7 +393,7 @@ int main()
                         else
                         {
                             printf("Masukan tidak valid!\n");
-                            printf("ENTER COMMAND: ");
+                            printf("Enter Opsi: ");
                             advWord();
                             opsi_gadget = getAngka();
                             printf("%d\n", opsi_gadget);
