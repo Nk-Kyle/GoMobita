@@ -76,6 +76,7 @@ int main()
         CreateLinkedList(&to_do_list);
         CreateLinkedList(&in_progress_list);
         CreatePrioQueue(&daftar_pesanan);
+        CreateTas(&tas);
         // inisialisasi Command
         cexit = makeWord("EXIT");              // keluar (untuk sementara)
         cmove = makeWord("MOVE");              // mobita bergerak

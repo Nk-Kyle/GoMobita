@@ -52,16 +52,20 @@ void printMap(map m, ListDin daftar_lokasi, Matrix mat_adj, Loc mobita, LinkedLi
   mobita_c = Name(mobita); //char lokasi (nama lokasi mobita)
   foundLoc = false;
   i = 0;
+  printf("1");
   while (!foundLoc){
     if (Name(ELMT(daftar_lokasi,i)) == mobita_c) foundLoc = true;
     else i++;
   }
+  printf("2");
   // Ketemu indeks lokasi mobita sekarang
   for (j = 0; j < lengthList(daftar_lokasi); j++){
     if (MELM(mat_adj,i,j) == 1) warna[j] = 'G';
     else warna[j] = 'N';
   }
   p = ToDo;
+  printf("3");
+  foundLoc = false;
   while(p != NULL){
     curr_c = Pickup(INFO(p));
     j = 0;
@@ -71,18 +75,26 @@ void printMap(map m, ListDin daftar_lokasi, Matrix mat_adj, Loc mobita, LinkedLi
     }
     warna[j] = 'R';
   }
-  curr_c = Dropoff(TOP(Tas));
-  j = 0;
-  while (!foundLoc){
-    if (Name(ELMT(daftar_lokasi,j)) == curr_c) foundLoc = true;
-    else j++;
+  printf("4");
+  if (!isTasEmpty(Tas)){
+    printf("4c");
+    curr_c = Dropoff(TOP(Tas));
+
+    j = 0;
+    foundLoc = false;
+    while (!foundLoc){
+      if (Name(ELMT(daftar_lokasi,j)) == curr_c) foundLoc = true;
+      else j++;
+    }
   }
+  printf("5");
   warna[j] = 'B';
   j = 0;
   while (!foundLoc){
     if (Name(ELMT(daftar_lokasi,j)) == mobita_c) foundLoc = true;
     else j++;
   }
+  printf("6");
   warna[j] = 'Y';
   for (i = 0; i < bariseff(m); i++){
     for(j = 0; j < kolomeff(m); j++){
@@ -114,6 +126,7 @@ void printMap(map m, ListDin daftar_lokasi, Matrix mat_adj, Loc mobita, LinkedLi
     }
     printf("\n");
   }
+  printf("7");
 }
 
 char convertToChar(int val, ListDin daftar_lokasi){
@@ -165,6 +178,7 @@ void move(Matrix matAjc, ListDin daftar_lokasi,Loc *mobita){
                 if(daftar_lokasi.buffer[k].locname == a){
                     locx = daftar_lokasi.buffer[k].coord.X;
                     locy = daftar_lokasi.buffer[k].coord.Y;
+                    growList(&posisiCapai,1);
                     insertLast(&posisiCapai, MakeLoc(a,locx,locy));
                 }
             }

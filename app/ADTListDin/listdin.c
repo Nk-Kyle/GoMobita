@@ -13,6 +13,7 @@ void CreateListDin(ListDin *l, int capacity){
   NEFF(*l) = 0;
   CAPACITY(*l) = capacity;
   BUFFER(*l) = (Loc *) malloc(sizeof(Loc) * capacity);
+
 }
 void dealocate(ListDin *l){
 /* I.S. l terdefinisi; */
