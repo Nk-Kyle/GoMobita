@@ -72,4 +72,5 @@ void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean
       }
       penqueue(orders, QEl);
     }
+  fclose(ftape);
 }
