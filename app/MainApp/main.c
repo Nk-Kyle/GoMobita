@@ -140,7 +140,12 @@ int main()
             }
             else if (isWordSame(currentWord, cpick_up))
             {
-                if (isPickUpAble(&to_do_list, mobita))
+                if (isTasFull(tas))
+                {
+                    printf("Tas penuh! Barang tidak bisa di pick up\n");
+                }
+
+                else if (isPickUpAble(&to_do_list, mobita))
                 {
                     removePesananDariToDo(&to_do_list, mobita, &pesanan);
                     pesanan.pickuptime = waktu;
