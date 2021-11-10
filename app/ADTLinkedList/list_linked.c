@@ -228,7 +228,14 @@ void updateToDoList(PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu)
     {
       Pesanan temp;
       dequeue(daftarPesanan, &temp);
-      insertLinkedListLast(toDoList, temp);
+      if (temp.itype == 'V')
+      {
+        insertLinkedListFirst(toDoList, temp);
+      }
+      else
+      {
+        insertLinkedListLast(toDoList, temp);
+      }
     }
   }
 }
@@ -268,6 +275,32 @@ boolean isPickUpAble(LinkedList *to_do_list, Loc mobita)
     p = NEXT(p);
   }
   return false;
+};
+
+boolean adaVIPItemDiTempatLain(LinkedList to_do_list, Loc mobita)
+{
+  Address p;
+  boolean found = false;
+  p = FIRST(to_do_list);
+  while (p != NULL)
+  {
+    if (INFO(p).pickup == mobita.locname)
+    {
+      if (INFO(p).itype == 'V')
+      {
+        return false;
+      }
+    }
+    else
+    {
+      if (INFO(p).itype == 'V')
+      {
+        found = true;
+      }
+    }
+    p = NEXT(p);
+  }
+  return found;
 };
 
 void removePesananDariToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val)
@@ -389,6 +422,9 @@ void displayToDoList(LinkedList to_do_list)
       case 'P':
         printf("Perishable Item)\n");
         break;
+      case 'V':
+        printf("VIP Item)\n");
+        break;
       default:
         break;
       }
@@ -404,7 +440,7 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
   int i;
   if (isEmptyLinkedList(in_progress_list))
   {
-    printf("To Do List Kosong\n");
+    printf("In Progress List Kosong\n");
   }
   else
   {
@@ -424,6 +460,10 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
         break;
       case 'P':
         printf("Perishable Item ");
+        break;
+      case 'V':
+        printf("VIP Item ");
+        break;
       default:
         break;
       }
@@ -436,5 +476,20 @@ void displayInProgressList(LinkedList in_progress_list, int waktu)
       i++;
       p = NEXT(p);
     }
+  }
+};
+
+void returnToSender(LinkedList *to_do_list, LinkedList *in_progress_list, StackTas *tas)
+{
+  Pesanan val;
+  while (!isEmptyLinkedList(*in_progress_list))
+  {
+    deleteLinkedListFirst(in_progress_list, &val);
+  }
+
+  while (!isTasEmpty(*tas))
+  {
+    popTas(tas, &val);
+    insertLinkedListLast(to_do_list, val);
   }
 };

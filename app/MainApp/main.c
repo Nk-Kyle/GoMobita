@@ -25,6 +25,7 @@ int main()
     float satuan_waktu;          // satuan waktu yang akan bertambah setiap mobita bergarak
     int speed_up;                // lama speed_up berefek
     int jumlah_antaran;          // jumlah pesanan yang berhasil diantar mobita
+    int return_barang;           // ability return barang yang didapat ketika mengantar VIP item
     PrioQueue daftar_pesanan;    // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
     LinkedList to_do_list;       // pesanan yang dapat dikerjakan mobita
     LinkedList in_progress_list; // pesanan yang sedang dolakukan mobita
@@ -34,6 +35,7 @@ int main()
     ListDin daftar_lokasi;       // lokasi-lokasi yang ada
     map peta;                    // peta lokasi-lokasi yang ada
     Pesanan pesanan;
+    Address p;
 
     // input command user
     Word cexit;        // keluar (untuk sementara)
@@ -46,6 +48,7 @@ int main()
     Word cbuy;         // mobita membeli gadget
     Word cinvetory;    // menampilkan gadget yang mobita punya
     Word chelp;        // menampilkan list command yang ada
+    Word creturn;      // mengembalikan pesanan di tas ke tempat semulanya
 
     // input lainnya
     int main_menu = 0; // pilihan user di main menu
@@ -89,7 +92,8 @@ int main()
         cin_progress = makeWord("INPROGRESS"); // menampilkan pensanan yang ada di in_progress_list
         cbuy = makeWord("BUY");                // mobita membeli gadget
         cinvetory = makeWord("INVENTORY");     // menampilkan gadget yang mobita punya
-        chelp = makeWord("HELP");
+        chelp = makeWord("HELP");              // menampilkan list command yang ada
+        creturn = makeWord("RETURN");          // mengembalikan pesanan di tas ke tempat semulanya
 
         printf("Masukkan File Konfigurasi: ");
         startWord();
@@ -108,6 +112,7 @@ int main()
         satuan_waktu = 1;
         speed_up = 0;
         jumlah_antaran = 0;
+        return_barang = 0;
         mobita = MakeLoc(daftar_lokasi.buffer[0].locname, daftar_lokasi.buffer[0].coord.X, daftar_lokasi.buffer[0].coord.Y);
         // GAME START
         while (!isWordSame(currentWord, cexit) && mobita.locname != '8' || !isEmpty(daftar_pesanan) || !isEmptyLinkedList(to_do_list) || !isEmptyLinkedList(in_progress_list))
@@ -140,31 +145,46 @@ int main()
             }
             else if (isWordSame(currentWord, cpick_up))
             {
-                if (isTasFull(tas))
+                if (TOP(tas).itype == 'V')
+                {
+                    printf("Pesanan Gagal di Pickup, Anda Harus mengantarkan pesanan VIP terlebih dahulu!\n");
+                }
+                else if (isTasFull(tas))
                 {
                     printf("Tas penuh! Barang tidak bisa di pick up\n");
                 }
 
                 else if (isPickUpAble(&to_do_list, mobita))
                 {
-                    removePesananDariToDo(&to_do_list, mobita, &pesanan);
-                    pesanan.pickuptime = waktu;
-                    insertLinkedListFirst(&in_progress_list, pesanan);
-                    pushTas(&tas, pesanan);
-                    switch (pesanan.itype)
+                    if (adaVIPItemDiTempatLain(to_do_list, mobita))
                     {
-                    case 'N':
-                        printf("Normal Item Berhasil di Pick Up\n");
-                        break;
-                    case 'H':
-                        printf("Heavy Item Berhasil di Pick Up, Speed Mobita akan berkurang\n");
-                        satuan_waktu += 1;
-                        speed_up = 0;
-                        break;
-                    case 'P':
-                        printf("Perishable Item Berhasil di Pick Up\n");
-                    default:
-                        break;
+                        printf("Pesanan gagal diambil karena ada pesanan VIP di tempat lain\n");
+                    }
+                    else
+                    {
+                        removePesananDariToDo(&to_do_list, mobita, &pesanan);
+                        pesanan.pickuptime = waktu;
+                        insertLinkedListFirst(&in_progress_list, pesanan);
+                        pushTas(&tas, pesanan);
+                        switch (pesanan.itype)
+                        {
+                        case 'N':
+                            printf("Normal Item Berhasil di Pick Up\n");
+                            break;
+                        case 'H':
+                            printf("Heavy Item Berhasil di Pick Up, Speed Mobita akan berkurang\n");
+                            satuan_waktu += 1;
+                            speed_up = 0;
+                            break;
+                        case 'P':
+                            printf("Perishable Item Berhasil di Pick Up\n");
+                            break;
+                        case 'V':
+                            printf("VIP Item Berhasil di Pickup, VIP Item harus segera diantar!\n");
+                            break;
+                        default:
+                            break;
+                        }
                     }
                 }
                 else
@@ -198,6 +218,10 @@ int main()
                         increaseTas(&tas);
                         printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
                         break;
+                    case 'V':
+                        uang += 600;
+                        printf("VIP item berhasil diantarkan. Uang mobita bertambah 600 Yen\n");
+                        return_barang += 1;
                     default:
                         break;
                     }
@@ -400,17 +424,38 @@ int main()
                     }
                 }
             }
+            else if (isWordSame(currentWord, creturn))
+            {
+                if (TOP(tas).itype == 'V')
+                {
+                    printf("Ability gagal digunakan karena barang VIP Harus Segera Diantar!!!\n");
+                }
+                else
+                {
+                    if (return_barang != 0)
+                    {
+                        returnToSender(&to_do_list, &in_progress_list, &tas);
+                        printf("Barang berhasil dikembalikan ke tempat semula\n");
+                        return_barang--;
+                    }
+                    else
+                    {
+                        printf("Anda tidak memiliki Ability RETURN\n");
+                    }
+                }
+            }
             else if (isWordSame(currentWord, chelp))
             {
                 printf("List Command: \n");
                 printf("MOVE        --> menggerakan mobita\n");
                 printf("PICKUP      --> mengambil pesanan (harus di lokasi yang ada pesanannya)\n");
-                printf("DROPOFF      --> mengantar pesanan (menurunkan barang terakhir yang di PICKUP dan harus di lokasi tujuan pesanan)\n");
+                printf("DROPOFF     --> mengantar pesanan (menurunkan barang terakhir yang di PICKUP dan harus di lokasi tujuan pesanan)\n");
                 printf("MAP         --> menampilkan peta\n");
                 printf("TODO        --> menampilkan daftar pesanan yang ada\n");
                 printf("INPROGRESS  --> menampilkan daftar pesanan yang sedang dibawa mobita\n");
                 printf("BUY         --> membeli gadget (harus di headquarter)\n");
                 printf("INVENTORY   --> menampilkan dan menggunakan list gadget yang dimiliki mobita\n");
+                printf("RETURN      --> mengembalikan barang di tas ke tempat semula. Hanya dapat digunakan jika berhasil mengantar VIP Item\n");
                 printf("HELP        --> menampilkan list commbad yang dapat digunakan\n");
             }
             else if (isWordSame(currentWord, cexit))

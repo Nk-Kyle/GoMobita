@@ -101,6 +101,10 @@ boolean isPickUpAble(LinkedList *to_do_list, Loc mobita);
 /* I.S. to_do_list dan mobita terdefinisi*/
 /* F.S. return true jika pada lokasi mobita ada barang yang dapat di pick up*/
 
+boolean adaVIPItemDiTempatLain(LinkedList to_do_list, Loc mobita);
+/* I.S. to_do_list terdefinisi*/
+/* F.S. return true jika ridak ada VIP item di posisi mobita namun ada VIP item di posisi lain*/
+
 void removePesananDariToDo(LinkedList *to_do_list, Loc mobita, Pesanan *val);
 /* I.S. to_do_list dan mobita terdefinisi, val sembarang. dipastikan ada pesanan yang sesuai dengan lokasi mobita*/
 /* F.S. mengapus pesanan dari to_do_list yang sesuai dengan lokasi mobita */
@@ -120,5 +124,9 @@ void displayToDoList(LinkedList to_do_list);
 void displayInProgressList(LinkedList in_progress_list, int waktu);
 /* I.S. in_progress_list terdefinisi dan mungkin kosong*/
 /* F.S. menampilkan in_progress_list*/
+
+void returnToSender(LinkedList *to_do_list, LinkedList *in_progress_list, StackTas *tas);
+/* I.S. to_do_list ,in_progress_list, dan tas terdefinisi dan mungkin kosong*/
+/* F.S. mengembalikan seluruh pesanan di in_progress_list ke to_do_list dan mengosongkan tas*/
 
 #endif
