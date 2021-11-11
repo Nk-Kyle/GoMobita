@@ -51,3 +51,7 @@ void pop(Stack *s, ElType *val){
     IDX_TOP(*s)--;
   }
 }
+
+int lengthStack(Stack s){
+  return (IDX_TOP(s) + 1);
+}
