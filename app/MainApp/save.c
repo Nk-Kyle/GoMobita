@@ -18,6 +18,11 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
   LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
   ListDin daftar_lokasi, map peta, Word namafile);
 
+void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
+  int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
+  LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
+  ListDin *daftar_lokasi, map *peta, Word namafile);
+
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
   int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
   LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
@@ -77,5 +82,19 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
   }
   fprintf(f, "%d %d\n", bariseff(peta)-2, kolomeff(peta)-2); // baris dan kolom map*/
   fclose(f);
+}
 
+void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
+  int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
+  LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
+  ListDin *daftar_lokasi, map *peta, Word namafile){
+  Pesanan order;
+  int x, y;
+  fstartWord(namafile.contents);
+  x = getAngka();
+  fadvWord();
+  y = getAngka();
+  Absis(Coor(*mobita)) = x;
+  Ordinat(Coor(*mobita)) = y;
+  
 }

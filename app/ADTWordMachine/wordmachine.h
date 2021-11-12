@@ -85,4 +85,7 @@ boolean isWordSame(Word str1, Word str2);
 
 int getAngka();
 /* Mendapatkan angka (integer) dari Currentword */
+
+float getFloat();
+/* Mendapatkan angka desimal (float) dari currentWord */
 #endif

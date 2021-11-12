@@ -4,6 +4,7 @@ int main () {
   Word namafile;
   Word katamove;
   int sum;
+  float afloat;
   printf("Test Input Terminal 1\n");
   printf("Kata 1: ");
   startWord();
@@ -19,9 +20,12 @@ int main () {
   sum += getAngka();
   fadvWord();
   sum += getAngka();
+  fadvWord();
+  afloat = getFloat();
   fclose(ftape);
   //Sudah keluar dari File
-  printf("%d\n", sum);
+  printf("Jumlah angka: %d\n", sum);
+  //printf("nilai float: %f\n", afloat);
   printf("Test Input Terminal 2\nInput kata MOVE\n");
   advWord();
   katamove = makeWord("MOVE");

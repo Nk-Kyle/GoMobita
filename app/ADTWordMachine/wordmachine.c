@@ -146,8 +146,33 @@ boolean isWordSame(Word str1, Word str2){
 int getAngka(){
   int angka = 0;
   int i;
-  for (i = 0; i < currentWord.length; i++){
-    angka = angka*10 + (currentWord.contents[i]- '0');
+  if (currentWord.contents[0] == '-') {
+    for (i = 1; i < currentWord.length; i++){
+      angka = angka*10 + (currentWord.contents[i]- '0');
+    }
+    angka = angka*(-1);
+  }
+  else {
+    for (i = 0; i < currentWord.length; i++){
+      angka = angka*10 + (currentWord.contents[i]- '0');
+    }
+  }
+  return angka;
+}
+
+float getFloat(){
+  float angka = 0;
+  int i = 0;
+  float j = 1;
+  while (i < currentWord.length && currentWord.contents[i] != '.'){
+    angka = angka * 10 + (currentWord.contents[i]- '0');
+    i++;
+  }
+  i++;
+  while(i < currentWord.length){
+    j = j * 10;
+    angka = angka + ((currentWord.contents[i]- '0')/j);
+    i++;
   }
   return angka;
 }
