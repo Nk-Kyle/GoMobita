@@ -51,6 +51,7 @@ int main()
     Word chelp;        // menampilkan list command yang ada
     Word creturn;      // mengembalikan pesanan di tas ke tempat semulanya
     Word csave;        // save kondisi game
+    Word namafile;
 
     // input lainnya
     int main_menu = 0; // pilihan user di main menu
@@ -100,13 +101,15 @@ int main()
 
         printf("Masukkan File Konfigurasi: ");
         startWord();
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
+        namafile = getWord();
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, namafile, &peta);
         while (!berhasil)
         {
             printf("File Konfigurasi tidak valid, mohon coba lagi\n");
             printf("Masukkan File Konfigurasi: ");
             advWord();
-            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
+            namafile = getWord();
+            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, namafile, &peta);
         }
         // inisialisasi lainnya
         uang = 0;
@@ -464,10 +467,11 @@ int main()
             else if (isWordSame(currentWord,csave)){
                 printf("Masukkan File tujuan save: ");
                 advWord();
+                namafile = getWord();
                 save_konfig(mobita, uang, waktu, waktu_speed, satuan_waktu,
                 speed_up, jumlah_antaran, return_barang, daftar_pesanan, to_do_list,
                 in_progress_list, tas, inventory_gadget, adj_matrix,
-                daftar_lokasi, peta, currentWord);
+                daftar_lokasi, peta, namafile);
             }
             else if (isWordSame(currentWord, cexit))
             {

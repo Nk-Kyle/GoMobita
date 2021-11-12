@@ -45,19 +45,21 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
   while (p != NULL){
     order = INFO(p);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
+    p = NEXT(p);
   }
-  /*
   fprintf(f, "%d\n", lengthLinkedList(in_progress_list));
   p = in_progress_list;
   while (p != NULL){
     order = INFO(p);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
+    p = NEXT(p);
   }
-  fprintf(f, "%s\n", lengthTas(tas));
+  fprintf(f, "%d\n", lengthTas(tas));
   while (!isTasEmpty(tas)){
     popTas(&tas, &order);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
   }
+
   for (int i = 0 ; i < 5 ; i++){
     if (i != 4) fprintf(f, "%d ",LGELMT(inventory_gadget,i));
     else fprintf(f, "%d\n", LGELMT(inventory_gadget,i));

@@ -115,4 +115,5 @@ void senterPembesar(StackTas *s)
 int lengthTas(StackTas s){
   int cnt = 0;
   if (!isTasEmpty(s)) cnt += IDX_TOP(s) + 1;
+  return cnt;
 }
