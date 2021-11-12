@@ -14,6 +14,7 @@
 #include "../ADTItem/item.c"
 #include "../ADTLinkedList/node.c"
 #include "../ADTColor/pcolor.c"
+#include "save.c"
 
 int main()
 {
@@ -50,6 +51,8 @@ int main()
     Word cinvetory;    // menampilkan gadget yang mobita punya
     Word chelp;        // menampilkan list command yang ada
     Word creturn;      // mengembalikan pesanan di tas ke tempat semulanya
+    Word csave;        // save kondisi game
+    Word namafile;
 
     // input lainnya
     int main_menu = 0; // pilihan user di main menu
@@ -95,16 +98,19 @@ int main()
         cinvetory = makeWord("INVENTORY");     // menampilkan gadget yang mobita punya
         chelp = makeWord("HELP");              // menampilkan list command yang ada
         creturn = makeWord("RETURN");          // mengembalikan pesanan di tas ke tempat semulanya
+        csave = makeWord("SAVE");
 
         printf("Masukkan File Konfigurasi: ");
         startWord();
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
+        namafile = getWord();
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, namafile, &peta);
         while (!berhasil)
         {
             printf("File Konfigurasi tidak valid, mohon coba lagi\n");
             printf("Masukkan File Konfigurasi: ");
             advWord();
-            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
+            namafile = getWord();
+            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, namafile, &peta);
         }
         // inisialisasi lainnya
         uang = 10000;
@@ -502,6 +508,15 @@ int main()
                 printf("INVENTORY   --> menampilkan dan menggunakan list gadget yang dimiliki mobita\n");
                 printf("RETURN      --> mengembalikan barang di tas ke tempat semula. Hanya dapat digunakan jika berhasil mengantar VIP Item\n");
                 printf("HELP        --> menampilkan list commbad yang dapat digunakan\n");
+            }
+            else if (isWordSame(currentWord,csave)){
+                printf("Masukkan File tujuan save: ");
+                advWord();
+                namafile = getWord();
+                save_konfig(mobita, uang, waktu, waktu_speed, satuan_waktu,
+                speed_up, jumlah_antaran, return_barang, daftar_pesanan, to_do_list,
+                in_progress_list, tas, inventory_gadget, adj_matrix,
+                daftar_lokasi, peta, namafile);
             }
             else if (isWordSame(currentWord, cexit))
             {

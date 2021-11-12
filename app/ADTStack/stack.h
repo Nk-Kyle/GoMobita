@@ -45,5 +45,5 @@ void pop(Stack *s, ElType *val);
 /* Menghapus val dari Stack s */
 /* I.S. s tidak mungkin kosong */
 /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */
-
+int lengthStack(Stack s);
 #endif

@@ -65,5 +65,5 @@ void senterPembesar(StackTas *s);
 /* Meningkatkan kapasitas tas sebesar dua kali lipat */
 /* I.S. currentTasCap tas mungkin maksimal */
 /* F.S. currentTasCap menjadi dua kali lipat tetapi tidak melebihi batas maksimum */
-
+int lengthTas(StackTas s);
 #endif
