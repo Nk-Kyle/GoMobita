@@ -84,6 +84,10 @@ void displayListGadget(ListGadget l)
         {
             printf("Mesin Waktu\n");
         }
+        else if (LGELMT(l, i) == 5)
+        {
+            printf("Senter Pengecil\n");
+        }
         else
         {
             printf("-\n");

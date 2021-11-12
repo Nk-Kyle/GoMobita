@@ -26,6 +26,7 @@ int main()
     int speed_up;                // lama speed_up berefek
     int jumlah_antaran;          // jumlah pesanan yang berhasil diantar mobita
     int return_barang;           // ability return barang yang didapat ketika mengantar VIP item
+    boolean senter_pengecil;     // Menandakan senter pengecil aktif atau tidak
     PrioQueue daftar_pesanan;    // seluruh daftar pesanan yang harus dikerjakan mobita agar game selesai
     LinkedList to_do_list;       // pesanan yang dapat dikerjakan mobita
     LinkedList in_progress_list; // pesanan yang sedang dolakukan mobita
@@ -106,13 +107,14 @@ int main()
             konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, currentWord, &peta);
         }
         // inisialisasi lainnya
-        uang = 0;
+        uang = 10000;
         waktu = 0;
         waktu_speed = 0;
         satuan_waktu = 1;
         speed_up = 0;
         jumlah_antaran = 0;
         return_barang = 0;
+        senter_pengecil = false;
         mobita = MakeLoc(daftar_lokasi.buffer[0].locname, daftar_lokasi.buffer[0].coord.X, daftar_lokasi.buffer[0].coord.Y);
         // GAME START
         while (!isWordSame(currentWord, cexit) && mobita.locname != '8' || !isEmpty(daftar_pesanan) || !isEmptyLinkedList(to_do_list) || !isEmptyLinkedList(in_progress_list))
@@ -207,7 +209,10 @@ int main()
                         break;
                     case 'H':
                         uang += 400;
-                        satuan_waktu -= 1;
+                        if (!senter_pengecil)
+                        {
+                            satuan_waktu -= 1;
+                        }
                         if (satuan_waktu == 1)
                         {
                             speed_up = 10;
@@ -224,6 +229,10 @@ int main()
                         return_barang += 1;
                     default:
                         break;
+                    }
+                    if (senter_pengecil)
+                    {
+                        senter_pengecil = false;
                     }
                 }
                 else
@@ -259,6 +268,7 @@ int main()
                     printf("2. Senter Pembesar (1200 Yen)\n");
                     printf("3. Pintu Kemana Saja (1500 Yen)\n");
                     printf("4. Mesin Waktu (3000 Yen)\n");
+                    printf("5. Senter Pengecil (800 Yen)\n");
                     printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n");
                     printf("Masukkan Opsi: ");
                     advWord();
@@ -325,6 +335,21 @@ int main()
                                     uang = uang - 3000;
                                     insertGadget(&inventory_gadget, opsi_beli);
                                     printf("Mesin Waktu berhasil dibeli!\n");
+                                    printf("Uang Anda sekarang: %d\n", uang);
+                                }
+                                else
+                                {
+                                    printf("Uang tidak cukup untuk membeli gadget!\n");
+                                }
+                                opsi_beli_valid = true;
+                            }
+                            else if (opsi_beli == 5)
+                            {
+                                if (uang >= 800)
+                                {
+                                    uang = uang - 800;
+                                    insertGadget(&inventory_gadget, opsi_beli);
+                                    printf("Senter Pengecil berhasil dibeli!\n");
                                     printf("Uang Anda sekarang: %d\n", uang);
                                 }
                                 else
@@ -420,6 +445,26 @@ int main()
                         {
                             useMesinWaktu(&in_progress_list, &tas, &waktu);
                             printf("Mesin Waktu berhasil digunakan!\n");
+                        }
+                        else if (kode_gadget == 5)
+                        {
+                            if (TOP(tas).itype == 'H')
+                            {
+                                if (senter_pengecil)
+                                {
+                                    printf("Senter Pengecil Sudah Aktif! Senter pengecil ini akan hangus\n");
+                                }
+                                else
+                                {
+                                    printf("Senter Pengecil Berhasil digunakan!\n");
+                                    senter_pengecil = true;
+                                    satuan_waktu--;
+                                }
+                            }
+                            else
+                            {
+                                printf("Barang paling atas di tas bukan Heavy Item! Senter Pengecil akan hangus\n");
+                            }
                         }
                     }
                 }
