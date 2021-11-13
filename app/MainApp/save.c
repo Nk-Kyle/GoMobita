@@ -65,7 +65,7 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
   }
 
-  for (int i = 0 ; i < 5 ; i++){
+  for (int i = 0 ; i < LISTGADGET_CAPACITY ; i++){
     if (i != 4) fprintf(f, "%d ",LGELMT(inventory_gadget,i));
     else fprintf(f, "%d\n", LGELMT(inventory_gadget,i));
   }
@@ -89,12 +89,129 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
   ListDin *daftar_lokasi, map *peta, Word namafile){
   Pesanan order;
-  int x, y;
+  Loc lokasi;
+  int x, y, i;
+  int len;
   fstartWord(namafile.contents);
   x = getAngka();
   fadvWord();
   y = getAngka();
   Absis(Coor(*mobita)) = x;
   Ordinat(Coor(*mobita)) = y;
-  
+  fadvWord();
+  *uang = getAngka();
+  fadvWord();
+  *waktu = getAngka();
+  fadvWord();
+  *waktu_speed = getFloat();
+  fadvWord();
+  *satuan_waktu = getFloat();
+  fadvWord();
+  *speed_up = getAngka();
+  fadvWord();
+  *jumlah_antaran = getAngka();
+  fadvWord();
+  *return_barang = getAngka();
+  fadvWord();
+  len = getAngka();
+  CreatePrioQueue(daftar_pesanan);
+  for (i = 0 ; i < len ; i++){
+    fadvWord();
+    Time(order) = getAngka();
+    fadvWord();
+    Pickup(order) = currentWord.contents[0];
+    fadvWord();
+    Dropoff(order) = currentWord.contents[0];
+    fadvWord();
+    IType(order) = currentWord.contents[0];
+    fadvWord();
+    Exp(order) = getAngka();
+    fadvWord();
+    PickupTime(order) = getAngka();
+    penqueue(daftar_pesanan, order);
+  }
+  fadvWord();
+  len = getAngka();
+  CreateLinkedList(to_do_list);
+  for (i = 0; i < len; i++){
+    fadvWord();
+    Time(order) = getAngka();
+    fadvWord();
+    Pickup(order) = currentWord.contents[0];
+    fadvWord();
+    Dropoff(order) = currentWord.contents[0];
+    fadvWord();
+    IType(order) = currentWord.contents[0];
+    fadvWord();
+    Exp(order) = getAngka();
+    fadvWord();
+    PickupTime(order) = getAngka();
+    insertLinkedListLast(to_do_list, order);
+  }
+  fadvWord();
+  len = getAngka();
+  CreateLinkedList(in_progress_list);
+  for (i = 0; i < len; i++){
+    fadvWord();
+    Time(order) = getAngka();
+    fadvWord();
+    Pickup(order) = currentWord.contents[0];
+    fadvWord();
+    Dropoff(order) = currentWord.contents[0];
+    fadvWord();
+    IType(order) = currentWord.contents[0];
+    fadvWord();
+    Exp(order) = getAngka();
+    fadvWord();
+    PickupTime(order) = getAngka();
+    insertLinkedListLast(in_progress_list, order);
+  }
+  fadvWord();
+  len = getAngka();
+  CreateTas(tas);
+  for (i = 0; i < len; i++){
+    fadvWord();
+    Time(order) = getAngka();
+    fadvWord();
+    Pickup(order) = currentWord.contents[0];
+    fadvWord();
+    Dropoff(order) = currentWord.contents[0];
+    fadvWord();
+    IType(order) = currentWord.contents[0];
+    fadvWord();
+    Exp(order) = getAngka();
+    fadvWord();
+    PickupTime(order) = getAngka();
+    pushTas(tas, order);
+  }
+  reverseTas(tas);
+  CreateListGadget(inventory_gadget);
+  for (int i = 0 ; i < LISTGADGET_CAPACITY ; i++){
+    fadvWord();
+    LGELMT(*inventory_gadget,i) = getAngka();
+  }
+  fadvWord();
+  len = getAngka();
+  CreateMatrix(len,len,adj_matrix);
+  for(int i = 0; i < len; i++){
+    for(int j = 0 ; j < len; j++){
+      fadvWord();
+      MELM(*adj_matrix,i,j) = getAngka();
+    }
+  }
+  CreateListDin(daftar_lokasi,len);
+  for (int i = 0 ; i < len; i++){
+    fadvWord();
+    Name(lokasi) = currentWord.contents[0];
+    fadvWord();
+    Absis(Coor(lokasi)) = getAngka();
+    fadvWord();
+    Ordinat(Coor(lokasi)) = getAngka();
+    ELMT(*daftar_lokasi,i) = lokasi;
+  }
+  fadvWord();
+  x = getAngka();
+  fadvWord();
+  y = getAngka();
+  makeMap(peta, x, y, *daftar_lokasi);
 }

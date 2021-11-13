@@ -117,3 +117,17 @@ int lengthTas(StackTas s){
   if (!isTasEmpty(s)) cnt += IDX_TOP(s) + 1;
   return cnt;
 }
+
+void reverseTas(StackTas *s){
+  StackTas temp;
+  Pesanan item;
+  CreateTas(&temp);
+  while(!isTasEmpty(*s)){
+    popTas(s, &item);
+    pushTas(&temp, item);
+  }
+  while(!isTasEmpty(temp)){
+    popTas(&temp, &item);
+    pushTas(s, item);
+  }
+}

@@ -66,4 +66,8 @@ void senterPembesar(StackTas *s);
 /* I.S. currentTasCap tas mungkin maksimal */
 /* F.S. currentTasCap menjadi dua kali lipat tetapi tidak melebihi batas maksimum */
 int lengthTas(StackTas s);
+/* Mengirimkan banyak isi tas */
+
+void reverseTas(StackTas *s);
+/* membalik urutan isi tas */
 #endif

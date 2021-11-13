@@ -25,7 +25,7 @@ int main () {
   fclose(ftape);
   //Sudah keluar dari File
   printf("Jumlah angka: %d\n", sum);
-  //printf("nilai float: %f\n", afloat);
+  printf("nilai float: %f\n", afloat);
   printf("Test Input Terminal 2\nInput kata MOVE\n");
   advWord();
   katamove = makeWord("MOVE");
