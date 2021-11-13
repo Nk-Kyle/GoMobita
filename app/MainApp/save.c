@@ -15,25 +15,26 @@
 #include "boolean.h"
 
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
-  int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
-  LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
-  ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil);
+                 int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
+                 LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
+                 ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil);
 
 void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
-  int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
-  LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
-  ListDin *daftar_lokasi, map *peta, Word namafile, boolean *senter_pengecil);
+                 int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
+                 LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
+                 ListDin *daftar_lokasi, map *peta, Word namafile, boolean *senter_pengecil);
 
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
-  int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
-  LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
-  ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil){
+                 int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
+                 LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
+                 ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil)
+{
   Pesanan order;
   Address p;
   Loc lokasi;
-  FILE * f;
+  FILE *f;
   f = fopen(namafile.contents, "w");
-  fprintf(f, "%c %d %d\n", Name(mobita),Absis(Coor(mobita)), Ordinat(Coor(mobita)));
+  fprintf(f, "%c %d %d\n", Name(mobita), Absis(Coor(mobita)), Ordinat(Coor(mobita)));
   fprintf(f, "%d\n", uang);
   fprintf(f, "%d\n", waktu);
   fprintf(f, "%f\n", waktu_speed);
@@ -42,61 +43,72 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
   fprintf(f, "%d\n", jumlah_antaran);
   fprintf(f, "%d\n", return_barang);
   fprintf(f, "%d\n", length(daftar_pesanan));
-  while (!isEmpty(daftar_pesanan)){
+  while (!isEmpty(daftar_pesanan))
+  {
     dequeue(&daftar_pesanan, &order);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
   }
   fprintf(f, "%d\n", lengthLinkedList(to_do_list));
   p = to_do_list;
-  while (p != NULL){
+  while (p != NULL)
+  {
     order = INFO(p);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
     p = NEXT(p);
   }
   fprintf(f, "%d\n", lengthLinkedList(in_progress_list));
   p = in_progress_list;
-  while (p != NULL){
+  while (p != NULL)
+  {
     order = INFO(p);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
     p = NEXT(p);
   }
   fprintf(f, "%d\n", lengthTas(tas));
-  while (!isTasEmpty(tas)){
+  while (!isTasEmpty(tas))
+  {
     popTas(&tas, &order);
     fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
   }
 
-  for (int i = 0 ; i < LISTGADGET_CAPACITY ; i++){
-    if (i != 4) fprintf(f, "%d ",LGELMT(inventory_gadget,i));
-    else fprintf(f, "%d\n", LGELMT(inventory_gadget,i));
+  for (int i = 0; i < LISTGADGET_CAPACITY; i++)
+  {
+    if (i != 4)
+      fprintf(f, "%d ", LGELMT(inventory_gadget, i));
+    else
+      fprintf(f, "%d\n", LGELMT(inventory_gadget, i));
   }
   fprintf(f, "%d\n", NEFF(daftar_lokasi));
-  for(int i = 0; i < NEFF(daftar_lokasi); i++){
-    for(int j = 0 ; j < NEFF(daftar_lokasi); j++){
-      fprintf(f, "%d ", MELM(adj_matrix,i,j));
+  for (int i = 0; i < NEFF(daftar_lokasi); i++)
+  {
+    for (int j = 0; j < NEFF(daftar_lokasi); j++)
+    {
+      fprintf(f, "%d ", MELM(adj_matrix, i, j));
     }
     fprintf(f, "\n");
   }
-  for (int i = 0 ; i < NEFF(daftar_lokasi); i++){
-    lokasi = ELMT(daftar_lokasi,i);
-    fprintf(f, "%c %d %d\n", Name(lokasi),Absis(Coor(lokasi)), Ordinat(Coor(lokasi)) );
+  for (int i = 0; i < NEFF(daftar_lokasi); i++)
+  {
+    lokasi = ELMT(daftar_lokasi, i);
+    fprintf(f, "%c %d %d\n", Name(lokasi), Absis(Coor(lokasi)), Ordinat(Coor(lokasi)));
   }
-  fprintf(f, "%d %d\n", bariseff(peta)-2, kolomeff(peta)-2); // baris dan kolom map*/
+  fprintf(f, "%d %d\n", bariseff(peta) - 2, kolomeff(peta) - 2); // baris dan kolom map*/
   fprintf(f, "%d\n", senter_pengecil);
   fclose(f);
 }
 
 void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
-  int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
-  LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
-  ListDin *daftar_lokasi, map *peta, Word namafile, boolean *senter_pengecil){
+                 int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
+                 LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
+                 ListDin *daftar_lokasi, map *peta, Word namafile, boolean *senter_pengecil)
+{
   Pesanan order;
   Loc lokasi;
   int x, y, i;
   int len;
   char c;
   fstartWord(namafile.contents);
-  c = currentWord.contents[0];
+  Name(*mobita) = currentWord.contents[0];
   fadvWord();
   x = getAngka();
   fadvWord();
@@ -120,7 +132,8 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   fadvWord();
   len = getAngka();
   CreatePrioQueue(daftar_pesanan);
-  for (i = 0 ; i < len ; i++){
+  for (i = 0; i < len; i++)
+  {
     fadvWord();
     Time(order) = getAngka();
     fadvWord();
@@ -138,7 +151,8 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   fadvWord();
   len = getAngka();
   CreateLinkedList(to_do_list);
-  for (i = 0; i < len; i++){
+  for (i = 0; i < len; i++)
+  {
     fadvWord();
     Time(order) = getAngka();
     fadvWord();
@@ -156,7 +170,8 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   fadvWord();
   len = getAngka();
   CreateLinkedList(in_progress_list);
-  for (i = 0; i < len; i++){
+  for (i = 0; i < len; i++)
+  {
     fadvWord();
     Time(order) = getAngka();
     fadvWord();
@@ -174,7 +189,8 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   fadvWord();
   len = getAngka();
   CreateTas(tas);
-  for (i = 0; i < len; i++){
+  for (i = 0; i < len; i++)
+  {
     fadvWord();
     Time(order) = getAngka();
     fadvWord();
@@ -191,28 +207,32 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   }
   reverseTas(tas);
   CreateListGadget(inventory_gadget);
-  for (int i = 0 ; i < LISTGADGET_CAPACITY ; i++){
+  for (int i = 0; i < LISTGADGET_CAPACITY; i++)
+  {
     fadvWord();
-    LGELMT(*inventory_gadget,i) = getAngka();
+    LGELMT(*inventory_gadget, i) = getAngka();
   }
   fadvWord();
   len = getAngka();
-  CreateMatrix(len,len,adj_matrix);
-  for(int i = 0; i < len; i++){
-    for(int j = 0 ; j < len; j++){
+  CreateMatrix(len, len, adj_matrix);
+  for (int i = 0; i < len; i++)
+  {
+    for (int j = 0; j < len; j++)
+    {
       fadvWord();
-      MELM(*adj_matrix,i,j) = getAngka();
+      MELM(*adj_matrix, i, j) = getAngka();
     }
   }
-  CreateListDin(daftar_lokasi,len);
-  for (int i = 0 ; i < len; i++){
+  CreateListDin(daftar_lokasi, len);
+  for (int i = 0; i < len; i++)
+  {
     fadvWord();
     Name(lokasi) = currentWord.contents[0];
     fadvWord();
     Absis(Coor(lokasi)) = getAngka();
     fadvWord();
     Ordinat(Coor(lokasi)) = getAngka();
-    ELMT(*daftar_lokasi,i) = lokasi;
+    insertLast(daftar_lokasi, lokasi);
   }
   fadvWord();
   x = getAngka();

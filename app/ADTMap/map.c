@@ -234,9 +234,7 @@ void move(Matrix matAjc, ListDin daftar_lokasi, Loc *mobita)
     }
   }
 
-  printf("Posisi yang dipilih yang dipilih: \n");
-  printf("\n");
-  printf("ENTER COMMAND :");
+  printf("Posisi yang dipilih yang dipilih: ");
   advWord();
   pilih = getAngka();
   // while ( pilih < 1 && pilih > k){
@@ -276,9 +274,7 @@ void pintuKemanaSaja(ListDin daftar_lokasi, Loc *mobita)
     }
   }
 
-  printf("Posisi yang dipilih yang dipilih: \n");
-  printf("\n");
-  printf("ENTER COMMAND :");
+  printf("Posisi yang dipilih yang dipilih: ");
   advWord();
   pilih = getAngka();
 
