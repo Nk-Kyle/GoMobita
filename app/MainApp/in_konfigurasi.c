@@ -18,7 +18,6 @@ void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean
   char name;
   Pesanan QEl;
   fstartWord(namafile.contents);
-  //startWord();
     *berhasil = true;
     size_n = getAngka();
     fadvWord();

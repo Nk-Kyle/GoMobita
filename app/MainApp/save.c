@@ -33,7 +33,7 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
   Loc lokasi;
   FILE * f;
   f = fopen(namafile.contents, "w");
-  fprintf(f, "%d %d\n", Absis(Coor(mobita)), Ordinat(Coor(mobita)));
+  fprintf(f, "%c %d %d\n", Name(mobita),Absis(Coor(mobita)), Ordinat(Coor(mobita)));
   fprintf(f, "%d\n", uang);
   fprintf(f, "%d\n", waktu);
   fprintf(f, "%f\n", waktu_speed);
@@ -94,7 +94,10 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   Loc lokasi;
   int x, y, i;
   int len;
+  char c;
   fstartWord(namafile.contents);
+  c = currentWord.contents[0];
+  fadvWord();
   x = getAngka();
   fadvWord();
   y = getAngka();
