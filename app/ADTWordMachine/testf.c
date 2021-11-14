@@ -2,8 +2,10 @@
 #include "wordmachine.c"
 
 int main() {
-  fstartWord("words.txt");
-  fadvWord();
-  fadvWord();
-  printf("%f\n", getFloat());
+  Word a,b;
+  b= makeWord("test");
+  a = concat("123",b);
+  printf("%s\n", b.contents);
+  printf("%d\n", b.length);
+  printf("%s\n", a.contents);
 }

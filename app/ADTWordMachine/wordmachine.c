@@ -126,7 +126,7 @@ Word makeWord(char str []){
     outW.contents[i] = str[i];
     i++;
   }
-  outW.contents[i+1] = '\0';
+  outW.contents[i] = '\0';
   return outW;
 }
 
@@ -175,4 +175,23 @@ float getFloat(){
     i++;
   }
   return angka;
+}
+
+Word concat(char con [],Word inW){
+  Word outW;
+  int i = 0;
+  int j = 0;
+  outW.length = 0;
+  while(con[i] != '\0'){
+    outW.length++;
+    outW.contents[i] = con[i];
+    i++;
+  }
+  for (j = 0; j < inW.length; j++){
+    outW.length++;
+    outW.contents[i] = inW.contents[j];
+    i++;
+  }
+  outW.contents[i] = '\0';
+  return outW;
 }

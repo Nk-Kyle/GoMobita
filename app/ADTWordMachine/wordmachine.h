@@ -88,4 +88,7 @@ int getAngka();
 
 float getFloat();
 /* Mendapatkan angka desimal (float) dari currentWord */
+
+Word concat(char con [], Word inW);
+/* Menghasilkan Word dengan Isi Word inW diconcat dengan  string con di depannya*/
 #endif

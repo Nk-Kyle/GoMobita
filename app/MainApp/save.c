@@ -3,74 +3,81 @@
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
                  int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
                  LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
-                 ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil)
+                 ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil, boolean *berhasil)
 {
   Pesanan order;
   Address p;
   Loc lokasi;
   FILE *f;
+  namafile = concat("/data/", namafile);
   f = fopen(namafile.contents, "w");
-  fprintf(f, "%c %d %d\n", Name(mobita), Absis(Coor(mobita)), Ordinat(Coor(mobita)));
-  fprintf(f, "%d\n", uang);
-  fprintf(f, "%d\n", waktu);
-  fprintf(f, "%f\n", waktu_speed);
-  fprintf(f, "%f\n", satuan_waktu);
-  fprintf(f, "%d\n", speed_up);
-  fprintf(f, "%d\n", jumlah_antaran);
-  fprintf(f, "%d\n", return_barang);
-  fprintf(f, "%d\n", length(daftar_pesanan));
-  while (!isEmpty(daftar_pesanan))
-  {
-    dequeue(&daftar_pesanan, &order);
-    fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
+  if (f == NULL) {
+    *berhasil = false;
   }
-  fprintf(f, "%d\n", lengthLinkedList(to_do_list));
-  p = to_do_list;
-  while (p != NULL)
-  {
-    order = INFO(p);
-    fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
-    p = NEXT(p);
-  }
-  fprintf(f, "%d\n", lengthLinkedList(in_progress_list));
-  p = in_progress_list;
-  while (p != NULL)
-  {
-    order = INFO(p);
-    fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
-    p = NEXT(p);
-  }
-  fprintf(f, "%d\n", lengthTas(tas));
-  while (!isTasEmpty(tas))
-  {
-    popTas(&tas, &order);
-    fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
-  }
-
-  for (int i = 0; i < LISTGADGET_CAPACITY; i++)
-  {
-    if (i != 4)
-      fprintf(f, "%d ", LGELMT(inventory_gadget, i));
-    else
-      fprintf(f, "%d\n", LGELMT(inventory_gadget, i));
-  }
-  fprintf(f, "%d\n", NEFF(daftar_lokasi));
-  for (int i = 0; i < NEFF(daftar_lokasi); i++)
-  {
-    for (int j = 0; j < NEFF(daftar_lokasi); j++)
+  else {
+    fprintf(f, "%c %d %d\n", Name(mobita), Absis(Coor(mobita)), Ordinat(Coor(mobita)));
+    fprintf(f, "%d\n", uang);
+    fprintf(f, "%d\n", waktu);
+    fprintf(f, "%f\n", waktu_speed);
+    fprintf(f, "%f\n", satuan_waktu);
+    fprintf(f, "%d\n", speed_up);
+    fprintf(f, "%d\n", jumlah_antaran);
+    fprintf(f, "%d\n", return_barang);
+    fprintf(f, "%d\n", length(daftar_pesanan));
+    while (!isEmpty(daftar_pesanan))
     {
-      fprintf(f, "%d ", MELM(adj_matrix, i, j));
+      dequeue(&daftar_pesanan, &order);
+      fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
     }
-    fprintf(f, "\n");
+    fprintf(f, "%d\n", lengthLinkedList(to_do_list));
+    p = to_do_list;
+    while (p != NULL)
+    {
+      order = INFO(p);
+      fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
+      p = NEXT(p);
+    }
+    fprintf(f, "%d\n", lengthLinkedList(in_progress_list));
+    p = in_progress_list;
+    while (p != NULL)
+    {
+      order = INFO(p);
+      fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
+      p = NEXT(p);
+    }
+    fprintf(f, "%d\n", lengthTas(tas));
+    while (!isTasEmpty(tas))
+    {
+      popTas(&tas, &order);
+      fprintf(f, "%d %c %c %c %d %d\n", Time(order), Pickup(order), Dropoff(order), IType(order), Exp(order), PickupTime(order));
+    }
+
+    for (int i = 0; i < LISTGADGET_CAPACITY; i++)
+    {
+      if (i != 4)
+        fprintf(f, "%d ", LGELMT(inventory_gadget, i));
+      else
+        fprintf(f, "%d\n", LGELMT(inventory_gadget, i));
+    }
+    fprintf(f, "%d\n", NEFF(daftar_lokasi));
+    for (int i = 0; i < NEFF(daftar_lokasi); i++)
+    {
+      for (int j = 0; j < NEFF(daftar_lokasi); j++)
+      {
+        fprintf(f, "%d ", MELM(adj_matrix, i, j));
+      }
+      fprintf(f, "\n");
+    }
+    for (int i = 0; i < NEFF(daftar_lokasi); i++)
+    {
+      lokasi = ELMT(daftar_lokasi, i);
+      fprintf(f, "%c %d %d\n", Name(lokasi), Absis(Coor(lokasi)), Ordinat(Coor(lokasi)));
+    }
+    fprintf(f, "%d %d\n", bariseff(peta) - 2, kolomeff(peta) - 2); // baris dan kolom map*/
+    fprintf(f, "%d\n", senter_pengecil);
+    *berhasil = true;
+    fclose(f);
   }
-  for (int i = 0; i < NEFF(daftar_lokasi); i++)
-  {
-    lokasi = ELMT(daftar_lokasi, i);
-    fprintf(f, "%c %d %d\n", Name(lokasi), Absis(Coor(lokasi)), Ordinat(Coor(lokasi)));
-  }
-  fprintf(f, "%d %d\n", bariseff(peta) - 2, kolomeff(peta) - 2); // baris dan kolom map*/
-  fprintf(f, "%d\n", senter_pengecil);
-  fclose(f);
 }
 
 void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
@@ -84,138 +91,144 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   int len;
   char c;
   fstartWord(namafile.contents);
-  Name(*mobita) = currentWord.contents[0];
-  fadvWord();
-  x = getAngka();
-  fadvWord();
-  y = getAngka();
-  Absis(Coor(*mobita)) = x;
-  Ordinat(Coor(*mobita)) = y;
-  fadvWord();
-  *uang = getAngka();
-  fadvWord();
-  *waktu = getAngka();
-  fadvWord();
-  *waktu_speed = getFloat();
-  fadvWord();
-  *satuan_waktu = getFloat();
-  fadvWord();
-  *speed_up = getAngka();
-  fadvWord();
-  *jumlah_antaran = getAngka();
-  fadvWord();
-  *return_barang = getAngka();
-  fadvWord();
-  len = getAngka();
-  CreatePrioQueue(daftar_pesanan);
-  for (i = 0; i < len; i++)
-  {
-    fadvWord();
-    Time(order) = getAngka();
-    fadvWord();
-    Pickup(order) = currentWord.contents[0];
-    fadvWord();
-    Dropoff(order) = currentWord.contents[0];
-    fadvWord();
-    IType(order) = currentWord.contents[0];
-    fadvWord();
-    Exp(order) = getAngka();
-    fadvWord();
-    PickupTime(order) = getAngka();
-    penqueue(daftar_pesanan, order);
+  if (ftape == NULL){
+    *berhasil = false;
   }
-  fadvWord();
-  len = getAngka();
-  CreateLinkedList(to_do_list);
-  for (i = 0; i < len; i++)
-  {
+  else {
+    Name(*mobita) = currentWord.contents[0];
     fadvWord();
-    Time(order) = getAngka();
+    x = getAngka();
     fadvWord();
-    Pickup(order) = currentWord.contents[0];
+    y = getAngka();
+    Absis(Coor(*mobita)) = x;
+    Ordinat(Coor(*mobita)) = y;
     fadvWord();
-    Dropoff(order) = currentWord.contents[0];
+    *uang = getAngka();
     fadvWord();
-    IType(order) = currentWord.contents[0];
+    *waktu = getAngka();
     fadvWord();
-    Exp(order) = getAngka();
+    *waktu_speed = getFloat();
     fadvWord();
-    PickupTime(order) = getAngka();
-    insertLinkedListLast(to_do_list, order);
-  }
-  fadvWord();
-  len = getAngka();
-  CreateLinkedList(in_progress_list);
-  for (i = 0; i < len; i++)
-  {
+    *satuan_waktu = getFloat();
     fadvWord();
-    Time(order) = getAngka();
+    *speed_up = getAngka();
     fadvWord();
-    Pickup(order) = currentWord.contents[0];
+    *jumlah_antaran = getAngka();
     fadvWord();
-    Dropoff(order) = currentWord.contents[0];
+    *return_barang = getAngka();
     fadvWord();
-    IType(order) = currentWord.contents[0];
-    fadvWord();
-    Exp(order) = getAngka();
-    fadvWord();
-    PickupTime(order) = getAngka();
-    insertLinkedListLast(in_progress_list, order);
-  }
-  fadvWord();
-  len = getAngka();
-  CreateTas(tas);
-  for (i = 0; i < len; i++)
-  {
-    fadvWord();
-    Time(order) = getAngka();
-    fadvWord();
-    Pickup(order) = currentWord.contents[0];
-    fadvWord();
-    Dropoff(order) = currentWord.contents[0];
-    fadvWord();
-    IType(order) = currentWord.contents[0];
-    fadvWord();
-    Exp(order) = getAngka();
-    fadvWord();
-    PickupTime(order) = getAngka();
-    pushTas(tas, order);
-  }
-  reverseTas(tas);
-  CreateListGadget(inventory_gadget);
-  for (int i = 0; i < LISTGADGET_CAPACITY; i++)
-  {
-    fadvWord();
-    LGELMT(*inventory_gadget, i) = getAngka();
-  }
-  fadvWord();
-  len = getAngka();
-  CreateMatrix(len, len, adj_matrix);
-  for (int i = 0; i < len; i++)
-  {
-    for (int j = 0; j < len; j++)
+    len = getAngka();
+    CreatePrioQueue(daftar_pesanan);
+    for (i = 0; i < len; i++)
     {
       fadvWord();
-      MELM(*adj_matrix, i, j) = getAngka();
+      Time(order) = getAngka();
+      fadvWord();
+      Pickup(order) = currentWord.contents[0];
+      fadvWord();
+      Dropoff(order) = currentWord.contents[0];
+      fadvWord();
+      IType(order) = currentWord.contents[0];
+      fadvWord();
+      Exp(order) = getAngka();
+      fadvWord();
+      PickupTime(order) = getAngka();
+      penqueue(daftar_pesanan, order);
     }
+    fadvWord();
+    len = getAngka();
+    CreateLinkedList(to_do_list);
+    for (i = 0; i < len; i++)
+    {
+      fadvWord();
+      Time(order) = getAngka();
+      fadvWord();
+      Pickup(order) = currentWord.contents[0];
+      fadvWord();
+      Dropoff(order) = currentWord.contents[0];
+      fadvWord();
+      IType(order) = currentWord.contents[0];
+      fadvWord();
+      Exp(order) = getAngka();
+      fadvWord();
+      PickupTime(order) = getAngka();
+      insertLinkedListLast(to_do_list, order);
+    }
+    fadvWord();
+    len = getAngka();
+    CreateLinkedList(in_progress_list);
+    for (i = 0; i < len; i++)
+    {
+      fadvWord();
+      Time(order) = getAngka();
+      fadvWord();
+      Pickup(order) = currentWord.contents[0];
+      fadvWord();
+      Dropoff(order) = currentWord.contents[0];
+      fadvWord();
+      IType(order) = currentWord.contents[0];
+      fadvWord();
+      Exp(order) = getAngka();
+      fadvWord();
+      PickupTime(order) = getAngka();
+      insertLinkedListLast(in_progress_list, order);
+    }
+    fadvWord();
+    len = getAngka();
+    CreateTas(tas);
+    for (i = 0; i < len; i++)
+    {
+      fadvWord();
+      Time(order) = getAngka();
+      fadvWord();
+      Pickup(order) = currentWord.contents[0];
+      fadvWord();
+      Dropoff(order) = currentWord.contents[0];
+      fadvWord();
+      IType(order) = currentWord.contents[0];
+      fadvWord();
+      Exp(order) = getAngka();
+      fadvWord();
+      PickupTime(order) = getAngka();
+      pushTas(tas, order);
+    }
+    reverseTas(tas);
+    CreateListGadget(inventory_gadget);
+    for (int i = 0; i < LISTGADGET_CAPACITY; i++)
+    {
+      fadvWord();
+      LGELMT(*inventory_gadget, i) = getAngka();
+    }
+    fadvWord();
+    len = getAngka();
+    CreateMatrix(len, len, adj_matrix);
+    for (int i = 0; i < len; i++)
+    {
+      for (int j = 0; j < len; j++)
+      {
+        fadvWord();
+        MELM(*adj_matrix, i, j) = getAngka();
+      }
+    }
+    CreateListDin(daftar_lokasi, len);
+    for (int i = 0; i < len; i++)
+    {
+      fadvWord();
+      Name(lokasi) = currentWord.contents[0];
+      fadvWord();
+      Absis(Coor(lokasi)) = getAngka();
+      fadvWord();
+      Ordinat(Coor(lokasi)) = getAngka();
+      insertLast(daftar_lokasi, lokasi);
+    }
+    fadvWord();
+    x = getAngka();
+    fadvWord();
+    y = getAngka();
+    makeMap(peta, x, y, *daftar_lokasi);
+    fadvWord();
+    *senter_pengecil = getAngka();
+    *berhasil = true;
+    fclose(ftape);
   }
-  CreateListDin(daftar_lokasi, len);
-  for (int i = 0; i < len; i++)
-  {
-    fadvWord();
-    Name(lokasi) = currentWord.contents[0];
-    fadvWord();
-    Absis(Coor(lokasi)) = getAngka();
-    fadvWord();
-    Ordinat(Coor(lokasi)) = getAngka();
-    insertLast(daftar_lokasi, lokasi);
-  }
-  fadvWord();
-  x = getAngka();
-  fadvWord();
-  y = getAngka();
-  makeMap(peta, x, y, *daftar_lokasi);
-  fadvWord();
-  *senter_pengecil = getAngka();
-  fclose(ftape);
 }
