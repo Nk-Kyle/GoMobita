@@ -12,21 +12,22 @@
 #include "../ADTMap/map.h"
 #include "../ADTItem/item.h"
 #include "../ADTLinkedList/node.h"
+#include "boolean.h"
 
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
   int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
   LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
-  ListDin daftar_lokasi, map peta, Word namafile);
+  ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil);
 
 void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
   int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
   LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
-  ListDin *daftar_lokasi, map *peta, Word namafile);
+  ListDin *daftar_lokasi, map *peta, Word namafile, boolean *senter_pengecil);
 
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
   int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
   LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
-  ListDin daftar_lokasi, map peta, Word namafile){
+  ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil){
   Pesanan order;
   Address p;
   Loc lokasi;
@@ -81,13 +82,14 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
     fprintf(f, "%c %d %d\n", Name(lokasi),Absis(Coor(lokasi)), Ordinat(Coor(lokasi)) );
   }
   fprintf(f, "%d %d\n", bariseff(peta)-2, kolomeff(peta)-2); // baris dan kolom map*/
+  fprintf(f, "%d\n", senter_pengecil);
   fclose(f);
 }
 
 void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
   int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
   LinkedList *in_progress_list, StackTas *tas, ListGadget *inventory_gadget, Matrix *adj_matrix,
-  ListDin *daftar_lokasi, map *peta, Word namafile){
+  ListDin *daftar_lokasi, map *peta, Word namafile, boolean *senter_pengecil){
   Pesanan order;
   Loc lokasi;
   int x, y, i;
@@ -214,4 +216,7 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   fadvWord();
   y = getAngka();
   makeMap(peta, x, y, *daftar_lokasi);
+  fadvWord();
+  *senter_pengecil = getAngka();
+  fclose(ftape);
 }
