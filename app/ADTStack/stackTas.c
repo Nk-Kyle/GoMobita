@@ -131,3 +131,12 @@ void reverseTas(StackTas *s){
     pushTas(s, item);
   }
 }
+
+void dispTas(StackTas s){
+  Pesanan item;
+  while(!isTasEmpty(s)){
+    popTas(&s,&item);
+    printf("Time :%d\nExp :%d\nPickupTime :%d\nPickup Place :%c\nDropoff Place: %c\nItem Type :%c\n\n",
+    Time(item), Exp(item), PickupTime(item), Pickup(item), Dropoff(item), IType(item));
+  }
+}
