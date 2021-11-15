@@ -11,6 +11,7 @@
 #include "../ADTLinkedList/list_linked.c"
 #include "../ADTLinkedList/node.c"
 #include "../ADTItem/item.c"
+#include "../ADTStack/stackTas.c"
 
 int main() {
   Matrix Adj_Mat;
@@ -21,12 +22,14 @@ int main() {
   Loc mobita;
   LinkedList ToDo;
   Pesanan val;
-  Map m;
-  namafile = makeWord("../MainApp/konfigurasi.txt");
-  konfig (&Adj_Mat, &daftar_lokasi, &Orders, &berhasil, namafile);
+  map m;
+  StackTas tas;
+  CreateTas(&tas);
+  namafile = makeWord("a.txt");
+  konfig(&Adj_Mat,&daftar_lokasi,&Orders,namafile,&m);
   mobita = MakeLoc('8',1,1);
   dequeue(&Orders, &val);
   CreateLinkedList(&ToDo);
   insertLinkedListFirst(&ToDo, val);
-  printMap( m, ListDin daftar_lokasi, Matrix mat_adj, Loc mobita, LinkedList ToDo, StackTas Tas)
+  printMap(m,daftar_lokasi,Adj_Mat,mobita,ToDo,tas);
 }
