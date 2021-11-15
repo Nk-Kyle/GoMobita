@@ -100,17 +100,9 @@ int main()
         printf("Masukkan File Konfigurasi: ");
         startWord();
         namafile = getWord();
-        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, namafile, &peta);
-        while (!berhasil)
-        {
-            printf("File Konfigurasi tidak valid, mohon coba lagi\n");
-            printf("Masukkan File Konfigurasi: ");
-            advWord();
-            namafile = getWord();
-            konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, &berhasil, namafile, &peta);
-        }
+        konfig(&adj_matrix, &daftar_lokasi, &daftar_pesanan, namafile, &peta);
         // inisialisasi lainnya
-        uang = 10000;
+        uang = 0;
         waktu = 0;
         waktu_speed = 0;
         satuan_waktu = 1;
@@ -128,18 +120,6 @@ int main()
                     &speed_up, &jumlah_antaran, &return_barang, &daftar_pesanan, &to_do_list,
                     &in_progress_list, &tas, &inventory_gadget, &adj_matrix,
                     &daftar_lokasi, &peta, namafile, &senter_pengecil);
-        berhasil = true;
-        while (!berhasil)
-        {
-            printf("File Konfigurasi tidak valid, mohon coba lagi\n");
-            printf("Masukkan File Konfigurasi: ");
-            advWord();
-            namafile = getWord();
-            load_konfig(&mobita, &uang, &waktu, &waktu_speed, &satuan_waktu,
-                        &speed_up, &jumlah_antaran, &return_barang, &daftar_pesanan, &to_do_list,
-                        &in_progress_list, &tas, &inventory_gadget, &adj_matrix,
-                        &daftar_lokasi, &peta, namafile, &senter_pengecil);
-        }
         break;
     case 3:
         return 0;

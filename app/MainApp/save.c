@@ -3,18 +3,14 @@
 void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satuan_waktu,
                  int speed_up, int jumlah_antaran, int return_barang, PrioQueue daftar_pesanan, LinkedList to_do_list,
                  LinkedList in_progress_list, StackTas tas, ListGadget inventory_gadget, Matrix adj_matrix,
-                 ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil, boolean *berhasil)
+                 ListDin daftar_lokasi, map peta, Word namafile, boolean senter_pengecil)
 {
   Pesanan order;
   Address p;
   Loc lokasi;
   FILE *f;
-  namafile = concat("/data/", namafile);
+  namafile = concat("data/", namafile);
   f = fopen(namafile.contents, "w");
-  if (f == NULL) {
-    *berhasil = false;
-  }
-  else {
     fprintf(f, "%c %d %d\n", Name(mobita), Absis(Coor(mobita)), Ordinat(Coor(mobita)));
     fprintf(f, "%d\n", uang);
     fprintf(f, "%d\n", waktu);
@@ -75,10 +71,8 @@ void save_konfig(Loc mobita, int uang, int waktu, float waktu_speed, float satua
     }
     fprintf(f, "%d %d\n", bariseff(peta) - 2, kolomeff(peta) - 2); // baris dan kolom map*/
     fprintf(f, "%d\n", senter_pengecil);
-    *berhasil = true;
-    fclose(f);
+    closetape(f);
   }
-}
 
 void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *satuan_waktu,
                  int *speed_up, int *jumlah_antaran, int *return_barang, PrioQueue *daftar_pesanan, LinkedList *to_do_list,
@@ -91,10 +85,6 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
   int len;
   char c;
   fstartWord(namafile.contents);
-  if (ftape == NULL){
-    *berhasil = false;
-  }
-  else {
     Name(*mobita) = currentWord.contents[0];
     fadvWord();
     x = getAngka();
@@ -228,7 +218,5 @@ void load_konfig(Loc *mobita, int *uang, int *waktu, float *waktu_speed, float *
     makeMap(peta, x, y, *daftar_lokasi);
     fadvWord();
     *senter_pengecil = getAngka();
-    *berhasil = true;
-    fclose(ftape);
-  }
+    closetape();
 }

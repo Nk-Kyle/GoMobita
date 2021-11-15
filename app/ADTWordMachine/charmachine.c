@@ -57,3 +57,7 @@ void fadv() {
 	/* Algoritma */
 	retval = fscanf(ftape,"%c",&currentChar);
 }
+
+void closetape(){
+   fclose(ftape);
+}

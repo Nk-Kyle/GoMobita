@@ -7,4 +7,4 @@
 #include "../ADTMatrix/matrix.h"
 #include "../ADTQueue/prioqueue.h"
 #include "../ADTMap/map.h"
-void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil, Word namafile, map *map);
+void konfig (Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, Word namafile, map *map);

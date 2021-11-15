@@ -6,6 +6,7 @@ Tanggal           : 26 September 2021
 Topik praktikum   : Mesin Kata
 */
 #include "wordmachine.h"
+#include <stdio.h>
 boolean endWord;
 Word currentWord;
 void ignoreBlank(){

@@ -10,6 +10,7 @@
 #include "node.h"
 #include "../ADTQueue/prioqueue.h"
 #include "../ADTStack/stackTas.h"
+#include "../ADTLokasi/lokasi.h"
 
 typedef Address LinkedList;
 

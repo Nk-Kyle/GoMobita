@@ -37,4 +37,6 @@ void fadv();
    F.S. : currentChar adalah karakter berikutnya dari currentChar yang lama,
           currentChar mungkin = MARK
 */
+
+void closetape();
 #endif

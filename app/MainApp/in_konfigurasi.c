@@ -1,5 +1,5 @@
 #include "in_konfigurasi.h"
-void konfig(Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean *berhasil, Word namafile, map *map)
+void konfig(Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, Word namafile, map *map)
 {
   int size_n, size_m;
   int x, y;
@@ -11,10 +11,6 @@ void konfig(Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean 
   Pesanan QEl;
   namafile = concat("data/", namafile);
   fstartWord(namafile.contents);
-  if (ftape == NULL) {
-    *berhasil = false;
-  }
-  else {
     size_n = getAngka();
     fadvWord();
     size_m = getAngka();
@@ -74,7 +70,5 @@ void konfig(Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, boolean 
       }
       penqueue(orders, QEl);
     }
-    *berhasil = true;
-    fclose(ftape);
+    closetape();
   }
-}

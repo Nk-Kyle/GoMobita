@@ -1,0 +1,2 @@
+cd app
+gcc main.c ADTColor/pcolor.c ADTPoint/point.c ADTLokasi/lokasi.c ADTItem/item.c ADTLinkedList/list_linked.c ADTLinkedList/node.c ADTList/listGadget.c ADTListDin/listdin.c ADTMap/map.c ADTMatrix/matrix.c  ADTQueue/prioqueue.c ADTStack/stackTas.c ADTWordMachine/charmachine.c ADTWordMachine/wordmachine.c MainApp/in_konfigurasi.c MainApp/save.c -o run
