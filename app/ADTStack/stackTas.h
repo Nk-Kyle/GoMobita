@@ -70,4 +70,5 @@ int lengthTas(StackTas s);
 
 void reverseTas(StackTas *s);
 /* membalik urutan isi tas */
+void dispTas(StackTas s);
 #endif
