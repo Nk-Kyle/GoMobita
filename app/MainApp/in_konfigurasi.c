@@ -9,7 +9,7 @@ void konfig(Matrix *Adj_mat, ListDin *daftar_lokasi, PrioQueue *orders, Word nam
   char pickup, dropoff, itype;
   char name;
   Pesanan QEl;
-  namafile = concat("data/konfig_file", namafile);
+  namafile = concat("data/konfig_file/", namafile);
   fstartWord(namafile.contents);
     size_n = getAngka();
     fadvWord();

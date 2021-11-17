@@ -237,11 +237,10 @@ void move(Matrix matAjc, ListDin daftar_lokasi, Loc *mobita)
   printf("Posisi yang dipilih yang dipilih: ");
   advWord();
   pilih = getAngka();
-  while ( pilih < 1 || pilih > l-1){
+  printf("nilai k: %d\nnilai pilihan: %d\n")
+  while ( pilih < 1 || pilih > k){
     printf("Masukkan tidak valid. Ulangi\n");
-    printf("Posisi yang dipilih yang dipilih: ");
-    advWord();
-    pilih = getAngka();
+    scanf("%d", &pilih);
  }
 
   Absis(p) = posisiCapai.buffer[pilih - 1].coord.X;
