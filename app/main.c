@@ -227,7 +227,8 @@ int main()
                     {
                         speed_up = 10;
                     }
-                    printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
+                    printf("Heavy item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
+                    break;
                 case 'P':
                     uang += 400;
                     increaseTas(&tas);
