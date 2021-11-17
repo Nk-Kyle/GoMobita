@@ -85,7 +85,7 @@ int main()
     main_menu = getAngka();
     while (main_menu != 1 && main_menu != 2 && main_menu != 3)
     {
-        printf("Inputan salah!");
+        printf("Inputan salah!\n");
         printf("Masukkan Menu yang ingin dilakukan (1/2/3): ");
         advWord();
         main_menu = getAngka();
@@ -227,7 +227,8 @@ int main()
                     {
                         speed_up = 10;
                     }
-                    printf("Normal item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
+                    printf("Heavy item berhasil diantarkan. Uang mobita bertambah 400 Yen\n");
+                    break;
                 case 'P':
                     uang += 400;
                     increaseTas(&tas);

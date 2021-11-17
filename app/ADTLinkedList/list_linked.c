@@ -224,7 +224,7 @@ void updateToDoList(PrioQueue *daftarPesanan, LinkedList *toDoList, int waktu)
 {
   if (!isEmpty(*daftarPesanan))
   {
-    while (HEAD(*daftarPesanan).time <= waktu)
+    while (!isEmpty(*daftarPesanan) && HEAD(*daftarPesanan).time <= waktu)
     {
       Pesanan temp;
       dequeue(daftarPesanan, &temp);
